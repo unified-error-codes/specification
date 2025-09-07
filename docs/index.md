@@ -1,6 +1,7 @@
 # Unified Error Codes (UEC) Specification
 
 ## Abstract
+
 This document specifies the data model, semantics, and behavioral requirements for Unified Error Codes (UEC) used in the e-mobility ecosystem. It provides a common language for reporting diagnostic events and conditions between ecosystem components, primarily the Electric Vehicle Supply Equipment (EVSE) and the Charge Point Management System (CPMS).
 
 ## Scope
@@ -13,18 +14,17 @@ The following referenced documents are indispensable for the application of this
 
 * **[DIN99003]** DIN DKE SPEC 99003: A comprehensive list of error codes for the EV charging ecosystem.
 
-## Terms, Definitions, and Abbreviations
+## Terms, Definitions
 
-### Definitions
-
-### Abbreviations
+## Abbreviations
 
 * **CPMS:** Charge Point Management System
 * **EV:** Electric Vehicle
 * **EVSE:** Electric Vehicle Supply Equipment
 * **UEC:** Unified Error Code
 
-### Conformance Language
+## Conformance Language
+
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].
 
 ## Architectural Principles
