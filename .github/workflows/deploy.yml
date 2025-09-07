@@ -43,5 +43,5 @@ jobs:
             To view the generated HTML documentation, download `github-pages` ZIP artifact directly from the [workflow run summary](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts).
             Extract the ZIP file and open `index.html` in your web browser to see the documentation preview.
       - name: Deploy to GitHub Pages
-        if: github.event_name == 'pull_request'
+        if: github.ref == 'refs/heads/main'
         uses: actions/deploy-pages@v4
