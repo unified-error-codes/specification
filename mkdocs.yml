@@ -1,0 +1,12 @@
+site_name: UEC Specification
+site_url: https://unified-error-codes.github.io/specification/
+repo_url: https://github.com/unified-error-codes/specification
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: blue grey
+  features:
+    - content.action.edit
