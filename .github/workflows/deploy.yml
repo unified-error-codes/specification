@@ -1,4 +1,4 @@
-name: Deploy Specification to GitHub Pages
+name: Build & Deploy Specification to GitHub Pages
 
 on:
   push:
@@ -9,12 +9,13 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pages: write
       id-token: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,12 +30,18 @@ jobs:
 
       - name: Build with MkDocs
         run: mkdocs build
-
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./site
-
+      - name: Post Preview and Artifact Links in PR
+        if: github.event_name == 'pull_request'
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            ### 📄 Documentation Preview
+            To view the generated HTML documentation, download `github-pages` ZIP artifact directly from the [workflow run summary](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts).
+            Extract the ZIP file and open `index.html` in your web browser to see the documentation preview.
       - name: Deploy to GitHub Pages
-        id: deployment
+        if: github.event_name == 'pull_request'
         uses: actions/deploy-pages@v4
