@@ -34,3 +34,5 @@ The UEC specification is built upon the following core principles:
 * **Transport Agnostic:** The UEC data model is independent of any specific communication protocol like OCPP.
 * **Extensibility:** The specification is designed to be extended with new codes and parameters in a structured and backward-compatible manner.
 * **Machine-Readability:** The specification prioritizes structured data over free text to enable reliable, automated processing.
+
+## Error Codes Requirements
