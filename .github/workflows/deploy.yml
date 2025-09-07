@@ -1,4 +1,4 @@
-name: Deploy Specification to GitHub Pages
+name: Build & Deploy Specification
 
 on:
   push:
@@ -9,12 +9,9 @@ on:
       - main
 
 jobs:
-  deploy:
+  # Build job
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,11 +27,29 @@ jobs:
       - name: Build with MkDocs
         run: mkdocs build
 
-      - name: Upload Pages Artifact
+      - name: Upload static files as artifact
+        id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./site
+          path: site/
 
+  # Deploy job
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Print Deployed URL
+        run: echo "${{ steps.deployment.outputs.page_url }}"
+
