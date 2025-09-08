@@ -1,4 +1,4 @@
-# Unified Error Codes (UEC) Specification
+# Error Codes Data Model
 
 ## Abstract
 
