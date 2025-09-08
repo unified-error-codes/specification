@@ -1,4 +1,4 @@
-site_name: UEC Specification
+site_name: Unified Error Codes Specification
 site_url: https://unified-error-codes.github.io/specification/
 repo_url: https://github.com/unified-error-codes/specification
 edit_uri: edit/main/docs/
@@ -10,3 +10,11 @@ theme:
     primary: blue grey
   features:
     - content.action.edit
+
+plugins:
+  - search
+  - add-number:
+      order: 2
+
+nav:
+  - index.md
