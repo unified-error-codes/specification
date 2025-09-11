@@ -39,7 +39,7 @@ The UEC specification is built upon the following core principles:
 
 ### Low Level Communication
 
-Table: Low Level Communication Error Codes
+{{ table_caption('low_level_comm_errors', 'Low Level Communication Error Codes') }}
 
 | Error code                      | Semantics                                                                                   |
 | :------------------------------ | :------------------------------------------------------------------------------------------ |
@@ -52,7 +52,7 @@ Table: Low Level Communication Error Codes
 
 ### SLAC and PLC
 
-Table: SLAC and PLC Error Codes
+{{ table_caption('slac_plc_errors', 'SLAC and PLC Error Codes') }}
 
 | Error code                  | Semantics                                                |
 | :-------------------------- | :------------------------------------------------------- |
@@ -71,7 +71,7 @@ Table: SLAC and PLC Error Codes
 
 ### V2G Transport Protocol
 
-Table: V2G Transport Protocol Error Codes
+{{ table_caption('v2g_transport_protocol_errors', 'V2G Transport Protocol Error Codes') }}
 
 | Error code                           | Semantics                                       |
 | :----------------------------------- | :---------------------------------------------- |
@@ -82,7 +82,7 @@ Table: V2G Transport Protocol Error Codes
 
 ### SDP
 
-Table: SDP Error Codes
+{{ table_caption('sdp_errors', 'SDP Error Codes') }}
 
 | Error code                | Semantics                                |
 | :------------------------ | :--------------------------------------- |
@@ -92,7 +92,7 @@ Table: SDP Error Codes
 
 ### TCP and TLS
 
-Table: TCP and TLS Error Codes
+{{ table_caption('tcp_tls_errors', 'TCP and TLS Error Codes') }}
 
 | Error code             | Semantics                                          |
 | :--------------------- | :------------------------------------------------- |
@@ -103,7 +103,7 @@ Table: TCP and TLS Error Codes
 
 ### EXI
 
-Table: EXI Error Codes
+{{ table_caption('exi_errors', 'EXI Error Codes') }}
 
 | Error code         | Semantics           |
 | :----------------- | :------------------ |
@@ -112,7 +112,7 @@ Table: EXI Error Codes
 
 ### V2G Application Layer
 
-Table: V2G Application Layer Error Codes
+{{ table_caption('v2g_app_layer_errors', 'V2G Application Layer Error Codes') }}
 
 | Error code                          | Semantics                                                                                                |
 | :---------------------------------- | :------------------------------------------------------------------------------------------------------- |
@@ -132,7 +132,7 @@ Table: V2G Application Layer Error Codes
 
 ### Certificate
 
-Table: Certificate Error Codes
+{{ table_caption('certificate_errors', 'Certificate Error Codes') }}
 
 | Error code                             | Semantics                                                     |
 | :------------------------------------- | :------------------------------------------------------------ |
@@ -142,7 +142,7 @@ Table: Certificate Error Codes
 
 ### Authorization
 
-Table: Authorization Error Codes
+{{ table_caption('authorization_errors', 'Authorization Error Codes') }}
 
 | Error code                   | Semantics                                                                                               |
 | :--------------------------- | :------------------------------------------------------------------------------------------------------ |
@@ -152,7 +152,7 @@ Table: Authorization Error Codes
 
 ### General Error Codes
 
-Table: General Error Codes
+{{ table_caption('general_errors', 'General Error Codes') }}
 
 | Error code             | Semantics                                                                                  |
 | :--------------------- | :----------------------------------------------------------------------------------------- |
