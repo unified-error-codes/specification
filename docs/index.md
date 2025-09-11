@@ -511,3 +511,80 @@ The UEC specification is built upon the following core principles:
 | :------------- | :------------- | :--------------------------- |
 | `error`        | string         | Power module-specific error. |
 | `id`           | string         | Power module identifier.     |
+
+
+### ContactorFault
+
+| Parameter Name  | Parameter Type     | Semantics                 |
+| :-------------- | :----------------- | :------------------------ |
+| `id`            | string             | Contactor identifier.     |
+| `actualValue`   | ContactorStateType | Actual contactor state.   |
+| `expectedValue` | ContactorStateType | Expected contactor state. |
+| `type`          | ContactorType      | Type of the contactor.    |
+
+### HighTemperature
+
+| Parameter Name | Parameter Type          | Semantics                                 |
+| :------------- | :---------------------- | :---------------------------------------- |
+| `actualValue`  | PhysicalValueType       | Actual temperature.                       |
+| `threshold`    | PhysicalValueType       | Warning or error threshold.               |
+| `location`     | TemperatureLocationType | Location of the temperature measurements. |
+
+### LowTemperature
+
+| Parameter Name | Parameter Type          | Semantics                                 |
+| :------------- | :---------------------- | :---------------------------------------- |
+| `actualValue`  | PhysicalValueType       | Actual temperature.                       |
+| `threshold`    | PhysicalValueType       | Warning or error threshold.               |
+| `location`     | TemperatureLocationType | Location of the temperature measurements. |
+
+### PowerLoss
+
+*This error code has no specific parameters.*
+
+### ConnectorLockFailure
+
+| Parameter Name  | Parameter Type         | Semantics            |
+| :-------------- | :--------------------- | :------------------- |
+| `actualValue`   | ConnectorLockStateType | Actual lock state.   |
+| `expectedValue` | ConnectorLockStateType | Expected lock state. |
+
+### UnderVoltage
+
+| Parameter Name | Parameter Type          | Semantics                            |
+| :------------- | :---------------------- | :----------------------------------- |
+| `actualValue`  | PhysicalValueType       | Actual voltage.                      |
+| `minValue`     | PhysicalValueType       | Lower bound of allowed range.        |
+| `location`     | MeasurementLocationType | Location of the voltage measurement. |
+
+### OverVoltage
+
+| Parameter Name | Parameter Type          | Semantics                            |
+| :------------- | :---------------------- | :----------------------------------- |
+| `actualValue`  | PhysicalValueType       | Actual voltage.                      |
+| `maxValue`     | PhysicalValueType       | Upper bound of allowed range         |
+| `location`     | MeasurementLocationType | Location of the voltage measurement. |
+
+### UnderCurrent
+
+| Parameter Name | Parameter Type          | Semantics                            |
+| :------------- | :---------------------- | :----------------------------------- |
+| `actualValue`  | PhysicalValueType       | Actual current.                      |
+| `minValue`     | PhysicalValueType       | Lower bound of allowed range.        |
+| `location`     | MeasurementLocationType | Location of the current measurement. |
+
+### OverCurrent
+
+| Parameter Name | Parameter Type          | Semantics                            |
+| :------------- | :---------------------- | :----------------------------------- |
+| `actualValue`  | PhysicalValueType       | Actual current.                      |
+| `maxValue`     | PhysicalValueType       | Upper bound of allowed range.        |
+| `location`     | MeasurementLocationType | Location of the current measurement. |
+
+### EVShiftPosition
+
+*This error code has no specific parameters.*
+
+### EVRESSMalfunction
+
+*This error code has no specific parameters.*
