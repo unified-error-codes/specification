@@ -12,6 +12,7 @@ theme:
     - content.action.edit
 
 plugins:
+  - macros
   - search
   - caption
   - add-number:

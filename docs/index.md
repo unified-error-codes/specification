@@ -178,24 +178,28 @@ Table: General Error Codes
 
 ### ProximityPilotNotDetected
 
-Table: Semantics and type definition for ProximityPilotNotDetected parameters
+{{ table_caption('prox_pilot_not_detected_parameters', 'Semantics and type definition for ProximityPilotNotDetected error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics                    |
 | :------------- | :---------------- | :--------------------------- |
 | `actualValue`  | PhysicalValueType | Measured voltage/resistance. |
 
+{{ requirement() }} The `ProximityPilotNotDetected` error code parameters shall be used as defined in {{ table_ref('prox_pilot_not_detected_parameters') }}.
+
 ### ProximityPilotValueChanged
 
-Table: Semantics and type definition for ProximityPilotValueChanged parameters
+{{ table_caption('prox_pilot_value_changed_parameters', 'Semantics and type definition for ProximityPilotValueChanged error code parameters') }}
 
 | Parameter Name  | Parameter Type    | Semantics                       |
 | :-------------- | :---------------- | :------------------------------ |
 | `actualValue`   | PhysicalValueType | Measured voltage/resistance.    |
 | `expectedValue` | PhysicalValueType | Expected proximity pilot value. |
 
+{{ requirement() }} The `ProximityPilotValueChanged` error code parameters shall be used as defined in {{ table_ref('prox_pilot_value_changed_parameters') }}.
+
 ### ControlPilotFault
 
-Table: Semantics and type definition for ControlPilotFault parameters
+{{ table_caption('ctrl_pilot_fault_parameters', 'Semantics and type definition for ControlPilotFault error code parameters') }}
 
 | Parameter Name    | Parameter Type    | Semantics                  |
 | :---------------- | :---------------- | :------------------------- |
@@ -204,9 +208,11 @@ Table: Semantics and type definition for ControlPilotFault parameters
 | `frequency`       | PhysicalValueType | Measured frequency.        |
 | `dutyCycle`       | PhysicalValueType | Measured duty cycle.       |
 
+{{ requirement() }} The `ControlPilotFault` error code parameters shall be used as defined in {{ table_ref('ctrl_pilot_fault_parameters') }}.
+
 ### ControlPilotStateUnexpected
 
-Table: Semantics and type definition for ControlPilotStateUnexpected parameters
+{{ table_caption('ctrl_pilot_state_unexpected_parameters', 'Semantics and type definition for ControlPilotStateUnexpected error code parameters') }}
 
 | Parameter Name    | Parameter Type        | Semantics                  |
 | :---------------- | :-------------------- | :------------------------- |
@@ -217,13 +223,17 @@ Table: Semantics and type definition for ControlPilotStateUnexpected parameters
 | `frequency`       | PhysicalValueType     | Measured frequency.        |
 | `dutyCycle`       | PhysicalValueType     | Measured duty cycle.       |
 
+{{ requirement() }} The `ControlPilotStateUnexpected` error code parameters shall be used as defined in {{ table_ref('ctrl_pilot_state_unexpected_parameters') }}.
+
 ### ControlPilotStateNotSupported
 
-Table: Semantics and type definition for ControlPilotStateNotSupported parameters
+{{ table_caption('ctrl_pilot_state_not_supported_parameters', 'Semantics and type definition for ControlPilotStateNotSupported error code parameters') }}
 
-| Parameter Name | Parameter Type        | Semantics                                          |
-| :------------- | :-------------------- | :------------------------------------------------- |
+| Parameter Name | Parameter Type        | Semantics                                            |
+| :------------- | :-------------------- | :--------------------------------------------------- |
 | `actualValue`  | ControlPilotStateType | Actual controller pilot state - not supported state. |
+
+{{ requirement() }} The `ControlPilotStateNotSupported` error code parameters shall be used as defined in {{ table_ref('ctrl_pilot_state_not_supported_parameters') }}.
 
 ### PLCNotFound
 
@@ -231,27 +241,33 @@ Table: Semantics and type definition for ControlPilotStateNotSupported parameter
 
 ### PLCFault
 
-Table: Semantics and type definition for PLCFault parameters
+{{ table_caption('plc_fault_parameters', 'Semantics and type definition for PLCFault error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                      |
 | :------------- | :------------- | :----------------------------- |
 | `error`        | string         | PLC modem-specific error code. |
 
+{{ requirement() }} The `PLCFault` error code parameters shall be used as defined in {{ table_ref('plc_fault_parameters') }}.
+
 ### PLCLinkDetectionTimeout
 
-Table: Semantics and type definition for PLCLinkDetectionTimeout parameters
+{{ table_caption('plc_link_detect_timeout_parameters', 'Semantics and type definition for PLCLinkDetectionTimeout error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics             |
 | :------------- | :---------------- | :-------------------- |
 | `timeout`      | PhysicalValueType | Actual timeout value. |
+
+{{ requirement() }} The `PLCLinkDetectionTimeout` error code parameters shall be used as defined in {{ table_ref('plc_link_detect_timeout_parameters') }}.
 
 ### PLCLinkLeaveTimeout
 
-Table: Semantics and type definition for PLCLinkLeaveTimeout parameters
+{{ table_caption('plc_link_leave_timeout_parameters', 'Semantics and type definition for PLCLinkLeaveTimeout error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics             |
 | :------------- | :---------------- | :-------------------- |
 | `timeout`      | PhysicalValueType | Actual timeout value. |
+
+{{ requirement() }} The `PLCLinkLeaveTimeout` error code parameters shall be used as defined in {{ table_ref('plc_link_leave_timeout_parameters') }}.
 
 ### PLCLinkLost
 
@@ -259,25 +275,29 @@ Table: Semantics and type definition for PLCLinkLeaveTimeout parameters
 
 ### SLACTimeout
 
-Table: Semantics and type definition for SLACTimeout parameters
+{{ table_caption('slac_timeout_parameters', 'Semantics and type definition for SLACTimeout error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics                             |
 | :------------- | :---------------- | :------------------------------------ |
 | `message`      | SLACMessageType   | SLAC state when the timeout occurred. |
 | `timeout`      | PhysicalValueType | Timeout in milliseconds.              |
 
+{{ requirement() }} The `SLACTimeout` error code parameters shall be used as defined in {{ table_ref('slac_timeout_parameters') }}.
+
 ### SLACSequenceError
 
-Table: Semantics and type definition for SLACSequenceError parameters
+{{ table_caption('slac_seq_error_parameters', 'Semantics and type definition for SLACSequenceError error code parameters') }}
 
 | Parameter Name    | Parameter Type  | Semantics         |
 | :---------------- | :-------------- | :---------------- |
 | `receivedMessage` | SLACMessageType | Received message. |
 | `expectedMessage` | SLACMessageType | Expected message. |
 
+{{ requirement() }} The `SLACSequenceError` error code parameters shall be used as defined in {{ table_ref('slac_seq_error_parameters') }}.
+
 ### SLACParameterInvalid
 
-Table: Semantics and type definition for SLACParameterInvalid parameters
+{{ table_caption('slac_param_invalid_parameters', 'Semantics and type definition for SLACParameterInvalid error code parameters') }}
 
 | Parameter Name  | Parameter Type     | Semantics                         |
 | :-------------- | :----------------- | :-------------------------------- |
@@ -285,10 +305,12 @@ Table: Semantics and type definition for SLACParameterInvalid parameters
 | `parameter`     | string             | Name of the field in the message. |
 | `actualValue`   | UniversalValueType | Actual field value.               |
 | `expectedValue` | UniversalValueType | Expected field value.             |
+
+{{ requirement() }} The `SLACParameterInvalid` error code parameters shall be used as defined in {{ table_ref('slac_param_invalid_parameters') }}.
 
 ### SLACParameterNotAllowed
 
-Table: Semantics and type definition for SLACParameterNotAllowed parameters
+{{ table_caption('slac_param_not_allowed_parameters', 'Semantics and type definition for SLACParameterNotAllowed error code parameters') }}
 
 | Parameter Name  | Parameter Type     | Semantics                         |
 | :-------------- | :----------------- | :-------------------------------- |
@@ -296,10 +318,12 @@ Table: Semantics and type definition for SLACParameterNotAllowed parameters
 | `parameter`     | string             | Name of the field in the message. |
 | `actualValue`   | UniversalValueType | Actual field value.               |
 | `expectedValue` | UniversalValueType | Expected field value.             |
+
+{{ requirement() }} The `SLACParameterNotAllowed` error code parameters shall be used as defined in {{ table_ref('slac_param_not_allowed_parameters') }}.
 
 ### SLACParameterNotSupported
 
-Table: Semantics and type definition for SLACParameterNotSupported parameters
+{{ table_caption('slac_param_not_supported_parameters', 'Semantics and type definition for SLACParameterNotSupported error code parameters') }}
 
 | Parameter Name  | Parameter Type     | Semantics                         |
 | :-------------- | :----------------- | :-------------------------------- |
@@ -308,9 +332,11 @@ Table: Semantics and type definition for SLACParameterNotSupported parameters
 | `actualValue`   | UniversalValueType | Actual field value.               |
 | `expectedValue` | UniversalValueType | Expected field value.             |
 
+{{ requirement() }} The `SLACParameterNotSupported` error code parameters shall be used as defined in {{ table_ref('slac_param_not_supported_parameters') }}.
+
 ### SLACParameterOutOfRange
 
-Table: Semantics and type definition for SLACParameterOutOfRange parameters
+{{ table_caption('slac_param_out_of_range_parameters', 'Semantics and type definition for SLACParameterOutOfRange error code parameters') }}
 
 | Parameter Name | Parameter Type     | Semantics                                 |
 | :------------- | :----------------- | :---------------------------------------- |
@@ -320,59 +346,73 @@ Table: Semantics and type definition for SLACParameterOutOfRange parameters
 | `minValue`     | UniversalValueType | Lower bound of allowed range.             |
 | `maxValue`     | UniversalValueType | Upper bound of allowed range.             |
 
+{{ requirement() }} The `SLACParameterOutOfRange` error code parameters shall be used as defined in {{ table_ref('slac_param_out_of_range_parameters') }}.
+
 ### SLACAttenuationHigh
 
-Table: Semantics and type definition for SLACAttenuationHigh parameters
+{{ table_caption('slac_attenuation_high_parameters', 'Semantics and type definition for SLACAttenuationHigh error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics                    |
 | :------------- | :---------------- | :--------------------------- |
 | `actualValue`  | PhysicalValueType | Actual attenuation.          |
 | `maxValue`     | PhysicalValueType | Maximal allowed attenuation. |
 
+{{ requirement() }} The `SLACAttenuationHigh` error code parameters shall be used as defined in {{ table_ref('slac_attenuation_high_parameters') }}.
+
 ### V2GTPProtocolVersionInvalid
 
-Table: Semantics and type definition for V2GTPProtocolVersionInvalid parameters
+{{ table_caption('v2gtp_proto_ver_invalid_parameters', 'Semantics and type definition for V2GTPProtocolVersionInvalid error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                 |
 | :------------- | :------------- | :------------------------ |
 | `actualValue`  | integer        | Invalid protocol version. |
 
+{{ requirement() }} The `V2GTPProtocolVersionInvalid` error code parameters shall be used as defined in {{ table_ref('v2gtp_proto_ver_invalid_parameters') }}.
+
 ### V2GTPInverseProtocolVersionInvalid
 
-Table: Semantics and type definition for V2GTPInverseProtocolVersionInvalid parameters
+{{ table_caption('v2gtp_inv_proto_ver_invalid_parameters', 'Semantics and type definition for V2GTPInverseProtocolVersionInvalid error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                         |
 | :------------- | :------------- | :-------------------------------- |
 | `actualValue`  | integer        | Invalid inverse protocol version. |
 
+{{ requirement() }} The `V2GTPInverseProtocolVersionInvalid` error code parameters shall be used as defined in {{ table_ref('v2gtp_inv_proto_ver_invalid_parameters') }}.
+
 ### V2GTPPayloadLengthInvalid
 
-Table: Semantics and type definition for V2GTPPayloadLengthInvalid parameters
+{{ table_caption('v2gtp_payload_len_invalid_parameters', 'Semantics and type definition for V2GTPPayloadLengthInvalid error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                 |
 | :------------- | :------------- | :------------------------ |
 | `actualValue`  | integer        | Incorrect payload length. |
 
+{{ requirement() }} The `V2GTPPayloadLengthInvalid` error code parameters shall be used as defined in {{ table_ref('v2gtp_payload_len_invalid_parameters') }}.
+
 ### V2GTPPayloadTypeInvalid
 
-Table: Semantics and type definition for V2GTPPayloadTypeInvalid parameters
+{{ table_caption('v2gtp_payload_type_invalid_parameters', 'Semantics and type definition for V2GTPPayloadTypeInvalid error code parameters') }}
 
 | Parameter Name  | Parameter Type | Semantics                    |
 | :-------------- | :------------- | :--------------------------- |
 | `actualValue`   | integer        | Actual payload type value.   |
 | `expectedValue` | integer        | Expected payload type value. |
 
+{{ requirement() }} The `V2GTPPayloadTypeInvalid` error code parameters shall be used as defined in {{ table_ref('v2gtp_payload_type_invalid_parameters') }}.
+
 ### SDPPayloadLengthInvalid
 
-Table: Semantics and type definition for SDPPayloadLengthInvalid parameters
+{{ table_caption('sdp_payload_len_invalid_parameters', 'Semantics and type definition for SDPPayloadLengthInvalid error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics              |
 | :------------- | :------------- | :--------------------- |
 | `actualValue`  | integer        | Actual payload length. |
 
+{{ requirement() }} The `SDPPayloadLengthInvalid` error code parameters shall be used as defined in {{ table_ref('sdp_payload_len_invalid_parameters') }}.
+
 ### SDPParameterInvalid
 
-Table: Semantics and type definition for SDPParameterInvalid parameters
+{{ table_caption('sdp_param_invalid_parameters', 'Semantics and type definition for SDPParameterInvalid error code parameters') }}
 
 | Parameter Name  | Parameter Type     | Semantics                                                                                                 |
 | :-------------- | :----------------- | :-------------------------------------------------------------------------------------------------------- |
@@ -380,66 +420,82 @@ Table: Semantics and type definition for SDPParameterInvalid parameters
 | `actualValue`   | UniversalValueType | Actual field value.                                                                                       |
 | `expectedValue` | UniversalValueType | Expected field value.                                                                                     |
 
+{{ requirement() }} The `SDPParameterInvalid` error code parameters shall be used as defined in {{ table_ref('sdp_param_invalid_parameters') }}.
+
 ### SDPDiscoveryTimeout
 
-Table: Semantics and type definition for SDPDiscoveryTimeout parameters
+{{ table_caption('sdp_discovery_timeout_parameters', 'Semantics and type definition for SDPDiscoveryTimeout error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                            |
 | :------------- | :------------- | :----------------------------------- |
 | `retries`      | integer        | Number of performed SDP Req retries. |
 
+{{ requirement() }} The `SDPDiscoveryTimeout` error code parameters shall be used as defined in {{ table_ref('sdp_discovery_timeout_parameters') }}.
+
 ### TLSHandshakeError
 
-Table: Semantics and type definition for TLSHandshakeError parameters
+{{ table_caption('tls_handshake_error_parameters', 'Semantics and type definition for TLSHandshakeError error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                                    |
 | :------------- | :------------- | :------------------------------------------- |
 | `alert`        | integer        | TLS alert number described in IETF RFC 5246. |
 
+{{ requirement() }} The `TLSHandshakeError` error code parameters shall be used as defined in {{ table_ref('tls_handshake_error_parameters') }}.
+
 ### TCPError
 
-Table: Semantics and type definition for TCPError parameters
+{{ table_caption('tcp_error_parameters', 'Semantics and type definition for TCPError error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                                    |
 | :------------- | :------------- | :------------------------------------------- |
 | `error`        | string         | Socket specific error.                       |
 | `v2gState`     | V2GStateType   | Communication state when the error occurred. |
 
+{{ requirement() }} The `TCPError` error code parameters shall be used as defined in {{ table_ref('tcp_error_parameters') }}.
+
 ### TCPUnexpectedClose
 
-Table: Semantics and type definition for TCPUnexpectedClose parameters
+{{ table_caption('tcp_unexpected_close_parameters', 'Semantics and type definition for TCPUnexpectedClose error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                                    |
 | :------------- | :------------- | :------------------------------------------- |
 | `v2gState`     | V2GStateType   | Communication state when the error occurred. |
 
+{{ requirement() }} The `TCPUnexpectedClose` error code parameters shall be used as defined in {{ table_ref('tcp_unexpected_close_parameters') }}.
+
 ### TCPConnectionTimeout
 
-Table: Semantics and type definition for TCPConnectionTimeout parameters
+{{ table_caption('tcp_conn_timeout_parameters', 'Semantics and type definition for TCPConnectionTimeout error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics           |
 | :------------- | :---------------- | :------------------ |
 | `actualValue`  | PhysicalValueType | Timeout in seconds. |
 
+{{ requirement() }} The `TCPConnectionTimeout` error code parameters shall be used as defined in {{ table_ref('tcp_conn_timeout_parameters') }}.
+
 ### EXIEncodingError
 
-Table: Semantics and type definition for EXIEncodingError parameters
+{{ table_caption('exi_encoding_error_parameters', 'Semantics and type definition for EXIEncodingError error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                           |
 | :------------- | :------------- | :---------------------------------- |
 | `exi`          | Base64         | EXI Message data encoded as Base64. |
+
+{{ requirement() }} The `EXIEncodingError` error code parameters shall be used as defined in {{ table_ref('exi_encoding_error_parameters') }}.
 
 ### EXIDecodingError
 
-Table: Semantics and type definition for EXIDecodingError parameters
+{{ table_caption('exi_decoding_error_parameters', 'Semantics and type definition for EXIDecodingError error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                           |
 | :------------- | :------------- | :---------------------------------- |
 | `exi`          | Base64         | EXI Message data encoded as Base64. |
 
+{{ requirement() }} The `EXIDecodingError` error code parameters shall be used as defined in {{ table_ref('exi_decoding_error_parameters') }}.
+
 ### V2GParameterNotSupported
 
-Table: Semantics and type definition for V2GParameterNotSupported parameters
+{{ table_caption('v2g_param_not_supported_parameters', 'Semantics and type definition for V2GParameterNotSupported error code parameters') }}
 
 | Parameter Name   | Parameter Type     | Semantics                           |
 | :--------------- | :----------------- | :---------------------------------- |
@@ -448,9 +504,11 @@ Table: Semantics and type definition for V2GParameterNotSupported parameters
 | `receivedValue`  | UniversalValueType | List of received parameter values.  |
 | `supportedValue` | UniversalValueType | List of supported parameter values. |
 
+{{ requirement() }} The `V2GParameterNotSupported` error code parameters shall be used as defined in {{ table_ref('v2g_param_not_supported_parameters') }}.
+
 ### V2GParameterInvalid
 
-Table: Semantics and type definition for V2GParameterInvalid parameters
+{{ table_caption('v2g_param_invalid_parameters', 'Semantics and type definition for V2GParameterInvalid error code parameters') }}
 
 | Parameter Name  | Parameter Type     | Semantics                                 |
 | :-------------- | :----------------- | :---------------------------------------- |
@@ -459,18 +517,22 @@ Table: Semantics and type definition for V2GParameterInvalid parameters
 | `actualValue`   | UniversalValueType | Actual field value.                       |
 | `expectedValue` | UniversalValueType | Expected field value.                     |
 
+{{ requirement() }} The `V2GParameterInvalid` error code parameters shall be used as defined in {{ table_ref('v2g_param_invalid_parameters') }}.
+
 ### V2GParameterNotAllowed
 
-Table: Semantics and type definition for V2GParameterNotAllowed parameters
+{{ table_caption('v2g_param_not_allowed_parameters', 'Semantics and type definition for V2GParameterNotAllowed error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                                 |
 | :------------- | :------------- | :---------------------------------------- |
 | `message`      | V2GMessageType | Affected message.                         |
 | `parameter`    | string         | Name of the parameter in the V2G message. |
 
+{{ requirement() }} The `V2GParameterNotAllowed` error code parameters shall be used as defined in {{ table_ref('v2g_param_not_allowed_parameters') }}.
+
 ### V2GParameterOutOfRange
 
-Table: Semantics and type definition for V2GParameterOutOfRange parameters
+{{ table_caption('v2g_param_out_of_range_parameters', 'Semantics and type definition for V2GParameterOutOfRange error code parameters') }}
 
 | Parameter Name | Parameter Type     | Semantics                                 |
 | :------------- | :----------------- | :---------------------------------------- |
@@ -480,18 +542,22 @@ Table: Semantics and type definition for V2GParameterOutOfRange parameters
 | `minValue`     | UniversalValueType | Lower bound of allowed range.             |
 | `maxValue`     | UniversalValueType | Upper bound of allowed range.             |
 
+{{ requirement() }} The `V2GParameterOutOfRange` error code parameters shall be used as defined in {{ table_ref('v2g_param_out_of_range_parameters') }}.
+
 ### V2GSequenceError
 
-Table: Semantics and type definition for V2GSequenceError parameters
+{{ table_caption('v2g_seq_error_parameters', 'Semantics and type definition for V2GSequenceError error code parameters') }}
 
 | Parameter Name    | Parameter Type | Semantics         |
 | :---------------- | :------------- | :---------------- |
 | `receivedMessage` | V2GMessageType | Received message. |
 | `expectedMessage` | V2GMessageType | Expected message. |
 
+{{ requirement() }} The `V2GSequenceError` error code parameters shall be used as defined in {{ table_ref('v2g_seq_error_parameters') }}.
+
 ### V2GTimeout
 
-Table: Semantics and type definition for V2GTimeout parameters
+{{ table_caption('v2g_timeout_parameters', 'Semantics and type definition for V2GTimeout error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics                       |
 | :------------- | :---------------- | :------------------------------ |
@@ -499,9 +565,11 @@ Table: Semantics and type definition for V2GTimeout parameters
 | `message`      | V2GMessageType    | Affected V2G message.           |
 | `timeoutType`  | V2GTimeoutType    | Timeout type.                   |
 
+{{ requirement() }} The `V2GTimeout` error code parameters shall be used as defined in {{ table_ref('v2g_timeout_parameters') }}.
+
 ### V2GPerformanceTime
 
-Table: Semantics and type definition for V2GPerformanceTime parameters
+{{ table_caption('v2g_perf_time_parameters', 'Semantics and type definition for V2GPerformanceTime error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics                                |
 | :------------- | :---------------- | :--------------------------------------- |
@@ -509,111 +577,137 @@ Table: Semantics and type definition for V2GPerformanceTime parameters
 | `message`      | V2GMessageType    | Affected V2G message.                    |
 | `timeoutType`  | V2GTimeoutType    | Timeout type.                            |
 
+{{ requirement() }} The `V2GPerformanceTime` error code parameters shall be used as defined in {{ table_ref('v2g_perf_time_parameters') }}.
+
 ### V2GNoChargeServiceSelected
 
-Table: Semantics and type definition for V2GNoChargeServiceSelected parameters
+{{ table_caption('v2g_no_charge_svc_selected_parameters', 'Semantics and type definition for V2GNoChargeServiceSelected error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                         |
 | :------------- | :------------- | :-------------------------------- |
 | `selected`     | string         | IDs of selected services by EVCC. |
 
+{{ requirement() }} The `V2GNoChargeServiceSelected` error code parameters shall be used as defined in {{ table_ref('v2g_no_charge_svc_selected_parameters') }}.
+
 ### V2GServiceSelectionInvalid
 
-Table: Semantics and type definition for V2GServiceSelectionInvalid parameters
+{{ table_caption('v2g_svc_selection_invalid_parameters', 'Semantics and type definition for V2GServiceSelectionInvalid error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                                        |
 | :------------- | :------------- | :----------------------------------------------- |
 | `selected`     | integer        | ID of the selected service by EVCC.              |
 | `offered`      | integer[]      | IDs of the offered services to the EVCC by SECC. |
 
+{{ requirement() }} The `V2GServiceSelectionInvalid` error code parameters shall be used as defined in {{ table_ref('v2g_svc_selection_invalid_parameters') }}.
+
 ### V2GPaymentSelectionInvalid
 
-Table: Semantics and type definition for V2GPaymentSelectionInvalid parameters
+{{ table_caption('v2g_payment_selection_invalid_parameters', 'Semantics and type definition for V2GPaymentSelectionInvalid error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                               |
 | :------------- | :------------- | :-------------------------------------- |
 | `selected`     | string         | Selected service by EVCC.               |
 | `offered`      | string[]       | Offered service(s) to the EVCC by SECC. |
 
+{{ requirement() }} The `V2GPaymentSelectionInvalid` error code parameters shall be used as defined in {{ table_ref('v2g_payment_selection_invalid_parameters') }}.
+
 ### V2GServiceIdInvalid
 
-Table: Semantics and type definition for V2GServiceIdInvalid parameters
+{{ table_caption('v2g_svc_id_invalid_parameters', 'Semantics and type definition for V2GServiceIdInvalid error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                                    |
 | :------------- | :------------- | :------------------------------------------- |
 | `serviceId`    | integer        | Identifier of the service requested by EVCC. |
 | `offered`      | integer[]      | List of offered services by SECC.            |
 
+{{ requirement() }} The `V2GServiceIdInvalid` error code parameters shall be used as defined in {{ table_ref('v2g_svc_id_invalid_parameters') }}.
+
 ### V2GContractCertificateExpired
 
-Table: Semantics and type definition for V2GContractCertificateExpired parameters
+{{ table_caption('v2g_contract_cert_expired_parameters', 'Semantics and type definition for V2GContractCertificateExpired error code parameters') }}
 
 | Parameter Name     | Parameter Type | Semantics                                                        |
 | :----------------- | :------------- | :--------------------------------------------------------------- |
 | `certificateChain` | string         | Contract certificate and sub-certificates encoded in PEM format. |
+
+{{ requirement() }} The `V2GContractCertificateExpired` error code parameters shall be used as defined in {{ table_ref('v2g_contract_cert_expired_parameters') }}.
 
 ### V2GContractCertificateNotYetValid
 
-Table: Semantics and type definition for V2GContractCertificateNotYetValid parameters
+{{ table_caption('v2g_contract_cert_not_yet_valid_parameters', 'Semantics and type definition for V2GContractCertificateNotYetValid error code parameters') }}
 
 | Parameter Name     | Parameter Type | Semantics                                                        |
 | :----------------- | :------------- | :--------------------------------------------------------------- |
 | `certificateChain` | string         | Contract certificate and sub-certificates encoded in PEM format. |
 
+{{ requirement() }} The `V2GContractCertificateNotYetValid` error code parameters shall be used as defined in {{ table_ref('v2g_contract_cert_not_yet_valid_parameters') }}.
+
 ### CertificateInstallationServerTimeout
 
-Table: Semantics and type definition for CertificateInstallationServerTimeout parameters
+{{ table_caption('cert_install_server_timeout_parameters', 'Semantics and type definition for CertificateInstallationServerTimeout error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics                      |
 | :------------- | :---------------- | :----------------------------- |
 | `timeout`      | PhysicalValueType | Timeout value in milliseconds. |
+
+{{ requirement() }} The `CertificateInstallationServerTimeout` error code parameters shall be used as defined in {{ table_ref('cert_install_server_timeout_parameters') }}.
 
 ### CertificateUpdateServerTimeout
 
-Table: Semantics and type definition for CertificateUpdateServerTimeout parameters
+{{ table_caption('cert_update_server_timeout_parameters', 'Semantics and type definition for CertificateUpdateServerTimeout error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics                      |
 | :------------- | :---------------- | :----------------------------- |
 | `timeout`      | PhysicalValueType | Timeout value in milliseconds. |
 
+{{ requirement() }} The `CertificateUpdateServerTimeout` error code parameters shall be used as defined in {{ table_ref('cert_update_server_timeout_parameters') }}.
+
 ### CertificatePrivateAndPublicMismatch
 
-Table: Semantics and type definition for CertificatePrivateAndPublicMismatch parameters
+{{ table_caption('cert_priv_pub_mismatch_parameters', 'Semantics and type definition for CertificatePrivateAndPublicMismatch error code parameters') }}
 
 | Parameter Name     | Parameter Type | Semantics                                |
 | :----------------- | :------------- | :--------------------------------------- |
 | `message`          | V2GMessageType | V2G message with certificates.           |
 | `certificateChain` | string         | Certificate chain encoded in PEM format. |
 
+{{ requirement() }} The `CertificatePrivateAndPublicMismatch` error code parameters shall be used as defined in {{ table_ref('cert_priv_pub_mismatch_parameters') }}.
+
 ### AuthorizationTimeoutServer
 
-Table: Semantics and type definition for AuthorizationTimeoutServer parameters
+{{ table_caption('auth_timeout_server_parameters', 'Semantics and type definition for AuthorizationTimeoutServer error code parameters') }}
 
 | Parameter Name | Parameter Type    | Semantics                                            |
 | :------------- | :---------------- | :--------------------------------------------------- |
 | `timeout`      | PhysicalValueType | Server response timeout in milliseconds.             |
 | `requestId`    | string            | Id of the authorization message sent to the backend. |
 
+{{ requirement() }} The `AuthorizationTimeoutServer` error code parameters shall be used as defined in {{ table_ref('auth_timeout_server_parameters') }}.
+
 ### AuthorizationTimeoutUser
 
-Table: Semantics and type definition for AuthorizationTimeoutUser parameters
+{{ table_caption('auth_timeout_user_parameters', 'Semantics and type definition for AuthorizationTimeoutUser error code parameters') }}
 
 | Parameter Name        | Parameter Type          | Semantics                                                 |
 | :-------------------- | :---------------------- | :-------------------------------------------------------- |
 | `timeout`             | PhysicalValueType       | User interaction timeout in milliseconds.                 |
 | `authorizationMethod` | AuthorizationMethodType | Method of authorization that the user is expected to use. |
 
+{{ requirement() }} The `AuthorizationTimeoutUser` error code parameters shall be used as defined in {{ table_ref('auth_timeout_user_parameters') }}.
+
 ### AuthorizationRejected
 
-Table: Semantics and type definition for AuthorizationRejected parameters
+{{ table_caption('auth_rejected_parameters', 'Semantics and type definition for AuthorizationRejected error code parameters') }}
 
 | Parameter Name        | Parameter Type          | Semantics                                                 |
 | :-------------------- | :---------------------- | :-------------------------------------------------------- |
 | `authorizationMethod` | AuthorizationMethodType | Method of authorization that the user is expected to use. |
 
+{{ requirement() }} The `AuthorizationRejected` error code parameters shall be used as defined in {{ table_ref('auth_rejected_parameters') }}.
+
 ### InsulationFault
 
-Table: Semantics and type definition for InsulationFault parameters
+{{ table_caption('insulation_fault_parameters', 'Semantics and type definition for InsulationFault error code parameters') }}
 
 | Parameter Name | Parameter Type         | Semantics                                     |
 | :------------- | :--------------------- | :-------------------------------------------- |
@@ -621,18 +715,22 @@ Table: Semantics and type definition for InsulationFault parameters
 | `resistance`   | PhysicalValueType      | Cable line resistance.                        |
 | `capacity`     | PhysicalValueType      | Cable capacity.                               |
 
+{{ requirement() }} The `InsulationFault` error code parameters shall be used as defined in {{ table_ref('insulation_fault_parameters') }}.
+
 ### PowerModuleFault
 
-Table: Semantics and type definition for PowerModuleFault parameters
+{{ table_caption('power_module_fault_parameters', 'Semantics and type definition for PowerModuleFault error code parameters') }}
 
 | Parameter Name | Parameter Type | Semantics                    |
 | :------------- | :------------- | :--------------------------- |
 | `error`        | string         | Power module-specific error. |
 | `id`           | string         | Power module identifier.     |
 
+{{ requirement() }} The `PowerModuleFault` error code parameters shall be used as defined in {{ table_ref('power_module_fault_parameters') }}.
+
 ### ContactorFault
 
-Table: Semantics and type definition for ContactorFault parameters
+{{ table_caption('contactor_fault_parameters', 'Semantics and type definition for ContactorFault error code parameters') }}
 
 | Parameter Name  | Parameter Type     | Semantics                 |
 | :-------------- | :----------------- | :------------------------ |
@@ -641,52 +739,64 @@ Table: Semantics and type definition for ContactorFault parameters
 | `expectedValue` | ContactorStateType | Expected contactor state. |
 | `type`          | ContactorType      | Type of the contactor.    |
 
+{{ requirement() }} The `ContactorFault` error code parameters shall be used as defined in {{ table_ref('contactor_fault_parameters') }}.
+
 ### HighTemperature
 
-Table: Semantics and type definition for HighTemperature parameters
+{{ table_caption('high_temp_parameters', 'Semantics and type definition for HighTemperature error code parameters') }}
 
 | Parameter Name | Parameter Type          | Semantics                                 |
 | :------------- | :---------------------- | :---------------------------------------- |
 | `actualValue`  | PhysicalValueType       | Actual temperature.                       |
 | `threshold`    | PhysicalValueType       | Warning or error threshold.               |
 | `location`     | TemperatureLocationType | Location of the temperature measurements. |
+
+{{ requirement() }} The `HighTemperature` error code parameters shall be used as defined in {{ table_ref('high_temp_parameters') }}.
 
 ### LowTemperature
 
-Table: Semantics and type definition for LowTemperature parameters
+{{ table_caption('low_temp_parameters', 'Semantics and type definition for LowTemperature error code parameters') }}
 
 | Parameter Name | Parameter Type          | Semantics                                 |
 | :------------- | :---------------------- | :---------------------------------------- |
 | `actualValue`  | PhysicalValueType       | Actual temperature.                       |
 | `threshold`    | PhysicalValueType       | Warning or error threshold.               |
 | `location`     | TemperatureLocationType | Location of the temperature measurements. |
+
+{{ requirement() }} The `LowTemperature` error code parameters shall be used as defined in {{ table_ref('low_temp_parameters') }}.
 
 ### PowerLoss
 
 *This error code has no specific parameters.*
 
+{{ requirement() }} The `PowerLoss` error code must be reported if the EVSE is unable to supply any power.
+
 ### ConnectorLockFailure
 
-Table: Sementics and type definition for ConnectorLockFailure error code parameters
+{{ table_caption('conn_lock_fail_parameters', 'Semantics and type definition for ConnectorLockFailure error code parameters') }}
 
 | Parameter Name  | Parameter Type         | Semantics            |
 | :-------------- | :--------------------- | :------------------- |
 | `actualValue`   | ConnectorLockStateType | Actual lock state.   |
 | `expectedValue` | ConnectorLockStateType | Expected lock state. |
 
+{{ requirement() }} The `ConnectorLockFailure` error code parameters shall be used as defined in {{ table_ref('conn_lock_fail_parameters') }}.
+
 ### UnderVoltage
 
-Table: Semantics and type definition for UnderVoltage parameters
+{{ table_caption('under_voltage_parameters', 'Semantics and type definition for UnderVoltage error code parameters') }}
 
 | Parameter Name | Parameter Type          | Semantics                            |
 | :------------- | :---------------------- | :----------------------------------- |
 | `actualValue`  | PhysicalValueType       | Actual voltage.                      |
 | `minValue`     | PhysicalValueType       | Lower bound of allowed range.        |
 | `location`     | MeasurementLocationType | Location of the voltage measurement. |
+
+{{ requirement() }} The `UnderVoltage` error code parameters shall be used as defined in {{ table_ref('under_voltage_parameters') }}.
 
 ### OverVoltage
 
-Table: Semantics and type definition for OverVoltage parameters
+{{ table_caption('over_voltage_parameters', 'Semantics and type definition for OverVoltage error code parameters') }}
 
 | Parameter Name | Parameter Type          | Semantics                            |
 | :------------- | :---------------------- | :----------------------------------- |
@@ -694,9 +804,11 @@ Table: Semantics and type definition for OverVoltage parameters
 | `maxValue`     | PhysicalValueType       | Upper bound of allowed range.        |
 | `location`     | MeasurementLocationType | Location of the voltage measurement. |
 
+{{ requirement() }} The `OverVoltage` error code parameters shall be used as defined in {{ table_ref('over_voltage_parameters') }}.
+
 ### UnderCurrent
 
-Table: Semantics and type definition for UnderCurrent parameters
+{{ table_caption('under_current_parameters', 'Semantics and type definition for UnderCurrent error code parameters') }}
 
 | Parameter Name | Parameter Type          | Semantics                            |
 | :------------- | :---------------------- | :----------------------------------- |
@@ -704,15 +816,19 @@ Table: Semantics and type definition for UnderCurrent parameters
 | `minValue`     | PhysicalValueType       | Lower bound of allowed range.        |
 | `location`     | MeasurementLocationType | Location of the current measurement. |
 
+{{ requirement() }} The `UnderCurrent` error code parameters shall be used as defined in {{ table_ref('under_current_parameters') }}.
+
 ### OverCurrent
 
-Table: Semantics and type definition for OverCurrent parameters
+{{ table_caption('over_current_parameters', 'Semantics and type definition for OverCurrent error code parameters') }}
 
 | Parameter Name | Parameter Type          | Semantics                            |
 | :------------- | :---------------------- | :----------------------------------- |
 | `actualValue`  | PhysicalValueType       | Actual current.                      |
 | `maxValue`     | PhysicalValueType       | Upper bound of allowed range.        |
 | `location`     | MeasurementLocationType | Location of the current measurement. |
+
+{{ requirement() }} The `OverCurrent` error code parameters shall be used as defined in {{ table_ref('over_current_parameters') }}.
 
 ### EVShiftPosition
 
