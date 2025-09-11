@@ -19,3 +19,6 @@ plugins:
 
 nav:
   - index.md
+
+extra_css:
+  - stylesheets/extra.css
