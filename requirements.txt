@@ -1,4 +1,0 @@
-mkdocs-material
-mkdocs-add-number-plugin
-mkdocs-caption
-mkdocs-macros-plugin
