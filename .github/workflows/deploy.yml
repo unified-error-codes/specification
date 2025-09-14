@@ -1,47 +1,21 @@
-name: Build & Deploy Specification to GitHub Pages
-
+name: Deploy sppecification
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-      pull-requests: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.x
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Build with MkDocs
-        run: mkdocs build
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
+      - run: pip install -r requirements.txt
+      - run: mkdocs build
+      - uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: ./site
-      - name: Post Preview and Artifact Links in PR
-        if: github.event_name == 'pull_request'
-        uses: mshick/add-pr-comment@v2
-        with:
-          message: |
-            ### 📄 Documentation Preview
-            To view the generated HTML documentation, download `github-pages` ZIP artifact directly from the [workflow run summary](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts).
-            Extract the ZIP file and open `index.html` in your web browser to see the documentation preview.
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
-        uses: actions/deploy-pages@v4
+          folder: site
+          branch: gh-pages
+          clean-exclude: pr-preview
+          force: false
