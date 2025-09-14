@@ -1,4 +1,4 @@
-name: Deploy PR specification previews
+name: Deploy specification preview
 concurrency: preview-${{ github.ref }}
 on:
   pull_request:
