@@ -1,0 +1,3756 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://unified-error-codes.github.io/specification/">
+      
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
+    
+    
+      
+        <title>Unified Error Codes Specification</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#error-codes-data-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Unified Error Codes Specification" class="md-header__button md-logo" aria-label="Unified Error Codes Specification" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Unified Error Codes Specification
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Error Codes Data Model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/unified-error-codes/specification" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Unified Error Codes Specification" class="md-nav__button md-logo" aria-label="Unified Error Codes Specification" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Unified Error Codes Specification
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/unified-error-codes/specification" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Error Codes Data Model
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Codes Data Model
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Abstract
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Scope
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-normative-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Normative References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-terms-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Terms, Definitions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-abbreviations" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Abbreviations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-conformance-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Conformance Language
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-architectural-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Architectural Principles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-error-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Error Codes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Error Codes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-low-level-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Low Level Communication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-slac-and-plc" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 SLAC and PLC
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-v2g-transport-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 V2G Transport Protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-sdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 SDP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-tcp-and-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5 TCP and TLS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-exi" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.6 EXI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#87-v2g-application-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.7 V2G Application Layer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#88-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.8 Certificate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#89-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.9 Authorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#810-general-error-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.10 General Error Codes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-proximitypilotfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1 ProximityPilotFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-proximitypilotnotdetected" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2 ProximityPilotNotDetected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-proximitypilotvaluechanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3 ProximityPilotValueChanged
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-controlpilotfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.4 ControlPilotFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-controlpilotstateunexpected" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.5 ControlPilotStateUnexpected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#96-controlpilotstatenotsupported" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.6 ControlPilotStateNotSupported
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#97-plcnotfound" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.7 PLCNotFound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#98-plcfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.8 PLCFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#99-plclinkdetectiontimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.9 PLCLinkDetectionTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#910-plclinkleavetimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.10 PLCLinkLeaveTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#911-plclinklost" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.11 PLCLinkLost
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#912-slactimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.12 SLACTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#913-slacsequenceerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.13 SLACSequenceError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#914-slacparameterinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.14 SLACParameterInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#915-slacparameternotallowed" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.15 SLACParameterNotAllowed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#916-slacparameternotsupported" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.16 SLACParameterNotSupported
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#917-slacparameteroutofrange" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.17 SLACParameterOutOfRange
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#918-slacattenuationhigh" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.18 SLACAttenuationHigh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#919-v2gtpprotocolversioninvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.19 V2GTPProtocolVersionInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#920-v2gtpinverseprotocolversioninvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.20 V2GTPInverseProtocolVersionInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#921-v2gtppayloadlengthinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.21 V2GTPPayloadLengthInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-v2gtppayloadtypeinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.22 V2GTPPayloadTypeInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923-sdppayloadlengthinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.23 SDPPayloadLengthInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924-sdpparameterinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.24 SDPParameterInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#925-sdpdiscoverytimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.25 SDPDiscoveryTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#926-tlshandshakeerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.26 TLSHandshakeError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#927-tcperror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.27 TCPError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#928-tcpunexpectedclose" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.28 TCPUnexpectedClose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#929-tcpconnectiontimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.29 TCPConnectionTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#930-exiencodingerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.30 EXIEncodingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#931-exidecodingerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.31 EXIDecodingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#932-v2gparameternotsupported" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.32 V2GParameterNotSupported
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#933-v2gparameterinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.33 V2GParameterInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#934-v2gparameternotallowed" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.34 V2GParameterNotAllowed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#935-v2gparameteroutofrange" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.35 V2GParameterOutOfRange
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#936-v2gsequenceerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.36 V2GSequenceError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#937-v2gtimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.37 V2GTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#938-v2gperformancetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.38 V2GPerformanceTime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#939-v2gnochargeserviceselected" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.39 V2GNoChargeServiceSelected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#940-v2gserviceselectioninvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.40 V2GServiceSelectionInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#941-v2gpaymentselectioninvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.41 V2GPaymentSelectionInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#942-v2gserviceidinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.42 V2GServiceIdInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#943-v2gcontractcertificateexpired" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.43 V2GContractCertificateExpired
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#944-v2gcontractcertificatenotyetvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.44 V2GContractCertificateNotYetValid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#945-certificateinstallationservertimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.45 CertificateInstallationServerTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#946-certificateupdateservertimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.46 CertificateUpdateServerTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#947-certificateprivateandpublicmismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.47 CertificatePrivateAndPublicMismatch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#948-authorizationtimeoutserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.48 AuthorizationTimeoutServer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#949-authorizationtimeoutuser" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.49 AuthorizationTimeoutUser
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#950-authorizationrejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.50 AuthorizationRejected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#951-insulationfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.51 InsulationFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#952-powermodulefault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.52 PowerModuleFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#953-contactorfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.53 ContactorFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#954-hightemperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.54 HighTemperature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#955-lowtemperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.55 LowTemperature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#956-powerloss" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.56 PowerLoss
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#957-connectorlockfailure" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.57 ConnectorLockFailure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.57 ConnectorLockFailure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#9571-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.57.1 General
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9572-evse" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.57.2 EVSE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9573-cpms" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.57.3 CPMS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#958-undervoltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.58 UnderVoltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#959-overvoltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.59 OverVoltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#960-undercurrent" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.60 UnderCurrent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#961-overcurrent" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.61 OverCurrent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#962-evshiftposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.62 EVShiftPosition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#963-evressmalfunction" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.63 EVRESSMalfunction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Abstract
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Scope
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-normative-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Normative References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-terms-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Terms, Definitions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-abbreviations" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Abbreviations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-conformance-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Conformance Language
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-architectural-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Architectural Principles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-error-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Error Codes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Error Codes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-low-level-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Low Level Communication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-slac-and-plc" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 SLAC and PLC
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-v2g-transport-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 V2G Transport Protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-sdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 SDP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-tcp-and-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5 TCP and TLS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-exi" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.6 EXI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#87-v2g-application-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.7 V2G Application Layer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#88-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.8 Certificate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#89-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.9 Authorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#810-general-error-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.10 General Error Codes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-proximitypilotfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1 ProximityPilotFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-proximitypilotnotdetected" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2 ProximityPilotNotDetected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-proximitypilotvaluechanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3 ProximityPilotValueChanged
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-controlpilotfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.4 ControlPilotFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-controlpilotstateunexpected" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.5 ControlPilotStateUnexpected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#96-controlpilotstatenotsupported" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.6 ControlPilotStateNotSupported
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#97-plcnotfound" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.7 PLCNotFound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#98-plcfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.8 PLCFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#99-plclinkdetectiontimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.9 PLCLinkDetectionTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#910-plclinkleavetimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.10 PLCLinkLeaveTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#911-plclinklost" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.11 PLCLinkLost
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#912-slactimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.12 SLACTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#913-slacsequenceerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.13 SLACSequenceError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#914-slacparameterinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.14 SLACParameterInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#915-slacparameternotallowed" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.15 SLACParameterNotAllowed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#916-slacparameternotsupported" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.16 SLACParameterNotSupported
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#917-slacparameteroutofrange" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.17 SLACParameterOutOfRange
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#918-slacattenuationhigh" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.18 SLACAttenuationHigh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#919-v2gtpprotocolversioninvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.19 V2GTPProtocolVersionInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#920-v2gtpinverseprotocolversioninvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.20 V2GTPInverseProtocolVersionInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#921-v2gtppayloadlengthinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.21 V2GTPPayloadLengthInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-v2gtppayloadtypeinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.22 V2GTPPayloadTypeInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923-sdppayloadlengthinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.23 SDPPayloadLengthInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924-sdpparameterinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.24 SDPParameterInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#925-sdpdiscoverytimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.25 SDPDiscoveryTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#926-tlshandshakeerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.26 TLSHandshakeError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#927-tcperror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.27 TCPError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#928-tcpunexpectedclose" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.28 TCPUnexpectedClose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#929-tcpconnectiontimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.29 TCPConnectionTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#930-exiencodingerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.30 EXIEncodingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#931-exidecodingerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.31 EXIDecodingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#932-v2gparameternotsupported" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.32 V2GParameterNotSupported
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#933-v2gparameterinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.33 V2GParameterInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#934-v2gparameternotallowed" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.34 V2GParameterNotAllowed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#935-v2gparameteroutofrange" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.35 V2GParameterOutOfRange
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#936-v2gsequenceerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.36 V2GSequenceError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#937-v2gtimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.37 V2GTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#938-v2gperformancetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.38 V2GPerformanceTime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#939-v2gnochargeserviceselected" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.39 V2GNoChargeServiceSelected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#940-v2gserviceselectioninvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.40 V2GServiceSelectionInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#941-v2gpaymentselectioninvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.41 V2GPaymentSelectionInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#942-v2gserviceidinvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.42 V2GServiceIdInvalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#943-v2gcontractcertificateexpired" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.43 V2GContractCertificateExpired
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#944-v2gcontractcertificatenotyetvalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.44 V2GContractCertificateNotYetValid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#945-certificateinstallationservertimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.45 CertificateInstallationServerTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#946-certificateupdateservertimeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.46 CertificateUpdateServerTimeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#947-certificateprivateandpublicmismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.47 CertificatePrivateAndPublicMismatch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#948-authorizationtimeoutserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.48 AuthorizationTimeoutServer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#949-authorizationtimeoutuser" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.49 AuthorizationTimeoutUser
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#950-authorizationrejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.50 AuthorizationRejected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#951-insulationfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.51 InsulationFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#952-powermodulefault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.52 PowerModuleFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#953-contactorfault" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.53 ContactorFault
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#954-hightemperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.54 HighTemperature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#955-lowtemperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.55 LowTemperature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#956-powerloss" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.56 PowerLoss
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#957-connectorlockfailure" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.57 ConnectorLockFailure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.57 ConnectorLockFailure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#9571-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.57.1 General
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9572-evse" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.57.2 EVSE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9573-cpms" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.57.3 CPMS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#958-undervoltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.58 UnderVoltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#959-overvoltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.59 OverVoltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#960-undercurrent" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.60 UnderCurrent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#961-overcurrent" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.61 OverCurrent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#962-evshiftposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.62 EVShiftPosition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#963-evressmalfunction" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.63 EVRESSMalfunction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/unified-error-codes/specification/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="error-codes-data-model">Error Codes Data Model</h1>
+<h2 id="1-abstract">1. Abstract</h2>
+<p>This document specifies the data model, semantics, and behavioral requirements for Unified Error Codes (UEC) used in the e-mobility ecosystem. It provides a common language for reporting diagnostic events and conditions between ecosystem components, primarily the Electric Vehicle Supply Equipment (EVSE) and the Charge Point Management System (CPMS).</p>
+<h2 id="2-scope">2. Scope</h2>
+<p>The scope of this specification is the definition of a unified set of error codes, their associated data models, and the required behavior of systems that implement them. This includes the conditions that trigger an error event and the conditions under which an error state is cleared.</p>
+<h2 id="3-normative-references">3. Normative References</h2>
+<p>The following referenced documents are indispensable for the application of this document.</p>
+<ul>
+<li><strong>[DIN99003]</strong> DIN DKE SPEC 99003: A comprehensive list of error codes for the EV charging ecosystem.</li>
+</ul>
+<h2 id="4-terms-definitions">4. Terms, Definitions</h2>
+<h2 id="5-abbreviations">5. Abbreviations</h2>
+<ul>
+<li><strong>CPMS:</strong> Charge Point Management System</li>
+<li><strong>EV:</strong> Electric Vehicle</li>
+<li><strong>EVSE:</strong> Electric Vehicle Supply Equipment</li>
+<li><strong>UEC:</strong> Unified Error Code</li>
+</ul>
+<h2 id="6-conformance-language">6. Conformance Language</h2>
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].</p>
+<h2 id="7-architectural-principles">7. Architectural Principles</h2>
+<p>The UEC specification is built upon the following core principles:</p>
+<ul>
+<li><strong>Transport Agnostic:</strong> The UEC data model is independent of any specific communication protocol like OCPP.</li>
+<li><strong>Extensibility:</strong> The specification is designed to be extended with new codes and parameters in a structured and backward-compatible manner.</li>
+<li><strong>Machine-Readability:</strong> The specification prioritizes structured data over free text to enable reliable, automated processing.</li>
+</ul>
+<h2 id="8-error-codes">8. Error Codes</h2>
+<h3 id="81-low-level-communication">8.1 Low Level Communication</h3>
+<table id="_table-1">
+<caption style="caption-side:bottom">Table 1: Low Level Communication Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>ProximityPilotFault</code></td>
+<td style="text-align: left;">Proximity value (voltage/resistance) out of range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ProximityPilotNotDetected</code></td>
+<td style="text-align: left;">The proximity pilot is not detected, but the EV (CP detected) is connected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ProximityPilotValueChanged</code></td>
+<td style="text-align: left;">The proximity pilot value has been changed while the plug is connected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ControlPilotFault</code></td>
+<td style="text-align: left;">The control pilot parameters are out of range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ControlPilotStateUnexpected</code></td>
+<td style="text-align: left;">Unexpected Control Pilot state detected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ControlPilotStateNotSupported</code></td>
+<td style="text-align: left;">Control Pilot state is not supported (e.g. state D (ventilation) is not supported by EVSE).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82-slac-and-plc">8.2 SLAC and PLC</h3>
+<table id="_table-2">
+<caption style="caption-side:bottom">Table 2: SLAC and PLC Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>PLCNotFound</code></td>
+<td style="text-align: left;">PLC modem not detected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PLCFault</code></td>
+<td style="text-align: left;">PLC modem fault.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PLCLinkDetectionTimeout</code></td>
+<td style="text-align: left;">Timeout to detect PLC link.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PLCLinkLeaveTimeout</code></td>
+<td style="text-align: left;">Timeout to leave the logical network.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PLCLinkLost</code></td>
+<td style="text-align: left;">The PLC link has been lost.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SLACTimeout</code></td>
+<td style="text-align: left;">Timeout occurred during SLAC.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SLACSequenceError</code></td>
+<td style="text-align: left;">Unexpected SLAC message (not according to the sequence).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SLACParameterInvalid</code></td>
+<td style="text-align: left;">The message field value has an incorrect value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SLACParameterNotAllowed</code></td>
+<td style="text-align: left;">The message field value has an incorrect value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SLACParameterNotSupported</code></td>
+<td style="text-align: left;">The message field value has an incorrect value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SLACParameterOutOfRange</code></td>
+<td style="text-align: left;">The value of the SLAC message field is out of range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SLACAttenuationHigh</code></td>
+<td style="text-align: left;">SLAC attenuation is too high.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="83-v2g-transport-protocol">8.3 V2G Transport Protocol</h3>
+<table id="_table-3">
+<caption style="caption-side:bottom">Table 3: V2G Transport Protocol Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>V2GTPProtocolVersionInvalid</code></td>
+<td style="text-align: left;">V2GTP header: invalid protocol version.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GTPInverseProtocolVersionInvalid</code></td>
+<td style="text-align: left;">V2GTP header: invalid inverse protocol version.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GTPPayloadLengthInvalid</code></td>
+<td style="text-align: left;">V2GTP header: invalid payload length.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GTPPayloadTypeInvalid</code></td>
+<td style="text-align: left;">V2GTP header: invalid payload type.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="84-sdp">8.4 SDP</h3>
+<table id="_table-4">
+<caption style="caption-side:bottom">Table 4: SDP Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>SDPPayloadLengthInvalid</code></td>
+<td style="text-align: left;">Invalid request/response payload length.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SDPParameterInvalid</code></td>
+<td style="text-align: left;">Invalid SDP field value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SDPDiscoveryTimeout</code></td>
+<td style="text-align: left;">EVCC was not able to discover SECC.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="85-tcp-and-tls">8.5 TCP and TLS</h3>
+<table id="_table-5">
+<caption style="caption-side:bottom">Table 5: TCP and TLS Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>TLSHandshakeError</code></td>
+<td style="text-align: left;">TLS handshake failure or warning.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>TCPError</code></td>
+<td style="text-align: left;">TCP/TLS socket send, receive, listen, etc. error.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>TCPUnexpectedClose</code></td>
+<td style="text-align: left;">Unexpected close of TCP/TLS connection by the EV.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>TCPConnectionTimeout</code></td>
+<td style="text-align: left;">Timeout for establishing a connection from the EV.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="86-exi">8.6 EXI</h3>
+<table id="_table-6">
+<caption style="caption-side:bottom">Table 6: EXI Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>EXIEncodingError</code></td>
+<td style="text-align: left;">EXI encoding error.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>EXIDecodingError</code></td>
+<td style="text-align: left;">EXI decoding error.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="87-v2g-application-layer">8.7 V2G Application Layer</h3>
+<table id="_table-7">
+<caption style="caption-side:bottom">Table 7: V2G Application Layer Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>V2GParameterNotSupported</code></td>
+<td style="text-align: left;">None of the parameter options received by SECC or EVCC are supported.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GParameterInvalid</code></td>
+<td style="text-align: left;">Wrong value of V2G message field.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GParameterNotAllowed</code></td>
+<td style="text-align: left;">Not allowed field present in the message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GParameterOutOfRange</code></td>
+<td style="text-align: left;">The value of the V2G message field is out of range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GSequenceError</code></td>
+<td style="text-align: left;">Wrong sequence of V2G messages.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GTimeout</code></td>
+<td style="text-align: left;">V2G timeout exceeded.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GPerformanceTime</code></td>
+<td style="text-align: left;">V2G performance exceeded (not reached).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GNoChargeServiceSelected</code></td>
+<td style="text-align: left;">EVCC did not select charge service - FAILED_NoChargeServiceSelected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GServiceSelectionInvalid</code></td>
+<td style="text-align: left;">EVCC selected a service that was not offered by SECC - FAILED_ServiceSelectionInvalid.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GPaymentSelectionInvalid</code></td>
+<td style="text-align: left;">EVCC selected Payment Option which is not supported (offered) by SECC - FAILED_PaymentSelectionInvalid.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GServiceIdInvalid</code></td>
+<td style="text-align: left;">EVCC requested details of the service that was not offered.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GContractCertificateExpired</code></td>
+<td style="text-align: left;">The contract certificate expired.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>V2GContractCertificateNotYetValid</code></td>
+<td style="text-align: left;">The contract certificate is not yet valid.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="88-certificate">8.8 Certificate</h3>
+<table id="_table-8">
+<caption style="caption-side:bottom">Table 8: Certificate Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>CertificateInstallationServerTimeout</code></td>
+<td style="text-align: left;">Timeout on server response to the CertificateInstallationReq.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>CertificateUpdateServerTimeout</code></td>
+<td style="text-align: left;">Timeout on server response to the CertificateUpdateReq.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>CertificatePrivateAndPublicMismatch</code></td>
+<td style="text-align: left;">The certificate public key and private key are not a pair.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="89-authorization">8.9 Authorization</h3>
+<table id="_table-9">
+<caption style="caption-side:bottom">Table 9: Authorization Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>AuthorizationTimeoutServer</code></td>
+<td style="text-align: left;">No response from the backend system on authorization request (e.g. OCPP server).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>AuthorizationTimeoutUser</code></td>
+<td style="text-align: left;">The user did not perform authorization action (tap RFID card, use a mobile app (remote start)) on time.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>AuthorizationRejected</code></td>
+<td style="text-align: left;">Authorization rejected locally or by the remote server.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="810-general-error-codes">8.10 General Error Codes</h3>
+<table id="_table-10">
+<caption style="caption-side:bottom">Table 10: General Error Codes</caption><thead>
+<tr>
+<th style="text-align: left;">Error code</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>InsulationFault</code></td>
+<td style="text-align: left;">insulation resistance low or below the allowed limit.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PowerModuleFault</code></td>
+<td style="text-align: left;">Power module fault.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ContactorFault</code></td>
+<td style="text-align: left;">Contactor fault.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>HighTemperature</code></td>
+<td style="text-align: left;">The temperature is above a maximum value, or the temperature is above an acceptable level.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>LowTemperature</code></td>
+<td style="text-align: left;">The temperature is below a minimum value, or the temperature is below an acceptable level.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PowerLoss</code></td>
+<td style="text-align: left;">The EVSE is unable to supply any power.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ConnectorLockFailure</code></td>
+<td style="text-align: left;">Failure to lock or unlock connector.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>UnderVoltage</code></td>
+<td style="text-align: left;">Voltage has dropped below an acceptable level.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>OverVoltage</code></td>
+<td style="text-align: left;">Voltage has risen above an acceptable level.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>UnderCurrent</code></td>
+<td style="text-align: left;">Current has dropped below an acceptable level.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>OverCurrent</code></td>
+<td style="text-align: left;">Current has risen above an acceptable level.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>EVShiftPosition</code></td>
+<td style="text-align: left;">Vehicle shift position, vehicle is not in park.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>EVRESSMalfunction</code></td>
+<td style="text-align: left;">Vehicle RESS malfunction. Any non-recoverable fault or error.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-requirements">9. Requirements</h2>
+<h3 id="91-proximitypilotfault">9.1 ProximityPilotFault</h3>
+<p><em>This error code has no specific parameters.</em></p>
+<h3 id="92-proximitypilotnotdetected">9.2 ProximityPilotNotDetected</h3>
+<table id="_table-11">
+<caption style="caption-side:bottom">Table 11: Semantics and type definition for ProximityPilotNotDetected error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured voltage/resistance.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-001]</strong> The <code>ProximityPilotNotDetected</code> error code parameters shall be used as defined in Table 11.</p>
+<h3 id="93-proximitypilotvaluechanged">9.3 ProximityPilotValueChanged</h3>
+<table id="_table-12">
+<caption style="caption-side:bottom">Table 12: Semantics and type definition for ProximityPilotValueChanged error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured voltage/resistance.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Expected proximity pilot value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-002]</strong> The <code>ProximityPilotValueChanged</code> error code parameters shall be used as defined in Table 12.</p>
+<h3 id="94-controlpilotfault">9.4 ControlPilotFault</h3>
+<table id="_table-13">
+<caption style="caption-side:bottom">Table 13: Semantics and type definition for ControlPilotFault error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>voltagePositive</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured positive voltage.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>voltageNegative</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured negative voltage.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>frequency</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured frequency.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dutyCycle</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured duty cycle.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-003]</strong> The <code>ControlPilotFault</code> error code parameters shall be used as defined in Table 13.</p>
+<h3 id="95-controlpilotstateunexpected">9.5 ControlPilotStateUnexpected</h3>
+<table id="_table-14">
+<caption style="caption-side:bottom">Table 14: Semantics and type definition for ControlPilotStateUnexpected error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">ControlPilotStateType</td>
+<td style="text-align: left;">Detected CP state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">ControlPilotStateType</td>
+<td style="text-align: left;">Expected CP state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>voltagePositive</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured positive voltage.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>voltageNegative</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured negative voltage.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>frequency</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured frequency.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dutyCycle</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Measured duty cycle.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-004]</strong> The <code>ControlPilotStateUnexpected</code> error code parameters shall be used as defined in Table 14.</p>
+<h3 id="96-controlpilotstatenotsupported">9.6 ControlPilotStateNotSupported</h3>
+<table id="_table-15">
+<caption style="caption-side:bottom">Table 15: Semantics and type definition for ControlPilotStateNotSupported error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">ControlPilotStateType</td>
+<td style="text-align: left;">Actual controller pilot state - not supported state.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-005]</strong> The <code>ControlPilotStateNotSupported</code> error code parameters shall be used as defined in Table 15.</p>
+<h3 id="97-plcnotfound">9.7 PLCNotFound</h3>
+<p><em>This error code has no specific parameters.</em></p>
+<h3 id="98-plcfault">9.8 PLCFault</h3>
+<table id="_table-16">
+<caption style="caption-side:bottom">Table 16: Semantics and type definition for PLCFault error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>error</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">PLC modem-specific error code.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-006]</strong> The <code>PLCFault</code> error code parameters shall be used as defined in Table 16.</p>
+<h3 id="99-plclinkdetectiontimeout">9.9 PLCLinkDetectionTimeout</h3>
+<table id="_table-17">
+<caption style="caption-side:bottom">Table 17: Semantics and type definition for PLCLinkDetectionTimeout error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>timeout</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual timeout value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-007]</strong> The <code>PLCLinkDetectionTimeout</code> error code parameters shall be used as defined in Table 17.</p>
+<h3 id="910-plclinkleavetimeout">9.10 PLCLinkLeaveTimeout</h3>
+<table id="_table-18">
+<caption style="caption-side:bottom">Table 18: Semantics and type definition for PLCLinkLeaveTimeout error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>timeout</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual timeout value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-008]</strong> The <code>PLCLinkLeaveTimeout</code> error code parameters shall be used as defined in Table 18.</p>
+<h3 id="911-plclinklost">9.11 PLCLinkLost</h3>
+<p><em>This error code has no specific parameters.</em></p>
+<h3 id="912-slactimeout">9.12 SLACTimeout</h3>
+<table id="_table-19">
+<caption style="caption-side:bottom">Table 19: Semantics and type definition for SLACTimeout error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">SLACMessageType</td>
+<td style="text-align: left;">SLAC state when the timeout occurred.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>timeout</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Timeout in milliseconds.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-009]</strong> The <code>SLACTimeout</code> error code parameters shall be used as defined in Table 19.</p>
+<h3 id="913-slacsequenceerror">9.13 SLACSequenceError</h3>
+<table id="_table-20">
+<caption style="caption-side:bottom">Table 20: Semantics and type definition for SLACSequenceError error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>receivedMessage</code></td>
+<td style="text-align: left;">SLACMessageType</td>
+<td style="text-align: left;">Received message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedMessage</code></td>
+<td style="text-align: left;">SLACMessageType</td>
+<td style="text-align: left;">Expected message.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-010]</strong> The <code>SLACSequenceError</code> error code parameters shall be used as defined in Table 20.</p>
+<h3 id="914-slacparameterinvalid">9.14 SLACParameterInvalid</h3>
+<table id="_table-21">
+<caption style="caption-side:bottom">Table 21: Semantics and type definition for SLACParameterInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">SLACMessageType</td>
+<td style="text-align: left;">Affected message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the field in the message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Actual field value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Expected field value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-011]</strong> The <code>SLACParameterInvalid</code> error code parameters shall be used as defined in Table 21.</p>
+<h3 id="915-slacparameternotallowed">9.15 SLACParameterNotAllowed</h3>
+<table id="_table-22">
+<caption style="caption-side:bottom">Table 22: Semantics and type definition for SLACParameterNotAllowed error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">SLACMessageType</td>
+<td style="text-align: left;">Affected message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the field in the message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Actual field value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Expected field value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-012]</strong> The <code>SLACParameterNotAllowed</code> error code parameters shall be used as defined in Table 22.</p>
+<h3 id="916-slacparameternotsupported">9.16 SLACParameterNotSupported</h3>
+<table id="_table-23">
+<caption style="caption-side:bottom">Table 23: Semantics and type definition for SLACParameterNotSupported error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">SLACMessageType</td>
+<td style="text-align: left;">Affected message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the field in the message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Actual field value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Expected field value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-013]</strong> The <code>SLACParameterNotSupported</code> error code parameters shall be used as defined in Table 23.</p>
+<h3 id="917-slacparameteroutofrange">9.17 SLACParameterOutOfRange</h3>
+<table id="_table-24">
+<caption style="caption-side:bottom">Table 24: Semantics and type definition for SLACParameterOutOfRange error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">SLACMessageType</td>
+<td style="text-align: left;">Affected V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the parameter in the V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Actual field value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>minValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Lower bound of allowed range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>maxValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Upper bound of allowed range.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-014]</strong> The <code>SLACParameterOutOfRange</code> error code parameters shall be used as defined in Table 24.</p>
+<h3 id="918-slacattenuationhigh">9.18 SLACAttenuationHigh</h3>
+<table id="_table-25">
+<caption style="caption-side:bottom">Table 25: Semantics and type definition for SLACAttenuationHigh error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual attenuation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>maxValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Maximal allowed attenuation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-015]</strong> The <code>SLACAttenuationHigh</code> error code parameters shall be used as defined in Table 25.</p>
+<h3 id="919-v2gtpprotocolversioninvalid">9.19 V2GTPProtocolVersionInvalid</h3>
+<table id="_table-26">
+<caption style="caption-side:bottom">Table 26: Semantics and type definition for V2GTPProtocolVersionInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Invalid protocol version.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-016]</strong> The <code>V2GTPProtocolVersionInvalid</code> error code parameters shall be used as defined in Table 26.</p>
+<h3 id="920-v2gtpinverseprotocolversioninvalid">9.20 V2GTPInverseProtocolVersionInvalid</h3>
+<table id="_table-27">
+<caption style="caption-side:bottom">Table 27: Semantics and type definition for V2GTPInverseProtocolVersionInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Invalid inverse protocol version.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-017]</strong> The <code>V2GTPInverseProtocolVersionInvalid</code> error code parameters shall be used as defined in Table 27.</p>
+<h3 id="921-v2gtppayloadlengthinvalid">9.21 V2GTPPayloadLengthInvalid</h3>
+<table id="_table-28">
+<caption style="caption-side:bottom">Table 28: Semantics and type definition for V2GTPPayloadLengthInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Incorrect payload length.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-018]</strong> The <code>V2GTPPayloadLengthInvalid</code> error code parameters shall be used as defined in Table 28.</p>
+<h3 id="922-v2gtppayloadtypeinvalid">9.22 V2GTPPayloadTypeInvalid</h3>
+<table id="_table-29">
+<caption style="caption-side:bottom">Table 29: Semantics and type definition for V2GTPPayloadTypeInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Actual payload type value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Expected payload type value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-019]</strong> The <code>V2GTPPayloadTypeInvalid</code> error code parameters shall be used as defined in Table 29.</p>
+<h3 id="923-sdppayloadlengthinvalid">9.23 SDPPayloadLengthInvalid</h3>
+<table id="_table-30">
+<caption style="caption-side:bottom">Table 30: Semantics and type definition for SDPPayloadLengthInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Actual payload length.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-020]</strong> The <code>SDPPayloadLengthInvalid</code> error code parameters shall be used as defined in Table 30.</p>
+<h3 id="924-sdpparameterinvalid">9.24 SDPParameterInvalid</h3>
+<table id="_table-31">
+<caption style="caption-side:bottom">Table 31: Semantics and type definition for SDPParameterInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the invalid SDP parameter. E.g. "SECC IP Address", "SECC port", "Security", "Transport Protocol".</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Actual field value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Expected field value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-021]</strong> The <code>SDPParameterInvalid</code> error code parameters shall be used as defined in Table 31.</p>
+<h3 id="925-sdpdiscoverytimeout">9.25 SDPDiscoveryTimeout</h3>
+<table id="_table-32">
+<caption style="caption-side:bottom">Table 32: Semantics and type definition for SDPDiscoveryTimeout error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>retries</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Number of performed SDP Req retries.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-022]</strong> The <code>SDPDiscoveryTimeout</code> error code parameters shall be used as defined in Table 32.</p>
+<h3 id="926-tlshandshakeerror">9.26 TLSHandshakeError</h3>
+<table id="_table-33">
+<caption style="caption-side:bottom">Table 33: Semantics and type definition for TLSHandshakeError error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>alert</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">TLS alert number described in IETF RFC 5246.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-023]</strong> The <code>TLSHandshakeError</code> error code parameters shall be used as defined in Table 33.</p>
+<h3 id="927-tcperror">9.27 TCPError</h3>
+<table id="_table-34">
+<caption style="caption-side:bottom">Table 34: Semantics and type definition for TCPError error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>error</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Socket specific error.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>v2gState</code></td>
+<td style="text-align: left;">V2GStateType</td>
+<td style="text-align: left;">Communication state when the error occurred.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-024]</strong> The <code>TCPError</code> error code parameters shall be used as defined in Table 34.</p>
+<h3 id="928-tcpunexpectedclose">9.28 TCPUnexpectedClose</h3>
+<table id="_table-35">
+<caption style="caption-side:bottom">Table 35: Semantics and type definition for TCPUnexpectedClose error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>v2gState</code></td>
+<td style="text-align: left;">V2GStateType</td>
+<td style="text-align: left;">Communication state when the error occurred.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-025]</strong> The <code>TCPUnexpectedClose</code> error code parameters shall be used as defined in Table 35.</p>
+<h3 id="929-tcpconnectiontimeout">9.29 TCPConnectionTimeout</h3>
+<table id="_table-36">
+<caption style="caption-side:bottom">Table 36: Semantics and type definition for TCPConnectionTimeout error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Timeout in seconds.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-026]</strong> The <code>TCPConnectionTimeout</code> error code parameters shall be used as defined in Table 36.</p>
+<h3 id="930-exiencodingerror">9.30 EXIEncodingError</h3>
+<table id="_table-37">
+<caption style="caption-side:bottom">Table 37: Semantics and type definition for EXIEncodingError error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>exi</code></td>
+<td style="text-align: left;">Base64</td>
+<td style="text-align: left;">EXI Message data encoded as Base64.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-027]</strong> The <code>EXIEncodingError</code> error code parameters shall be used as defined in Table 37.</p>
+<h3 id="931-exidecodingerror">9.31 EXIDecodingError</h3>
+<table id="_table-38">
+<caption style="caption-side:bottom">Table 38: Semantics and type definition for EXIDecodingError error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>exi</code></td>
+<td style="text-align: left;">Base64</td>
+<td style="text-align: left;">EXI Message data encoded as Base64.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-028]</strong> The <code>EXIDecodingError</code> error code parameters shall be used as defined in Table 38.</p>
+<h3 id="932-v2gparameternotsupported">9.32 V2GParameterNotSupported</h3>
+<table id="_table-39">
+<caption style="caption-side:bottom">Table 39: Semantics and type definition for V2GParameterNotSupported error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">Affected V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the V2G parameter.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>receivedValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">List of received parameter values.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>supportedValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">List of supported parameter values.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-029]</strong> The <code>V2GParameterNotSupported</code> error code parameters shall be used as defined in Table 39.</p>
+<h3 id="933-v2gparameterinvalid">9.33 V2GParameterInvalid</h3>
+<table id="_table-40">
+<caption style="caption-side:bottom">Table 40: Semantics and type definition for V2GParameterInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">Affected V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the parameter in the V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Actual field value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Expected field value.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-030]</strong> The <code>V2GParameterInvalid</code> error code parameters shall be used as defined in Table 40.</p>
+<h3 id="934-v2gparameternotallowed">9.34 V2GParameterNotAllowed</h3>
+<table id="_table-41">
+<caption style="caption-side:bottom">Table 41: Semantics and type definition for V2GParameterNotAllowed error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">Affected message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the parameter in the V2G message.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-031]</strong> The <code>V2GParameterNotAllowed</code> error code parameters shall be used as defined in Table 41.</p>
+<h3 id="935-v2gparameteroutofrange">9.35 V2GParameterOutOfRange</h3>
+<table id="_table-42">
+<caption style="caption-side:bottom">Table 42: Semantics and type definition for V2GParameterOutOfRange error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">Affected V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parameter</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Name of the parameter in the V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Actual field value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>minValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Lower bound of allowed range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>maxValue</code></td>
+<td style="text-align: left;">UniversalValueType</td>
+<td style="text-align: left;">Upper bound of allowed range.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-032]</strong> The <code>V2GParameterOutOfRange</code> error code parameters shall be used as defined in Table 42.</p>
+<h3 id="936-v2gsequenceerror">9.36 V2GSequenceError</h3>
+<table id="_table-43">
+<caption style="caption-side:bottom">Table 43: Semantics and type definition for V2GSequenceError error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>receivedMessage</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">Received message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedMessage</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">Expected message.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-033]</strong> The <code>V2GSequenceError</code> error code parameters shall be used as defined in Table 43.</p>
+<h3 id="937-v2gtimeout">9.37 V2GTimeout</h3>
+<table id="_table-44">
+<caption style="caption-side:bottom">Table 44: Semantics and type definition for V2GTimeout error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual timeout in milliseconds.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">Affected V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>timeoutType</code></td>
+<td style="text-align: left;">V2GTimeoutType</td>
+<td style="text-align: left;">Timeout type.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-034]</strong> The <code>V2GTimeout</code> error code parameters shall be used as defined in Table 44.</p>
+<h3 id="938-v2gperformancetime">9.38 V2GPerformanceTime</h3>
+<table id="_table-45">
+<caption style="caption-side:bottom">Table 45: Semantics and type definition for V2GPerformanceTime error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual performance time in milliseconds.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">Affected V2G message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>timeoutType</code></td>
+<td style="text-align: left;">V2GTimeoutType</td>
+<td style="text-align: left;">Timeout type.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-035]</strong> The <code>V2GPerformanceTime</code> error code parameters shall be used as defined in Table 45.</p>
+<h3 id="939-v2gnochargeserviceselected">9.39 V2GNoChargeServiceSelected</h3>
+<table id="_table-46">
+<caption style="caption-side:bottom">Table 46: Semantics and type definition for V2GNoChargeServiceSelected error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>selected</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">IDs of selected services by EVCC.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-036]</strong> The <code>V2GNoChargeServiceSelected</code> error code parameters shall be used as defined in Table 46.</p>
+<h3 id="940-v2gserviceselectioninvalid">9.40 V2GServiceSelectionInvalid</h3>
+<table id="_table-47">
+<caption style="caption-side:bottom">Table 47: Semantics and type definition for V2GServiceSelectionInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>selected</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">ID of the selected service by EVCC.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>offered</code></td>
+<td style="text-align: left;">integer[]</td>
+<td style="text-align: left;">IDs of the offered services to the EVCC by SECC.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-037]</strong> The <code>V2GServiceSelectionInvalid</code> error code parameters shall be used as defined in Table 47.</p>
+<h3 id="941-v2gpaymentselectioninvalid">9.41 V2GPaymentSelectionInvalid</h3>
+<table id="_table-48">
+<caption style="caption-side:bottom">Table 48: Semantics and type definition for V2GPaymentSelectionInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>selected</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Selected service by EVCC.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>offered</code></td>
+<td style="text-align: left;">string[]</td>
+<td style="text-align: left;">Offered service(s) to the EVCC by SECC.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-038]</strong> The <code>V2GPaymentSelectionInvalid</code> error code parameters shall be used as defined in Table 48.</p>
+<h3 id="942-v2gserviceidinvalid">9.42 V2GServiceIdInvalid</h3>
+<table id="_table-49">
+<caption style="caption-side:bottom">Table 49: Semantics and type definition for V2GServiceIdInvalid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>serviceId</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Identifier of the service requested by EVCC.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>offered</code></td>
+<td style="text-align: left;">integer[]</td>
+<td style="text-align: left;">List of offered services by SECC.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-039]</strong> The <code>V2GServiceIdInvalid</code> error code parameters shall be used as defined in Table 49.</p>
+<h3 id="943-v2gcontractcertificateexpired">9.43 V2GContractCertificateExpired</h3>
+<table id="_table-50">
+<caption style="caption-side:bottom">Table 50: Semantics and type definition for V2GContractCertificateExpired error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>certificateChain</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Contract certificate and sub-certificates encoded in PEM format.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-040]</strong> The <code>V2GContractCertificateExpired</code> error code parameters shall be used as defined in Table 50.</p>
+<h3 id="944-v2gcontractcertificatenotyetvalid">9.44 V2GContractCertificateNotYetValid</h3>
+<table id="_table-51">
+<caption style="caption-side:bottom">Table 51: Semantics and type definition for V2GContractCertificateNotYetValid error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>certificateChain</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Contract certificate and sub-certificates encoded in PEM format.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-041]</strong> The <code>V2GContractCertificateNotYetValid</code> error code parameters shall be used as defined in Table 51.</p>
+<h3 id="945-certificateinstallationservertimeout">9.45 CertificateInstallationServerTimeout</h3>
+<table id="_table-52">
+<caption style="caption-side:bottom">Table 52: Semantics and type definition for CertificateInstallationServerTimeout error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>timeout</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Timeout value in milliseconds.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-042]</strong> The <code>CertificateInstallationServerTimeout</code> error code parameters shall be used as defined in Table 52.</p>
+<h3 id="946-certificateupdateservertimeout">9.46 CertificateUpdateServerTimeout</h3>
+<table id="_table-53">
+<caption style="caption-side:bottom">Table 53: Semantics and type definition for CertificateUpdateServerTimeout error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>timeout</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Timeout value in milliseconds.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-043]</strong> The <code>CertificateUpdateServerTimeout</code> error code parameters shall be used as defined in Table 53.</p>
+<h3 id="947-certificateprivateandpublicmismatch">9.47 CertificatePrivateAndPublicMismatch</h3>
+<table id="_table-54">
+<caption style="caption-side:bottom">Table 54: Semantics and type definition for CertificatePrivateAndPublicMismatch error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>message</code></td>
+<td style="text-align: left;">V2GMessageType</td>
+<td style="text-align: left;">V2G message with certificates.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>certificateChain</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Certificate chain encoded in PEM format.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-044]</strong> The <code>CertificatePrivateAndPublicMismatch</code> error code parameters shall be used as defined in Table 54.</p>
+<h3 id="948-authorizationtimeoutserver">9.48 AuthorizationTimeoutServer</h3>
+<table id="_table-55">
+<caption style="caption-side:bottom">Table 55: Semantics and type definition for AuthorizationTimeoutServer error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>timeout</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Server response timeout in milliseconds.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>requestId</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Id of the authorization message sent to the backend.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-045]</strong> The <code>AuthorizationTimeoutServer</code> error code parameters shall be used as defined in Table 55.</p>
+<h3 id="949-authorizationtimeoutuser">9.49 AuthorizationTimeoutUser</h3>
+<table id="_table-56">
+<caption style="caption-side:bottom">Table 56: Semantics and type definition for AuthorizationTimeoutUser error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>timeout</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">User interaction timeout in milliseconds.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>authorizationMethod</code></td>
+<td style="text-align: left;">AuthorizationMethodType</td>
+<td style="text-align: left;">Method of authorization that the user is expected to use.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-046]</strong> The <code>AuthorizationTimeoutUser</code> error code parameters shall be used as defined in Table 56.</p>
+<h3 id="950-authorizationrejected">9.50 AuthorizationRejected</h3>
+<table id="_table-57">
+<caption style="caption-side:bottom">Table 57: Semantics and type definition for AuthorizationRejected error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>authorizationMethod</code></td>
+<td style="text-align: left;">AuthorizationMethodType</td>
+<td style="text-align: left;">Method of authorization that the user is expected to use.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-047]</strong> The <code>AuthorizationRejected</code> error code parameters shall be used as defined in Table 57.</p>
+<h3 id="951-insulationfault">9.51 InsulationFault</h3>
+<table id="_table-58">
+<caption style="caption-side:bottom">Table 58: Semantics and type definition for InsulationFault error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>v2gState</code></td>
+<td style="text-align: left;">CommunicationStateType</td>
+<td style="text-align: left;">Communication state where the error occurred.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>resistance</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Cable line resistance.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>capacity</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Cable capacity.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-048]</strong> The <code>InsulationFault</code> error code parameters shall be used as defined in Table 58.</p>
+<h3 id="952-powermodulefault">9.52 PowerModuleFault</h3>
+<table id="_table-59">
+<caption style="caption-side:bottom">Table 59: Semantics and type definition for PowerModuleFault error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>error</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Power module-specific error.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>id</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Power module identifier.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-049]</strong> The <code>PowerModuleFault</code> error code parameters shall be used as defined in Table 59.</p>
+<h3 id="953-contactorfault">9.53 ContactorFault</h3>
+<table id="_table-60">
+<caption style="caption-side:bottom">Table 60: Semantics and type definition for ContactorFault error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>id</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Contactor identifier.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">ContactorStateType</td>
+<td style="text-align: left;">Actual contactor state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">ContactorStateType</td>
+<td style="text-align: left;">Expected contactor state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>type</code></td>
+<td style="text-align: left;">ContactorType</td>
+<td style="text-align: left;">Type of the contactor.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-050]</strong> The <code>ContactorFault</code> error code parameters shall be used as defined in Table 60.</p>
+<h3 id="954-hightemperature">9.54 HighTemperature</h3>
+<table id="_table-61">
+<caption style="caption-side:bottom">Table 61: Semantics and type definition for HighTemperature error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual temperature.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>threshold</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Warning or error threshold.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>location</code></td>
+<td style="text-align: left;">TemperatureLocationType</td>
+<td style="text-align: left;">Location of the temperature measurements.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-051]</strong> The <code>HighTemperature</code> error code parameters shall be used as defined in Table 61.</p>
+<h3 id="955-lowtemperature">9.55 LowTemperature</h3>
+<table id="_table-62">
+<caption style="caption-side:bottom">Table 62: Semantics and type definition for LowTemperature error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual temperature.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>threshold</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Warning or error threshold.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>location</code></td>
+<td style="text-align: left;">TemperatureLocationType</td>
+<td style="text-align: left;">Location of the temperature measurements.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-052]</strong> The <code>LowTemperature</code> error code parameters shall be used as defined in Table 62.</p>
+<h3 id="956-powerloss">9.56 PowerLoss</h3>
+<p><em>This error code has no specific parameters.</em></p>
+<p><strong>[UEC-053]</strong> The <code>PowerLoss</code> error code must be reported if the EVSE is unable to supply any power.</p>
+<h3 id="957-connectorlockfailure">9.57 ConnectorLockFailure</h3>
+<table id="_table-63">
+<caption style="caption-side:bottom">Table 63: Semantics and type definition for ConnectorLockFailure error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">ConnectorLockStateType</td>
+<td style="text-align: left;">Actual lock state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>expectedValue</code></td>
+<td style="text-align: left;">ConnectorLockStateType</td>
+<td style="text-align: left;">Expected lock state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>EVSEID</code></td>
+<td style="text-align: left;">ConnectorLockStateType</td>
+<td style="text-align: left;">The EVSE identifier - the same one that the EVSE sends to the EV in the SessionSetupRes message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>EVCCID</code></td>
+<td style="text-align: left;">ConnectorLockStateType</td>
+<td style="text-align: left;">The EVCC identifier - the same on that the EV sends to the EVSE in the SessionSetupReq message.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="9571-general">9.57.1 General</h4>
+<p><strong>[UEC-054]</strong> The ConnectorLockFailure error code parameters shall be used as defined in Table 63.</p>
+<h4 id="9572-evse">9.57.2 EVSE</h4>
+<p><strong>[UEC-055]</strong> The EVSE shall report the ConnectorLockFailure error code when the EVStatus field in a V2G message equals EVStatus_ChargerConnectorLockFailure.</p>
+<p><strong>[UEC-056]</strong> When a ConnectorLockFailure error occurs, the EVSE shall display a popup message to the EV Driver on the HMI screen.</p>
+<p><strong>[UEC-057]</strong> The popup message shall be cleared automatically upon a successful connector lock or when the connector is unplugged.</p>
+<p><strong>[UEC-058]</strong> The popup message shall be dismissible by the EV Driver.</p>
+<h4 id="9573-cpms">9.57.3 CPMS</h4>
+<p><strong>[UEC-059]</strong> The CPMS shall provide statistics on the most affected EVs, aggregated using the EVCCID parameter.</p>
+<p><strong>[UEC-060]</strong> The CPMS shall provide statistics on the most affected EVSEs, aggregated using the EVSEID parameter.</p>
+<h3 id="958-undervoltage">9.58 UnderVoltage</h3>
+<table id="_table-64">
+<caption style="caption-side:bottom">Table 64: Semantics and type definition for UnderVoltage error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual voltage.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>minValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Lower bound of allowed range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>location</code></td>
+<td style="text-align: left;">MeasurementLocationType</td>
+<td style="text-align: left;">Location of the voltage measurement.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-061]</strong> The <code>UnderVoltage</code> error code parameters shall be used as defined in Table 64.</p>
+<h3 id="959-overvoltage">9.59 OverVoltage</h3>
+<table id="_table-65">
+<caption style="caption-side:bottom">Table 65: Semantics and type definition for OverVoltage error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual voltage.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>maxValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Upper bound of allowed range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>location</code></td>
+<td style="text-align: left;">MeasurementLocationType</td>
+<td style="text-align: left;">Location of the voltage measurement.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-062]</strong> The <code>OverVoltage</code> error code parameters shall be used as defined in Table 65.</p>
+<h3 id="960-undercurrent">9.60 UnderCurrent</h3>
+<table id="_table-66">
+<caption style="caption-side:bottom">Table 66: Semantics and type definition for UnderCurrent error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual current.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>minValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Lower bound of allowed range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>location</code></td>
+<td style="text-align: left;">MeasurementLocationType</td>
+<td style="text-align: left;">Location of the current measurement.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-063]</strong> The <code>UnderCurrent</code> error code parameters shall be used as defined in Table 66.</p>
+<h3 id="961-overcurrent">9.61 OverCurrent</h3>
+<table id="_table-67">
+<caption style="caption-side:bottom">Table 67: Semantics and type definition for OverCurrent error code parameters</caption><thead>
+<tr>
+<th style="text-align: left;">Parameter Name</th>
+<th style="text-align: left;">Parameter Type</th>
+<th style="text-align: left;">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>actualValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Actual current.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>maxValue</code></td>
+<td style="text-align: left;">PhysicalValueType</td>
+<td style="text-align: left;">Upper bound of allowed range.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>location</code></td>
+<td style="text-align: left;">MeasurementLocationType</td>
+<td style="text-align: left;">Location of the current measurement.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UEC-064]</strong> The <code>OverCurrent</code> error code parameters shall be used as defined in Table 67.</p>
+<h3 id="962-evshiftposition">9.62 EVShiftPosition</h3>
+<p><em>This error code has no specific parameters.</em></p>
+<h3 id="963-evressmalfunction">9.63 EVRESSMalfunction</h3>
+<p><em>This error code has no specific parameters.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["content.action.edit"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+    
+  </body>
+</html>
