@@ -775,12 +775,32 @@ The UEC specification is built upon the following core principles:
 
 {{ table_caption('conn_lock_fail_parameters', 'Semantics and type definition for ConnectorLockFailure error code parameters') }}
 
-| Parameter Name  | Parameter Type         | Semantics            |
-| :-------------- | :--------------------- | :------------------- |
-| `actualValue`   | ConnectorLockStateType | Actual lock state.   |
-| `expectedValue` | ConnectorLockStateType | Expected lock state. |
+| Parameter Name  | Parameter Type         | Semantics                                                                                        |
+| :-------------- | :--------------------- | :----------------------------------------------------------------------------------------------- |
+| `actualValue`   | ConnectorLockStateType | Actual lock state.                                                                               |
+| `expectedValue` | ConnectorLockStateType | Expected lock state.                                                                             |
+| `EVSEID`        | string                 | The EVSE identifier - the same one that the EVSE sends to the EV in the SessionSetupRes message. |
+| `EVCCID`        | string                 | The EVCC identifier - the same one that the EV sends to the EVSE in the SessionSetupReq message. |
 
-{{ requirement() }} The `ConnectorLockFailure` error code parameters shall be used as defined in {{ table_ref('conn_lock_fail_parameters') }}.
+#### General
+
+{{ requirement() }} The ConnectorLockFailure error code parameters shall be used as defined in {{ table_ref('conn_lock_fail_parameters') }}.
+
+#### EVSE
+
+{{ requirement() }} The EVSE shall report the ConnectorLockFailure error code when the EVStatus field in a V2G message equals EVStatus_ChargerConnectorLockFailure.
+
+{{ requirement() }} When a ConnectorLockFailure error occurs, the EVSE shall display a popup message to the EV Driver on the HMI screen.
+
+{{ requirement() }} The popup message shall be cleared automatically upon a successful connector lock or when the connector is unplugged.
+
+{{ requirement() }} The popup message shall be dismissible by the EV Driver.
+
+#### CPMS
+
+{{ requirement() }} The CPMS shall provide statistics on the most affected EVs, aggregated using the EVCCID parameter.
+
+{{ requirement() }} The CPMS shall provide statistics on the most affected EVSEs, aggregated using the EVSEID parameter.
 
 ### UnderVoltage
 
