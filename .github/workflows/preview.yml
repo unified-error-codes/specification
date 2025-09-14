@@ -1,0 +1,26 @@
+name: Deploy PR specification previews
+concurrency: preview-${{ github.ref }}
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - run: pip install -r requirements.txt
+      - run: mkdocs build
+        if: github.event.action != 'closed'
+      - uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: site
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto
