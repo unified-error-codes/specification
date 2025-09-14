@@ -1,4 +1,4 @@
-name: Deploy sppecification
+name: Deploy specification
 on:
   push:
     branches:
