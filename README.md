@@ -147,7 +147,7 @@ Open it with any PDF viewer.
 ### Step 4: Make Clean
 If you want to clean the build first:
 >```
->**On Windows (Power Shell)**
+>**On Windows (powershell)**
 >docker run --rm -v "${PWD}:/docs" sphinxdoc/sphinx-latexpdf make clean
 >```
 
