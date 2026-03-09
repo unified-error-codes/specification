@@ -81,7 +81,7 @@ git clone https://github.com/YOUR-USERNAME/unified-error-codes.git
 
 > Replace `YOUR-USERNAME` with your actual GitHub username.
 
-Then navigate into the project folder:
+Then navigate into the project folder in the terminal:
 
 ```bash
 cd unified-error-codes
@@ -111,6 +111,7 @@ To verify Docker is installed, run:
 ```bash
 docker --version
 ```
+-**Windows / macOS:**  Make sure Docker Desktop is Open and your Login. 
 
 ### Step 2: Build the PDF
 
@@ -123,6 +124,11 @@ docker run --rm -v $(pwd)/specification:/docs sphinxdoc/sphinx-latexpdf make lat
 > **On Windows (Command Prompt)**, replace `$(pwd)` with the full path:
 > ```
 > docker run --rm -v C:\path\to\unified-error-codes\specification:/docs sphinxdoc/sphinx-latexpdf make latexpdf
+> ```
+
+> **On Windows (Power Shell)**
+> ```
+> docker run --rm -v "${PWD}:/docs" sphinxdoc/sphinx-latexpdf make latexpdf
 > ```
 
 This will download the Sphinx image (first time only) and build the specification as a PDF.
@@ -138,6 +144,12 @@ specification/_build/latex/unifiederrorcodes.pdf
 Open it with any PDF viewer.
 
 ---
+### Step 4: Make Clean
+If you want to clean the build first:
+>```
+>**On Windows (Power Shell)**
+>docker run --rm -v "${PWD}:/docs" sphinxdoc/sphinx-latexpdf make clean
+>```
 
 ## How to Contribute
 
