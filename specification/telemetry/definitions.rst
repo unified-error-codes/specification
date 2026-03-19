@@ -51,3 +51,28 @@ the charging station.
 -  **Description**: The state of the communication between EV and charging station.
 -  **Unit**: N/A
 -  **Resolution**: N/A
+
+.. _telemetry_connector_lock_position:
+
+************************
+ Connector Lock Position
+************************
+
+-  **Description**: The position feedback state of the CCS connector lock
+   mechanism as reported by the EVSE. Determined by a threshold-based
+   evaluation of the lock actuator feedback signal, which may be a continuous
+   analog measurement.
+-  **Unit**: N/A (enumerated: ``locked``, ``unlocked``, ``unknown``)
+-  **Resolution**: N/A
+
+.. _telemetry_connector_lock_command:
+
+***********************
+ Connector Lock Command
+***********************
+
+-  **Description**: The last command issued to the connector lock actuator.
+   Used to correlate commanded state against reported position
+   feedback during failure analysis.
+-  **Unit**: N/A (enumerated: ``lock``, ``unlock``)
+-  **Resolution**: N/A

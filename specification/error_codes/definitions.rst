@@ -34,3 +34,31 @@ The following telemetry signals are required for analyzing this error:
 -  :ref:`telemetry_supply_voltage_l1`
 -  :ref:`telemetry_supply_voltage_l2`
 -  :ref:`telemetry_supply_voltage_l3`
+
+.. _error_connectorlockfailure:
+
+**********************
+ ConnectorLockFailure
+**********************
+
+Description
+===========
+
+This error is raised when the connector lock mechanism fails to reach
+the expected locked or unlocked position.
+
+Trigger Conditions
+==================
+
+-  The lock position feedback does not reach the locked threshold within the
+   expected time after a lock command is issued.
+-  The lock position feedback does not reach the unlocked threshold within the
+   expected time after an unlock command is issued.
+
+Related Telemetry
+=================
+
+The following telemetry signals are required for analyzing this error:
+
+-  :ref:`telemetry_connector_lock_position`
+-  :ref:`telemetry_connector_lock_command`
