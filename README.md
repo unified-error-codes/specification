@@ -111,7 +111,7 @@ To verify Docker is installed, run:
 ```bash
 docker --version
 ```
--**Windows / macOS:**  Make sure Docker Desktop is Open and your Login. 
+-**Windows / macOS:**  Make sure Docker Desktop is Open and you're logged in. 
 
 ### Step 2: Build the PDF
 
@@ -147,7 +147,7 @@ Open it with any PDF viewer.
 ### Step 4: Make Clean
 If you want to clean the build first:
 >```
->**On Windows (powershell)**
+>**On Windows (PowerShell)**
 >docker run --rm -v "${PWD}:/docs" sphinxdoc/sphinx-latexpdf make clean
 >```
 

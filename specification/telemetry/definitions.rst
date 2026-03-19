@@ -9,44 +9,44 @@
 This section defines the telemetry signals that shall be monitored by
 the charging station.
 
-.. _telemetry_inlet_voltage_l1:
+.. _telemetry_supply_voltage_l1:
 
-******************
- Inlet Voltage L1
-******************
+*******************
+ Supply Voltage L1
+*******************
 
 -  **Description**: The continuous measurement of AC voltage for L1
-   phase. Measured at the inlet of the charging station.
+   phase. Measured at the AC supply input to the charging station.
 -  **Unit**: Volts (V)
 -  **Resolution**: `1 V`
 
-.. _telemetry_inlet_voltage_l2:
+.. _telemetry_supply_voltage_l2:
 
-******************
- Inlet Voltage L2
-******************
+*******************
+ Supply Voltage L2
+*******************
 
 -  **Description**: The continuous measurement of AC voltage for L2
-   phase. Measured at the inlet of the charging station.
+   phase. Measured at the AC supply input to the charging station.
 -  **Unit**: Volts (V)
 -  **Resolution**: `1 V`
 
-.. _telemetry_inlet_voltage_l3:
+.. _telemetry_supply_voltage_l3:
 
-******************
- Inlet Voltage L3
-******************
+*******************
+ Supply Voltage L3
+*******************
 
 -  **Description**: The continuous measurement of AC voltage for L3
-   phase. Measured at the inlet of the charging station.
+   phase. Measured at the AC supply input to the charging station.
 -  **Unit**: Volts (V)
 -  **Resolution**: `1 V`
 
 .. _telemetry_communication_state:
 
-******************
-Communication State
-******************
+********************
+ Communication State
+********************
 
 -  **Description**: The state of the communication between EV and charging station.
 -  **Unit**: N/A

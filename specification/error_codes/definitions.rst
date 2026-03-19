@@ -31,6 +31,6 @@ Related Telemetry
 The following telemetry signals are required for analyzing this error:
 
 -  :ref:`telemetry_communication_state`
--  :ref:`telemetry_inlet_voltage_l1`
--  :ref:`telemetry_inlet_voltage_l2`
--  :ref:`telemetry_inlet_voltage_l3`
+-  :ref:`telemetry_supply_voltage_l1`
+-  :ref:`telemetry_supply_voltage_l2`
+-  :ref:`telemetry_supply_voltage_l3`
