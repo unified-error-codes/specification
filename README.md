@@ -25,6 +25,7 @@ Here you can find the project materials related to **Unified Error Codes**, deve
     - [Step 1: Install Docker](#step-1-install-docker)
     - [Step 2: Build the PDF](#step-2-build-the-pdf)
     - [Step 3: View the result](#step-3-view-the-result)
+    - [Step 4: Make Clean](#step-4-make-clean)
   - [How to Contribute](#how-to-contribute)
   - [Project Structure](#project-structure)
   - [Governance](#governance)
@@ -111,7 +112,7 @@ To verify Docker is installed, run:
 ```bash
 docker --version
 ```
--**Windows / macOS:**  Make sure Docker Desktop is Open and your Login. 
+-**Windows / macOS:**  Make sure Docker Desktop is Open and you're logged in.
 
 ### Step 2: Build the PDF
 
@@ -147,7 +148,7 @@ Open it with any PDF viewer.
 ### Step 4: Make Clean
 If you want to clean the build first:
 >```
->**On Windows (powershell)**
+>**On Windows (PowerShell)**
 >docker run --rm -v "${PWD}:/docs" sphinxdoc/sphinx-latexpdf make clean
 >```
 

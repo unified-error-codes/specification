@@ -23,7 +23,7 @@ The EV charging industry faces significant operational challenges due to a lack 
 
     Current standards (e.g., IEC) primarily focus on the minimum electrical safety requirements for shutting down a charging session. They do not, however, define a complete, required response to a fault. This includes a critical omission: there are almost no requirements for informing the EV driver about the problem. This lack of clear, standardized behavior — a famous example being the "connector lock failure" — leaves the driver with a failed session without explanation or guidance.
 
-* **No Defined Bidirectional Error Exchange between Charing Station and EV**
+* **No Defined Bidirectional Error Exchange between Charging Station and EV**
 
     ISO 15118-202 opens a pathway for data exchange between the Charging Station and the EV. However, it only defines the *transport* layer, not the *schema* or *content* of the error codes to be exchanged. Furthermore, there is no standard way to exchange critical diagnostic data *before* high-level communication is established.
 
@@ -70,7 +70,7 @@ Defining how the Charging Station should deliver this reliability-essential data
 
 ### Error and Diagnostic Exchange Protocol between Charging Station and EV
 
-Defining how error and diagnostic data should be encoded between the (Charging Station) and EV either through ISO 15118-202 or another redudant pathway. This also includes defining a potential pathway to exchange critical diagnostic data *before* high-level communication is established.
+Defining how error and diagnostic data should be encoded between the (Charging Station) and EV either through ISO 15118-202 or another redundant pathway. This also includes defining a potential pathway to exchange critical diagnostic data *before* high-level communication is established.
 
 ### Alignment with Vehicle Diagnostics (DTC/DTS)
 
