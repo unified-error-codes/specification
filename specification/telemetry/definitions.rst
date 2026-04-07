@@ -76,3 +76,39 @@ the charging station.
    feedback during failure analysis.
 -  **Unit**: N/A (enumerated: ``lock``, ``unlock``)
 -  **Resolution**: N/A
+
+.. _telemetry_insulation_resistance:
+
+***********************
+ Insulation Resistance
+***********************
+
+-  **Description**: The insulation resistance between the high-voltage
+   DC lines (DC+, DC-) and protective earth (PE), as measured by the
+   EVSE's Insulation Monitoring Device (IMD). Monitored during the
+   pre-charge insulation test and continuously during DC energy transfer.
+-  **Unit**: kilohms (k\ :math:`\Omega`)
+-  **Resolution**: ``1`` k\ :math:`\Omega`
+
+.. _telemetry_imd_status:
+
+************
+ IMD Status
+************
+
+-  **Description**: The operational status of the Insulation Monitoring
+   Device (IMD) within the EVSE. Indicates whether the IMD is
+   functioning correctly, has detected an insulation warning or fault,
+   or has failed its own self-test.
+-  **Unit**: N/A
+-  **Resolution**: N/A
+-  **Values**:
+
+   -  ``normal`` — IMD is operational and insulation resistance is above
+      the warning threshold.
+   -  ``warning`` — Insulation resistance is below the warning threshold
+      but above the fault threshold. Charging may continue.
+   -  ``fault`` — Insulation resistance is below the fault threshold.
+      Charging shall be terminated.
+   -  ``selfTestFailed`` — The IMD functional self-test has failed.
+      Charging shall not be initiated.
