@@ -10,9 +10,9 @@ This section defines the error codes.
 
 .. _error_EVShiftPosition:
 
-**************
+****************
  EVShiftPosition
-**************
+****************
 
 Description
 ===========
@@ -30,5 +30,6 @@ Related Telemetry
 =================
 
 The following telemetry signals are required for analyzing this error:
+TBD
 
 
