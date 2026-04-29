@@ -2,13 +2,7 @@
    SPDX-License-Identifier: CC-BY-4.0
    Copyright CharIN e.V. and Contributors
 
-#############
- Error Codes
-#############
-
-This section defines the error codes.
-
-.. _error_EVShiftPosition:
+.. _error_evshiftposition:
 
 ****************
  EVShiftPosition
@@ -23,8 +17,8 @@ not in Park, or otherwise not conducive to charging.
 Trigger Conditions
 ==================
 
-The Shift Position is Unknown.
-The Shift Position is not in park during Power Delivery.
+- The Shift Position is Unknown.
+- The Shift Position is not in Park during Power Delivery.
 
 Related Telemetry
 =================

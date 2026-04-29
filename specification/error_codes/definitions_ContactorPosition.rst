@@ -2,13 +2,7 @@
    SPDX-License-Identifier: CC-BY-4.0
    Copyright CharIN e.V. and Contributors
 
-#############
- Error Codes
-#############
-
-This section defines the error codes.
-
-.. _error_ContactorPosition:
+.. _error_contactorposition:
 
 ******************
  ContactorPosition
@@ -23,7 +17,7 @@ within the EVSE that manages power flow between the grid and the vehicle.
 Trigger Conditions
 ==================
 
- IEC 61851-23, sections FF.5.6
+- IEC 61851-23, sections FF.5.6
 
 Related Telemetry
 =================
