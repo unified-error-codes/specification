@@ -74,3 +74,4 @@ the charging station.
 
 .. include:: definitions_ConnectorLockTelemetry.rst
 .. include:: definitions_HighTemperatureTelemetry.rst
+.. include:: definitions_PowerModuleTelemetry.rst
