@@ -73,3 +73,4 @@ the charging station.
    -  ``SessionStop`` — Error occurred during SessionStop.
 
 .. include:: definitions_ConnectorLockTelemetry.rst
+.. include:: definitions_HighTemperatureTelemetry.rst
