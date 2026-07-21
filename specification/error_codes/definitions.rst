@@ -39,3 +39,4 @@ The following telemetry signals are required for analyzing this error:
 .. include:: definitions_EVShiftPosition.rst
 .. include:: definitions_ContactorPosition.rst
 .. include:: definitions_ConnectorLockFailure.rst
+.. include:: definitions_HighTemperature.rst
