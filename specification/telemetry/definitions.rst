@@ -71,3 +71,6 @@ the charging station.
    -  ``CurrentDemand`` — Error occurred during CurrentDemand.
    -  ``WeldingDetection`` — Error occurred during WeldingDetection.
    -  ``SessionStop`` — Error occurred during SessionStop.
+
+.. include:: definitions_ConnectorLockTelemetry.rst
+.. include:: definitions_HighTemperatureTelemetry.rst

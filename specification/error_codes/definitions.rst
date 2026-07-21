@@ -35,3 +35,8 @@ The following telemetry signals are required for analyzing this error:
 -  :ref:`telemetry_supply_voltage_l1`
 -  :ref:`telemetry_supply_voltage_l2`
 -  :ref:`telemetry_supply_voltage_l3`
+
+.. include:: definitions_EVShiftPosition.rst
+.. include:: definitions_ContactorPosition.rst
+.. include:: definitions_ConnectorLockFailure.rst
+.. include:: definitions_HighTemperature.rst
