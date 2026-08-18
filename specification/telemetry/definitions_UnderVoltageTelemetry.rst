@@ -14,6 +14,20 @@
 -  **Unit**: N/A
 -  **Resolution**: N/A
 
+.. _telemetry_undervoltage_system:
+
+********************
+ UnderVoltage System
+********************
+
+-  **Description**: The system, EV or EVSE, responsible for or reporting the
+   undervoltage condition. At Site A this is always the EVSE; at Site B
+   either the EV or the EVSE may be the reporting system, since both sides
+   observe the same physical interface.
+-  **Values**: EV, EVSE
+-  **Unit**: N/A
+-  **Resolution**: N/A
+
 .. _telemetry_undervoltage_actual:
 
 *****************

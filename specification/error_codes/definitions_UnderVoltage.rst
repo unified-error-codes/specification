@@ -20,6 +20,8 @@ Undervoltage at Site A is a voltage falling below limits at the EVSE terminals c
 Site B  Vehicle Interface (EV-EVSE Connection)
 Undervoltage at Site B is a voltage falling below limits at the physical connection between the EVSE and the vehicle (connector or socket outlet), as measured at the interface, such that the system's output voltage is lower than agreed between EV & EVSE.
 
+This error code is applicable to and can be set by either the EV or EVSE. At Site A it is always reported by the EVSE; at Site B it may be reported by either side, depending on which system observes the shortfall at the connection.
+
 Trigger Conditions
 ==================
 Threshold Shortfall
@@ -44,6 +46,7 @@ Related Telemetry
 The following telemetry signals are required for analyzing this error:
 
 -  :ref:`telemetry_undervoltage_location`
+-  :ref:`telemetry_undervoltage_system`
 -  :ref:`telemetry_undervoltage_actual`
 -  :ref:`telemetry_undervoltage_threshold`
 
