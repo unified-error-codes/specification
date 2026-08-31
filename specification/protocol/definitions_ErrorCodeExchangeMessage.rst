@@ -227,6 +227,90 @@ Message Structure
          ``SideB_OverCurrentFailure``).
       -  Required
 
+ENP Extension Registration
+============================
+
+ISO 15118-202 publishes its ENP extension registry as a machine-readable
+ASN.1 module, `ENPExtensions.asn
+<https://standards.iso.org/iso/pas/15118/-202/ed-1/en/ENPExtensions.asn>`_.
+It defines an open, extensible registry keyed by a 16-octet UUID:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   -  -  ISO 15118-202 type
+      -  Role
+
+   -  -  ``ENPExtensions``
+      -  A list of ``ENPExtension`` entries carried in an ENP message.
+
+   -  -  ``ENPExtension``
+      -  One ``{ extensionID, extensionValue }`` pair.
+
+   -  -  ``EXTENSION`` (an ASN.1 Information Object Class)
+      -  Declares ``&id`` as a unique 16-octet ``OCTET STRING`` and
+         ``&Type`` as the ASN.1 type it selects.
+
+   -  -  ``ExtensionSet``
+      -  The registry table itself: a list of
+         ``{ uuid extensionValueType }`` entries.
+
+As published, ``ExtensionSet`` registers six narrowly-scoped extensions
+(EVSE grid information, grid code impact level, EV/EVSE stop reason,
+EV/EVSE derating reason) — none carries a general-purpose error code.
+`GitHub issue #65 <https://github.com/charinev/unified-error-codes/issues/65>`_
+proposes registering ``ErrorCodeReport`` (this message's root type) as a
+new ``ExtensionSet`` entry for exactly that purpose. As of this writing
+that registration is a proposal, not yet ratified:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   -  -  Registration field
+      -  Proposed value
+
+   -  -  ``extensionID`` (UUID v4)
+      -  ``0F9FA02C-B967-40FF-AF1D-50BF09A1D8DC`` — **PROPOSED**,
+         pending working-group ratification via issue #65
+
+   -  -  ``extensionValue`` type
+      -  ``ErrorCodeReport``
+
+``EXTENSION CLASS`` and ``ExtensionSet`` are not reproduced as ASN.1 in
+this repository: they are ISO 15118-202's own types, and — per the
+EVerest project's own investigation
+(`EVerest/EVerest-archived#259 <https://github.com/EVerest/EVerest-archived/issues/259>`_)
+— current open-source ASN.1 compilers (``asn1c``) cannot yet generate
+code for the X.681 Information Object Class construct ``EXTENSION
+CLASS`` uses, so compiling against it directly is not yet practical
+either. ``ErrorCodeExtension``, defined alongside ``ErrorCodeReport``
+in the ASN.1 module below, is a simplified, tool-compatible stand-in
+with the same shape (a 16-octet UUID plus an opaque payload), used only
+to demonstrate the intended wire structure — it is **not** part of the
+ISO 15118-202 ``ExtensionSet`` until issue #65 is ratified.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 45 15
+
+   -  -  Field
+      -  Type
+      -  Description
+      -  Presence
+
+   -  -  ``extensionID``
+      -  16-byte octet string
+      -  The UUID identifying this as the Error Code Extension (see
+         table above).
+      -  Required
+
+   -  -  ``extensionValue``
+      -  octet string
+      -  A COER-encoded ``ErrorCodeReport``.
+      -  Required
+
 ASN.1 Module
 =============
 
