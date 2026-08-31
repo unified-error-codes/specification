@@ -41,38 +41,37 @@ sequenceDiagram
    `csms_ocpp201.py`) — minimal mock backends, one per protocol
    version, each a `websockets` server accepting exactly the OCPP
    message the EVSE sends and acknowledging it.
--  **`run_demo.py`** — starts both mock CSMS backends, then runs the
+-  **`demo.py`** — starts both mock CSMS backends, then runs the
    EV → EVSE → CSMS flow once, printing each step.
 
 ## ENP extension wrapping
 
-ISO 15118-202 publishes its ENP extension registry as a machine-readable
-ASN.1 module,
-[`ENPExtensions.asn`](https://standards.iso.org/iso/pas/15118/-202/ed-1/en/ENPExtensions.asn)
-(fetched directly from ISO's standards portal for this demo). It defines
-an open registry, `ExtensionSet`, mapping a 16-octet UUID (`extensionID`)
-to the ASN.1 type (`extensionValue`) that UUID selects — six such
-extensions are registered today (EVSE grid information, grid code impact
-level, EV/EVSE stop reason, EV/EVSE derating reason), none for a
-general-purpose error code.
+ISO 15118-202 carries ENP extensions in a registry whose entries pair a
+unique 16-octet identifier with the ASN.1 type that identifier selects.
+ISO publishes that registry as a machine-readable ASN.1 module,
+[`ENPExtensions.asn`](https://standards.iso.org/iso/pas/15118/-202/ed-1/en/ENPExtensions.asn),
+separately from the paywalled prose document. Six extensions are
+registered today (EVSE grid information, grid code impact level, EV/EVSE
+stop reason, EV/EVSE derating reason), none for a general-purpose error
+code.
 [GitHub issue #65](https://github.com/charinev/unified-error-codes/issues/65)
 proposes adding `ErrorCodeReport` as a new entry for exactly that
-purpose. This demo's `ErrorCodeExtension` type mirrors that proposal's
-shape (`extensionID` + `extensionValue`) and uses the UUID proposed
-there — see the "ENP Extension Registration" section of
+purpose — see the "ENP Extension Registration" section of
 `specification/protocol/definitions_ErrorCodeExchangeMessage.rst` for
-the full registration proposal and its status.
+the proposal and its status.
 
-ISO's real `ExtensionSet` mechanism is built on an ASN.1 `EXTENSION
-CLASS` (an X.681 Information Object Class) so that `extensionValue`'s
-type is inferred from `extensionID` at compile time. This demo does not
-implement that literally: per the EVerest project's own investigation
+ISO's registry is built on an ASN.1 Information Object Class (ITU-T
+X.681), so that the payload's type is inferred from the identifier at
+compile time. This demo does not implement that literally: per the
+EVerest project's own investigation
 ([EVerest/EVerest-archived#259](https://github.com/EVerest/EVerest-archived/issues/259)),
-current open-source ASN.1 compilers can't yet generate code for
-`EXTENSION CLASS`, so `ErrorCodeExtension` is a simplified, tool-
-compatible stand-in — a plain `{ extensionID, extensionValue }` pair,
-with `extensionValue` an opaque, separately-COER-encoded
-`ErrorCodeReport` — that demonstrates the same wire shape.
+current open-source ASN.1 compilers can't yet process that construct.
+The demo therefore defines its own stand-in in
+[`DemoEnpExtension.asn1`](DemoEnpExtension.asn1) — a plain
+`{ extensionID, extensionValue }` pair, with `extensionValue` an opaque,
+separately-encoded `ErrorCodeReport` — so the wire structure can be shown
+end to end. That file is demonstration scaffolding: what #65 proposes
+registering is `ErrorCodeReport` itself, not this wrapper.
 
 ## Protocol translation
 
@@ -80,19 +79,28 @@ The EVSE does not forward the ASN.1 message as-is; each backend gets a
 payload built from native OCPP fields, populated from the same
 `ErrorCodeReport`:
 
-| Field | OCPP 1.6 `StatusNotification` | OCPP 2.0.1 `NotifyEventRequest` |
+| `ErrorCodeReport` field | OCPP 1.6 `StatusNotification` | OCPP 2.0.1 `NotifyEventRequest` |
 |---|---|---|
-| Which side/what happened | `error_code` (closest matching `ChargePointErrorCode`, else `OtherError`) + `status=Faulted` | `event_data[].tech_code` |
-| Exact Unified Error Code | `vendor_error_code` = `codeName`, `vendor_id` = `"org.charin.unified-error-codes"` | `event_data[].tech_code` = `codeName` |
-| When it happened | `timestamp` | `event_data[].timestamp` |
+| `errorCode.codeName` (exact) | `vendor_error_code`, with `vendor_id` = `"org.charin.unified-error-codes"` | `event_data[].tech_code` and `event_data[].actual_value` |
+| `errorCode.codeName` (normalized) | `error_code` — the closest matching `ChargePointErrorCode`, else `OtherError` | — (no fixed vocabulary to normalize into) |
+| `errorCode.source` | *not represented* — see below | `event_data[].tech_info` (`source=ev` / `source=evse`) |
+| `metadata.sessionContext.timestamp` | `timestamp` | `event_data[].timestamp` |
+| (fault state) | `status=Faulted` | `trigger=Alerting`, `event_notification_type=HardWiredNotification` |
 
 OCPP 1.6's `ChargePointErrorCode` is a small, fixed vocabulary; where a
 Unified Error Code name matches one of its values directly (e.g.
 `OverCurrentFailure`), it is used, so 1.6-only backends still get a
-standard error code — the exact Unified Error Code name always rides
+standard error code — and the exact Unified Error Code name always rides
 along in `vendorErrorCode` regardless. OCPP 2.0.1's `NotifyEventRequest`
 was designed for exactly this kind of open-ended event/alarm reporting,
 so `tech_code` carries the Unified Error Code name directly.
+
+One asymmetry is worth calling out: **OCPP 1.6 has no field for
+`errorCode.source`**, so a 1.6-only backend cannot tell whether the EV
+or the EVSE detected the fault, even though the ISO 15118-202 message
+carries that distinction. OCPP 2.0.1 can convey it (here via
+`tech_info`). Anything richer than the error code name itself is where
+the two protocol generations stop being equivalent.
 
 ## Why simulate two backends at once
 
@@ -100,9 +108,10 @@ A charging station operator upgrading its fleet from OCPP 1.6 to 2.0.1
 does not do so instantaneously across every backend and every station.
 Demonstrating the EVSE relaying the *same* detected error to both
 protocol versions in parallel shows that this message design does not
-force a hard cutover: a single Unified Error Code, once reported by an
-EV, is representable — completely, not just as best-effort free text —
-in whichever OCPP version a given backend still speaks.
+force a hard cutover: the error code name itself survives intact in
+either version, in a dedicated field rather than as free text. What does
+*not* survive equally is the surrounding context — see the asymmetry
+noted above — which is the honest cost of staying on 1.6.
 
 ## Non-goals / simplifications
 
@@ -110,7 +119,8 @@ This is a documentation demo, not a reference implementation:
 
 -  No real ISO 15118-202 (ENP) transport, and no ISO 15118-2/-20 SLAC,
    SDP, or TLS — the EV → EVSE leg is a direct in-process function
-   call carrying the same OER bytes that would cross the wire.
+   call. It carries a real OER encoding of the report, but not the ENP
+   message framing that would surround it on the wire.
 -  No OCPP security profiles (TLS, Basic Auth) — the mock CSMS
    backends accept any connection on `localhost`.
 -  No retry, backoff, or persistence — each relay is a single
@@ -152,17 +162,17 @@ the main source for how this demo integrates with ENP:
    asked for the *minimum* required set, and much of #62 remains
    under active discussion.
 -  [#65 "ISO 15118-202 Error Code ENP Extension Definition"](https://github.com/charinev/unified-error-codes/issues/65) —
-   the open proposal this demo's `ErrorCodeExtension` wrapper and
-   proposed UUID follow directly.
+   proposes registering `ErrorCodeReport` as an ENP extension; the UUID
+   this demo uses is the candidate proposed there, still unratified.
 
 [EVerest](https://github.com/EVerest/everest-core) is an existing
 open-source EVSE/CS software stack. Its own archived issue tracker has
 a matching thread,
 [EVerest/EVerest-archived#259 "Integration ISO15118-202"](https://github.com/EVerest/EVerest-archived/issues/259),
 which independently confirms ISO 15118-202 uses ASN.1 for four
-messages and documents that `asn1c` cannot yet compile the `EXTENSION
-CLASS` construct `ExtensionSet` depends on — the basis for this demo's
-simplified `ErrorCodeExtension` stand-in (see above). A fork,
+messages and documents that `asn1c` cannot yet compile the Information
+Object Class construct its extension registry depends on — the basis
+for this demo's simplified stand-in (see above). A fork,
 [NatLabRockies/everest-core](https://github.com/NatLabRockies/everest-core),
 adds a prototype of ESDP (not ENP) based on an earlier draft of
 ISO 15118-202, with its own ASN.1 module

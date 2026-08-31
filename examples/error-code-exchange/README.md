@@ -17,12 +17,12 @@ The complete path **EV → EVSE → CSMS**:
    using the canonical ASN.1 module at
    [`specification/protocol/UnifiedErrorCodeExchange.asn1`](../../specification/protocol/UnifiedErrorCodeExchange.asn1)
    directly, so the demo can never drift from the published schema, and
-   wraps it as an ISO 15118-202 ENP extension (`ErrorCodeExtension`) —
-   see `ARCHITECTURE.md`'s "ENP extension wrapping" section.
-   (The Canonical Octet Encoding Rules, COER, are the wire encoding
-   ISO 15118-202's Event Notification Protocol requires; the demo uses
-   asn1tools' `oer` codec as the closest supported stand-in — see the
-   comment in `demo.py`.)
+   wraps it as an ISO 15118-202 ENP extension — see `ARCHITECTURE.md`'s
+   "ENP extension wrapping" section for what is real here and what is
+   scaffolding.
+   (The specification requires the canonical Octet Encoding Rules,
+   COER; the demo uses asn1tools' `oer` codec as the closest supported
+   stand-in — see the comment in `demo.py`.)
 2. An EVSE unwraps and decodes it, then relays the *same* detected
    error to **two** mock CSMS backends **in parallel**: one speaking
    **OCPP 1.6** (`StatusNotification`), one speaking **OCPP 2.0.1**
@@ -41,6 +41,7 @@ python demo.py
 
 | File | Role |
 |---|---|
+| `DemoEnpExtension.asn1` | Demo-only ENP extension wrapper (scaffolding, not spec) |
 | `common.py` | Shared sample data and ASN.1 codec setup |
 | `ev.py` | EV: builds and encodes the `ErrorCodeReport` |
 | `evse.py` | EVSE: decodes it, relays to both OCPP backends |
