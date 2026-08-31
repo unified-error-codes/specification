@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import datetime
+import uuid
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,11 @@ ASN1_MODULE_PATH = (
 )
 
 VENDOR_ID = "org.charin.unified-error-codes"
+
+# Proposed (unratified) extensionID for registering ErrorCodeReport as an
+# ISO 15118-202 ENP ExtensionSet entry, per GitHub issue #65. See the
+# "ENP Extension Registration" section of definitions_ErrorCodeExchangeMessage.rst.
+ERROR_CODE_EXTENSION_ID = uuid.UUID("0F9FA02C-B967-40FF-AF1D-50BF09A1D8DC")
 
 
 def compile_asn1_codec(codec: str) -> Any:

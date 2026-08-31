@@ -16,7 +16,7 @@ sequenceDiagram
     participant CSMS16 as CSMS (OCPP 1.6)
     participant CSMS201 as CSMS (OCPP 2.0.1)
 
-    EV->>EVSE: ErrorCodeReport (ASN.1 / OER bytes)
+    EV->>EVSE: ErrorCodeExtension{extensionID, ErrorCodeReport} (OER bytes)
     Note over EV,EVSE: ISO 15118-202 Event Notification Protocol (ENP)
     par relay to both backends
         EVSE->>CSMS16: StatusNotification(errorCode, vendorErrorCode)
@@ -28,20 +28,51 @@ sequenceDiagram
 ```
 
 -  **EV** (`ev.py`) — builds an `ErrorCodeReport` (the ASN.1 message
-   defined in `specification/protocol/UnifiedErrorCodeExchange.asn1`)
-   and encodes it as it would be sent over the Event Notification
-   Protocol (ENP) specified by ISO 15118-202.
--  **EVSE** (`evse.py`) — decodes the report and relays it, unchanged
-   in meaning, to both connected CSMS backends at the same time. It
-   translates the single `codeName` into each protocol's native error
-   representation rather than tunnelling the ASN.1 message through
-   OCPP.
+   defined in `specification/protocol/UnifiedErrorCodeExchange.asn1`),
+   wraps it as an ENP extension (`ErrorCodeExtension`), and encodes it
+   as it would be sent over the Event Notification Protocol (ENP)
+   specified by ISO 15118-202. See "ENP extension wrapping" below.
+-  **EVSE** (`evse.py`) — unwraps the extension, decodes the report,
+   and relays it, unchanged in meaning, to both connected CSMS backends
+   at the same time. It translates the single `codeName` into each
+   protocol's native error representation rather than tunnelling the
+   ASN.1 message through OCPP.
 -  **CSMS (OCPP 1.6)** and **CSMS (OCPP 2.0.1)** (`csms_ocpp16.py`,
    `csms_ocpp201.py`) — minimal mock backends, one per protocol
    version, each a `websockets` server accepting exactly the OCPP
    message the EVSE sends and acknowledging it.
 -  **`run_demo.py`** — starts both mock CSMS backends, then runs the
    EV → EVSE → CSMS flow once, printing each step.
+
+## ENP extension wrapping
+
+ISO 15118-202 publishes its ENP extension registry as a machine-readable
+ASN.1 module,
+[`ENPExtensions.asn`](https://standards.iso.org/iso/pas/15118/-202/ed-1/en/ENPExtensions.asn)
+(fetched directly from ISO's standards portal for this demo). It defines
+an open registry, `ExtensionSet`, mapping a 16-octet UUID (`extensionID`)
+to the ASN.1 type (`extensionValue`) that UUID selects — six such
+extensions are registered today (EVSE grid information, grid code impact
+level, EV/EVSE stop reason, EV/EVSE derating reason), none for a
+general-purpose error code.
+[GitHub issue #65](https://github.com/charinev/unified-error-codes/issues/65)
+proposes adding `ErrorCodeReport` as a new entry for exactly that
+purpose. This demo's `ErrorCodeExtension` type mirrors that proposal's
+shape (`extensionID` + `extensionValue`) and uses the UUID proposed
+there — see the "ENP Extension Registration" section of
+`specification/protocol/definitions_ErrorCodeExchangeMessage.rst` for
+the full registration proposal and its status.
+
+ISO's real `ExtensionSet` mechanism is built on an ASN.1 `EXTENSION
+CLASS` (an X.681 Information Object Class) so that `extensionValue`'s
+type is inferred from `extensionID` at compile time. This demo does not
+implement that literally: per the EVerest project's own investigation
+([EVerest/EVerest-archived#259](https://github.com/EVerest/EVerest-archived/issues/259)),
+current open-source ASN.1 compilers can't yet generate code for
+`EXTENSION CLASS`, so `ErrorCodeExtension` is a simplified, tool-
+compatible stand-in — a plain `{ extensionID, extensionValue }` pair,
+with `extensionValue` an opaque, separately-COER-encoded
+`ErrorCodeReport` — that demonstrates the same wire shape.
 
 ## Protocol translation
 
@@ -98,17 +129,51 @@ use *alongside* ISO 15118-2 and ISO 15118-20. Its scope statement:
 "These protocols... offer additional functionality that makes the
 digital communication for EV charging more robust and allows to
 better determine the reason of failures." That is exactly the gap this
-message closes.
+message closes. Its machine-readable ASN.1 schema files are published
+openly by ISO, independent of the (paywalled) prose document:
+[`ENPExtensions.asn`](https://standards.iso.org/iso/pas/15118/-202/ed-1/en/ENPExtensions.asn)
+and
+[`ESDPExtensions.asn`](https://standards.iso.org/iso/pas/15118/-202/ed-1/en/ESDPExtensions.asn)
+— see "ENP extension wrapping" above for how this demo uses the former.
+
+**Three open issues in this repository are directly relevant** and were
+the main source for how this demo integrates with ENP:
+
+-  [#35 "Decide on Schema Format"](https://github.com/charinev/unified-error-codes/issues/35) —
+   records the group's starting tension (OCPP uses JSON, ISO 15118-202
+   uses ASN.1) that this message format and its OCPP field-mapping both
+   answer.
+-  [#62 "Error Code Extension"](https://github.com/charinev/unified-error-codes/issues/62) —
+   an earlier, richer draft schema (event lifecycle, error
+   classification, charge context, diagnostics) with several questions
+   still unresolved by the working group (e.g. analog vs. digital
+   sessions, one message vs. per-side messages). Deliberately not
+   adopted here in full, since #61 (which this message implements)
+   asked for the *minimum* required set, and much of #62 remains
+   under active discussion.
+-  [#65 "ISO 15118-202 Error Code ENP Extension Definition"](https://github.com/charinev/unified-error-codes/issues/65) —
+   the open proposal this demo's `ErrorCodeExtension` wrapper and
+   proposed UUID follow directly.
 
 [EVerest](https://github.com/EVerest/everest-core) is an existing
-open-source EVSE/CS software stack. A fork,
+open-source EVSE/CS software stack. Its own archived issue tracker has
+a matching thread,
+[EVerest/EVerest-archived#259 "Integration ISO15118-202"](https://github.com/EVerest/EVerest-archived/issues/259),
+which independently confirms ISO 15118-202 uses ASN.1 for four
+messages and documents that `asn1c` cannot yet compile the `EXTENSION
+CLASS` construct `ExtensionSet` depends on — the basis for this demo's
+simplified `ErrorCodeExtension` stand-in (see above). A fork,
 [NatLabRockies/everest-core](https://github.com/NatLabRockies/everest-core),
-adds a prototype of ESDP (not ENP) based on a draft of ISO 15118-202,
-including a real ASN.1 module
+adds a prototype of ESDP (not ENP) based on an earlier draft of
+ISO 15118-202, with its own ASN.1 module
 ([`esdp_extensions_new.asn`](https://github.com/NatLabRockies/everest-core/blob/main/modules/EvseV2G/asn1/esdp_extensions_new.asn))
-— no open ENP reference implementation was found, so this demo's OCPP
-field mappings are instead grounded in EVerest's general-purpose OCPP
-modules:
+— superseded here by the current, official `ESDPExtensions.asn` linked
+above, but confirming this is a real, independently-verified engineering
+effort, not a one-off.
+
+No open ENP reference implementation carrying an error code was found
+anywhere, so this demo's OCPP field mappings are grounded in EVerest's
+general-purpose OCPP modules instead:
 
 -  OCPP 1.6: EVerest's `StatusNotification.req` carries `errorCode`,
    `status`, and optional `vendorId`/`vendorErrorCode` fields — this

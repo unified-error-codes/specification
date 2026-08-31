@@ -1,6 +1,6 @@
-"""The EVSE side: receives an ErrorCodeReport from the EV and relays it,
-unchanged in meaning, to two CSMS backends at once — one speaking
-OCPP 1.6, one speaking OCPP 2.0.1.
+"""The EVSE side: receives an ENP-extension-wrapped ErrorCodeReport from
+the EV and relays it, unchanged in meaning, to two CSMS backends at
+once — one speaking OCPP 1.6, one speaking OCPP 2.0.1.
 
 The EVSE does not tunnel the ASN.1 message through OCPP; it translates
 the Unified Error Code into each protocol's native error representation.
@@ -21,14 +21,23 @@ from ocpp.v201 import call as call201
 from ocpp.v201 import datatypes as datatypes201
 from ocpp.v201 import enums as enums201
 
-from common import VENDOR_ID, compile_asn1_codec
+from common import ERROR_CODE_EXTENSION_ID, VENDOR_ID, compile_asn1_codec
 
 CHARGE_POINT_ID = "EVSE-DE-ABC-E1234-1"
 
 
 def decode_from_iso15118(codec: Any, wire_bytes: bytes) -> dict:
-    """The EVSE decodes the bytes it received from the EV."""
-    return codec.decode("ErrorCodeReport", wire_bytes)
+    """The EVSE unwraps the ENP extension it received from the EV and
+    decodes the ErrorCodeReport carried in its extensionValue.
+    """
+    extension = codec.decode("ErrorCodeExtension", wire_bytes)
+    extension_id = extension["extensionID"]
+    if extension_id != ERROR_CODE_EXTENSION_ID.bytes:
+        raise ValueError(
+            f"unrecognized ENP extensionID: {extension_id.hex()} "
+            f"(expected the Error Code Extension, {ERROR_CODE_EXTENSION_ID})"
+        )
+    return codec.decode("ErrorCodeReport", extension["extensionValue"])
 
 
 def map_code_name_to_ocpp16_error(code_name: str) -> enums16.ChargePointErrorCode:

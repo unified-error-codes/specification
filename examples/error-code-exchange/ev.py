@@ -11,13 +11,24 @@ from __future__ import annotations
 
 from typing import Any
 
-from common import build_sample_report, compile_asn1_codec
+from common import ERROR_CODE_EXTENSION_ID, build_sample_report, compile_asn1_codec
 
 
 def raise_error_over_iso15118(codec: Any) -> bytes:
-    """The EV builds and encodes an ErrorCodeReport for the EVSE."""
+    """The EV builds an ErrorCodeReport and wraps it as an ENP extension.
+
+    Mirrors ISO 15118-202's ENPExtension shape: a 16-octet extensionID
+    selecting which type the extensionValue holds (here, the proposed
+    Error Code Extension from GitHub issue #65), and an extensionValue
+    carrying that type's own COER encoding.
+    """
     report = build_sample_report()
-    return codec.encode("ErrorCodeReport", report)
+    report_bytes = codec.encode("ErrorCodeReport", report)
+    extension = {
+        "extensionID": ERROR_CODE_EXTENSION_ID.bytes,
+        "extensionValue": report_bytes,
+    }
+    return codec.encode("ErrorCodeExtension", extension)
 
 
 if __name__ == "__main__":

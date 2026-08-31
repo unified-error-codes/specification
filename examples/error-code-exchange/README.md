@@ -3,7 +3,9 @@
 Runnable, end-to-end demonstration of the `ErrorCodeReport` message
 defined in
 [`specification/protocol/definitions_ErrorCodeExchangeMessage.rst`](../../specification/protocol/definitions_ErrorCodeExchangeMessage.rst),
-implementing [GitHub issue #61](https://github.com/charinev/unified-error-codes/issues/61).
+implementing [GitHub issue #61](https://github.com/charinev/unified-error-codes/issues/61)
+and the ENP extension registration proposed in
+[GitHub issue #65](https://github.com/charinev/unified-error-codes/issues/65).
 
 See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the full design.
 
@@ -12,16 +14,18 @@ See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the full design.
 The complete path **EV → EVSE → CSMS**:
 
 1. An EV builds an `ErrorCodeReport` for a `SideB_OverCurrentFailure`
-   and encodes it using the canonical ASN.1 module at
+   using the canonical ASN.1 module at
    [`specification/protocol/UnifiedErrorCodeExchange.asn1`](../../specification/protocol/UnifiedErrorCodeExchange.asn1)
-   directly, so the demo can never drift from the published schema.
+   directly, so the demo can never drift from the published schema, and
+   wraps it as an ISO 15118-202 ENP extension (`ErrorCodeExtension`) —
+   see `ARCHITECTURE.md`'s "ENP extension wrapping" section.
    (The Canonical Octet Encoding Rules, COER, are the wire encoding
    ISO 15118-202's Event Notification Protocol requires; the demo uses
    asn1tools' `oer` codec as the closest supported stand-in — see the
    comment in `demo.py`.)
-2. An EVSE decodes it, then relays the *same* detected error to **two**
-   mock CSMS backends **in parallel**: one speaking **OCPP 1.6**
-   (`StatusNotification`), one speaking **OCPP 2.0.1**
+2. An EVSE unwraps and decodes it, then relays the *same* detected
+   error to **two** mock CSMS backends **in parallel**: one speaking
+   **OCPP 1.6** (`StatusNotification`), one speaking **OCPP 2.0.1**
    (`NotifyEventRequest`) — simulating a station that has not yet
    fully migrated off the older protocol.
 

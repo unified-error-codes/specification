@@ -3,11 +3,13 @@
 
 See ARCHITECTURE.md for the full design. In short:
 
-1. The EV builds and encodes a Unified Error Code ErrorCodeReport, as it
-   would be sent over the Event Notification Protocol (ENP) specified
-   by ISO 15118-202.
-2. The EVSE decodes it, then relays the same detected error to two mock
-   CSMS backends at once: one speaking OCPP 1.6, one speaking OCPP 2.0.1.
+1. The EV builds a Unified Error Code ErrorCodeReport and wraps it as an
+   ENP extension (the proposed Error Code Extension from GitHub issue
+   #65), as it would be sent over the Event Notification Protocol (ENP)
+   specified by ISO 15118-202.
+2. The EVSE unwraps and decodes it, then relays the same detected error
+   to two mock CSMS backends at once: one speaking OCPP 1.6, one
+   speaking OCPP 2.0.1.
 
 Requires: pip install -r requirements.txt
 Run: python demo.py
@@ -36,12 +38,12 @@ async def main() -> None:
     # OER encoding differ from a canonical (COER) one.
     coer = compile_asn1_codec("oer")
 
-    print("=== EV: building and encoding ErrorCodeReport ===")
+    print("=== EV: building ErrorCodeReport, wrapping as an ENP extension ===")
     wire_bytes = raise_error_over_iso15118(coer)
     print(f"EV -> EVSE over ISO 15118-202 ENP (OER, {len(wire_bytes)} bytes):")
     print(wire_bytes.hex())
 
-    print("\n=== EVSE: decoding the report from the EV ===")
+    print("\n=== EVSE: unwrapping the ENP extension and decoding the report ===")
     report = decode_from_iso15118(coer, wire_bytes)
     print(json.dumps(report, indent=2, default=str))
 
