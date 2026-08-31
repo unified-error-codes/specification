@@ -14,7 +14,7 @@ EXPORTS ALL;
 -- ErrorCodeReport
 --
 -- Carries a single CharIN Unified Error Code report between an EV and an
--- EVSE during an ISO 15118-2 ("-202") high-level communication session, or
+-- EVSE during an ISO 15118-2 high-level communication session, or
 -- ahead of it via the Event/Signal Discovery Protocol (ESDP) / Event
 -- Notification Protocol (ENP) extensions referenced by the ISO 15118-2
 -- working draft. This is deliberately the minimum data set needed to

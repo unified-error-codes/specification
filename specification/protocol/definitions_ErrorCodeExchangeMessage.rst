@@ -12,9 +12,8 @@ Description
 ===========
 
 This message carries a single Unified Error Code report between an EV
-and an EVSE over **ISO 15118-2 ("-202")**. It is not applicable to
-ISO 15118-20, which defines its own, independently versioned message
-set.
+and an EVSE over **ISO 15118-2**, via the Event Notification Protocol
+extensions referenced by the ISO 15118-2 working draft.
 
 The message intentionally carries the *minimum* data required to
 answer three questions on receipt:
@@ -29,21 +28,18 @@ classification. Those remain the responsibility of the corresponding
 :doc:`../telemetry/definitions` signals and of the receiving system,
 which resolves ``codeName`` against the Unified Error Codes catalog.
 
-Scope: ISO 15118-2 vs. ISO 15118-20
-====================================
+Scope
+======
 
 ISO 15118-2 opens a pathway for error/diagnostic data exchange between
 the EVSE and the EV, but only defines the *transport* layer, not the
 *schema* or *content* of the error codes exchanged over it (see the
-`MANIFESTO <../../MANIFESTO.md>`_). This message closes that gap for
-ISO 15118-2 deployments, including exchanges that occur via the Event
-Signalling/Notification Protocol (ESDP/ENP) extensions referenced by
-the ISO 15118-2 working draft, before high-level communication (and
-therefore before an ``EVCCID``, an ``EVSEID`` learned by the EV, or a
-V2G ``sessionID``) is available.
-
-ISO 15118-20 uses a different, XML/EXI-based message set and version
-namespace and is out of scope for this message definition.
+`MANIFESTO <../../MANIFESTO.md>`_). This message closes that gap,
+including exchanges that occur via the Event Signalling/Notification
+Protocol (ESDP/ENP) extensions referenced by the ISO 15118-2 working
+draft, before high-level communication (and therefore before an
+``EVCCID``, an ``EVSEID`` learned by the EV, or a V2G ``sessionID``)
+is available.
 
 Message Structure
 ==================
@@ -242,7 +238,7 @@ are a human-readable summary of it.
 Encoding Rules
 ===============
 
--  **ISO 15118-2 link (EV ↔ EVSE)**: this message SHALL be encoded
+-  **ISO 15118-2 link (EV/EVSE)**: this message SHALL be encoded
    using the **Canonical Octet Encoding Rules (COER)**, as defined in
    `ITU-T X.696 <https://www.itu.int/rec/T-REC-X.696>`_. COER matches
    the byte-, string-, and integer-encoding conventions already used
