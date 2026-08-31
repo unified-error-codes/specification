@@ -347,8 +347,9 @@ Demonstration Code
 ====================
 
 A runnable demonstration of the full path — an EV encoding an
-``ErrorCodeReport`` with COER, an EVSE decoding it, and relaying the
-same detected error to two CSMS backends in parallel over OCPP 1.6 and
+``ErrorCodeReport``, wrapping it as the ``ErrorCodeExtension`` proposed
+above, an EVSE unwrapping and decoding it, and relaying the same
+detected error to two CSMS backends in parallel over OCPP 1.6 and
 OCPP 2.0.1 — is provided at
 `examples/error-code-exchange <../../examples/error-code-exchange>`_
 in the repository root.
