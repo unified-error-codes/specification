@@ -21,7 +21,7 @@
 ********************
 
 -  **Description**: The system, EV or EVSE, responsible for or reporting the
-   undervoltage condition. At Site A this is always the EVSE; at Site B
+   undervoltage condition. At Side A this is always the EVSE; at Side B
    either the EV or the EVSE may be the reporting system, since both sides
    observe the same physical interface.
 -  **Values**: EV, EVSE
