@@ -35,7 +35,8 @@ EXPORTS ALL;
 
 ErrorCodeReport ::= SEQUENCE {
     metadata    BasicMetadata,
-    errorCode   UnifiedErrorCode
+    errorCode   UnifiedErrorCode,
+    ...
 }
 
 -- -----------------------------------------------------------------------------
@@ -56,7 +57,8 @@ BasicMetadata ::= SEQUENCE {
     evseID                  EVSEID OPTIONAL,
     evccID                  EVCCID OPTIONAL,
     communicationProtocol   CommunicationProtocol OPTIONAL,
-    sessionContext          SessionContext
+    sessionContext          SessionContext,
+    ...
 }
 
 EVSEID ::= UTF8String (SIZE (1..37))
@@ -77,7 +79,8 @@ CommunicationProtocol ::= SEQUENCE {
     versionMajor        INTEGER (0..255) OPTIONAL,
     versionMinor        INTEGER (0..255) OPTIONAL,
     schemaID            INTEGER (0..255) OPTIONAL,
-    priority            INTEGER (1..20) OPTIONAL
+    priority            INTEGER (1..20) OPTIONAL,
+    ...
 }
 -- Mirrors the AppProtocolType negotiated in SupportedAppProtocolReq/Res.
 -- A separate protocolName field was intentionally dropped: protocolNamespace
@@ -86,7 +89,8 @@ CommunicationProtocol ::= SEQUENCE {
 SessionContext ::= SEQUENCE {
     sessionID     OCTET STRING (SIZE (1..8)) OPTIONAL,
     messageName   UTF8String (SIZE (1..40)) OPTIONAL,
-    timestamp     GeneralizedTime
+    timestamp     GeneralizedTime,
+    ...
 }
 -- sessionID is the V2G session identifier assigned in SessionSetupRes, so
 -- it is OPTIONAL because it does not exist before that message is
@@ -109,13 +113,68 @@ SessionContext ::= SEQUENCE {
 
 UnifiedErrorCode ::= SEQUENCE {
     source     ErrorSource,
-    codeName   UTF8String (SIZE (1..64))
+    codeName   UTF8String (SIZE (1..64)),
+    ...
 }
 -- codeName SHALL match the name of an error code defined in the CharIN
 -- Unified Error Codes specification, section "Error Codes" (e.g.
 -- "GridPowerLoss", "SideB_OverCurrentFailure").
 
-ErrorSource ::= ENUMERATED { ev(0), evse(1) }
+ErrorSource ::= ENUMERATED { ev(0), evse(1), ... }
 -- Identifies which side of the charging session detected/raised the error.
+
+-- =============================================================================
+-- ENP Extension Registration
+--
+-- ISO 15118-202 publishes its Event Notification Protocol extension
+-- registry as a machine-readable ASN.1 module, ENPExtensions.asn:
+--   https://standards.iso.org/iso/pas/15118/-202/ed-1/en/ENPExtensions.asn
+-- (ENPExtensions.asn is an unmodified ISO deliverable, reproduced here
+-- only in description, per its licence terms, not copied verbatim.)
+--
+-- That module defines an open, extensible registry:
+--   ENPExtensions ::= SEQUENCE {
+--       enpExtensionsList SEQUENCE (SIZE (1..MAX)) OF ENPExtension, ... }
+--   ENPExtension ::= SEQUENCE {
+--       extensionID    EXTENSION.&id ({ExtensionSet}),
+--       extensionValue EXTENSION.&Type ({ExtensionSet}{@.extensionID}), ... }
+--   EXTENSION ::= CLASS { &id OCTET STRING (SIZE (16)) UNIQUE, &Type }
+--       WITH SYNTAX {&id &Type}
+--   ExtensionSet EXTENSION ::= { {uuid-1 Type1} | {uuid-2 Type2} | ..., ... }
+--
+-- i.e. &id is a 16-octet UUID that selects which ASN.1 type &Type the
+-- paired extensionValue holds. As published, ExtensionSet registers six
+-- narrowly-scoped extensions (EVSE grid information, grid code impact
+-- level, EV/EVSE stop reason, EV/EVSE derating reason) — none carries a
+-- general-purpose error code. GitHub issue #65 proposes registering
+-- ErrorCodeReport (this module's root type) as a new ExtensionSet entry
+-- for exactly that purpose:
+--   https://github.com/charinev/unified-error-codes/issues/65
+--
+-- Proposed registration (pending working-group ratification via #65):
+--   extensionID (UUID v4, PROPOSED, not yet assigned by the working
+--   group): 0F9FA02C-B967-40FF-AF1D-50BF09A1D8DC
+--   extensionValue type: ErrorCodeReport (this module)
+--
+-- Neither EXTENSION CLASS nor ExtensionSet are reproduced as ASN.1 here:
+-- they are ISO 15118-202's own types, and — per the EVerest project's
+-- own investigation (github.com/EVerest/EVerest-archived issue #259) —
+-- current open-source ASN.1 compilers (asn1c) cannot yet generate code
+-- for the X.681 Information Object Class construct EXTENSION CLASS
+-- uses, so it is not practical to compile against it directly today
+-- either. ErrorCodeExtension below is a simplified, tool-compatible
+-- stand-in with the same shape (a 16-octet UUID plus an opaque payload)
+-- used only to demonstrate the intended wire structure; it is NOT part
+-- of the ISO 15118-202 ExtensionSet until #65 is ratified.
+-- =============================================================================
+
+ErrorCodeExtension ::= SEQUENCE {
+    extensionID      OCTET STRING (SIZE (16)),
+    extensionValue   OCTET STRING
+}
+-- extensionID: the UUID (see above) identifying this as the Error Code
+-- Extension, matching EXTENSION.&id's type (a 16-octet OCTET STRING).
+-- extensionValue: an ErrorCodeReport, COER-encoded, matching how
+-- EXTENSION.&Type's open type is carried on the wire.
 
 END
