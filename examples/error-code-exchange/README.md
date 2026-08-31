@@ -15,9 +15,10 @@ The complete path **EV → EVSE → CSMS**:
    and encodes it using the canonical ASN.1 module at
    [`specification/protocol/UnifiedErrorCodeExchange.asn1`](../../specification/protocol/UnifiedErrorCodeExchange.asn1)
    directly, so the demo can never drift from the published schema.
-   (The Canonical Octet Encoding Rules, COER, are ISO 15118-2's
-   required wire encoding; the demo uses asn1tools' `oer` codec as the
-   closest supported stand-in — see the comment in `demo.py`.)
+   (The Canonical Octet Encoding Rules, COER, are the wire encoding
+   ISO 15118-202's Event Notification Protocol requires; the demo uses
+   asn1tools' `oer` codec as the closest supported stand-in — see the
+   comment in `demo.py`.)
 2. An EVSE decodes it, then relays the *same* detected error to **two**
    mock CSMS backends **in parallel**: one speaking **OCPP 1.6**
    (`StatusNotification`), one speaking **OCPP 2.0.1**

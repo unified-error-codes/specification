@@ -12,8 +12,12 @@ Description
 ===========
 
 This message carries a single Unified Error Code report between an EV
-and an EVSE over **ISO 15118-2**, via the Event Notification Protocol
-extensions referenced by the ISO 15118-2 working draft.
+and an EVSE over the **Event Notification Protocol (ENP)**, as
+specified by `ISO 15118-202
+<https://www.iso.org/standard/89759.html>`_ ("Extensible SECC
+Discovery Protocol and Event Notification Protocol", currently at
+Draft PAS stage). ENP is designed to run alongside either
+ISO 15118-2 or ISO 15118-20.
 
 The message intentionally carries the *minimum* data required to
 answer three questions on receipt:
@@ -31,15 +35,14 @@ which resolves ``codeName`` against the Unified Error Codes catalog.
 Scope
 ======
 
-ISO 15118-2 opens a pathway for error/diagnostic data exchange between
-the EVSE and the EV, but only defines the *transport* layer, not the
-*schema* or *content* of the error codes exchanged over it (see the
-`MANIFESTO <../../MANIFESTO.md>`_). This message closes that gap,
-including exchanges that occur via the Event Signalling/Notification
-Protocol (ESDP/ENP) extensions referenced by the ISO 15118-2 working
-draft, before high-level communication (and therefore before an
-``EVCCID``, an ``EVSEID`` learned by the EV, or a V2G ``sessionID``)
-is available.
+ISO 15118-202 opens a pathway for error/diagnostic data exchange
+between the EVSE and the EV, but only defines the *transport* layer,
+not the *schema* or *content* of the error codes exchanged over it
+(see the `MANIFESTO <../../MANIFESTO.md>`_). This message closes that
+gap. Because ENP is designed to also work before or independent of an
+active V2G session, most fields here are optional — including
+``EVCCID``, an ``EVSEID`` learned by the EV, and a V2G ``sessionID``,
+none of which are available before high-level communication begins.
 
 Message Structure
 ==================
@@ -238,11 +241,12 @@ are a human-readable summary of it.
 Encoding Rules
 ===============
 
--  **ISO 15118-2 link (EV/EVSE)**: this message SHALL be encoded
-   using the **Canonical Octet Encoding Rules (COER)**, as defined in
-   `ITU-T X.696 <https://www.itu.int/rec/T-REC-X.696>`_. COER matches
-   the byte-, string-, and integer-encoding conventions already used
-   by ISO 15118-2's Event Notification Protocol extensions.
+-  **ENP link (EV/EVSE)**: this message SHALL be encoded using the
+   **Canonical Octet Encoding Rules (COER)**, as defined in
+   `ISO/IEC 8825-7 <https://www.iso.org/standard/81426.html>`_ (jointly
+   published as `ITU-T X.696 <https://www.itu.int/rec/T-REC-X.696>`_)
+   — the same encoding rules ISO 15118-202 itself normatively
+   references for ENP.
 
 -  **Charging management system relay (e.g. OCPP)**: an EVSE relaying
    this message to a backend maps its fields onto that backend's

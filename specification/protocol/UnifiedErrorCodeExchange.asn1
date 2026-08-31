@@ -5,7 +5,7 @@
 -- message. See specification/protocol/definitions_ErrorCodeExchangeMessage.rst
 -- for the normative field-by-field description.
 
-UnifiedErrorCodeExchange-ISO15118-2 DEFINITIONS AUTOMATIC TAGS ::=
+UnifiedErrorCodeExchange-ISO15118-202 DEFINITIONS AUTOMATIC TAGS ::=
 BEGIN
 
 EXPORTS ALL;
@@ -14,19 +14,23 @@ EXPORTS ALL;
 -- ErrorCodeReport
 --
 -- Carries a single CharIN Unified Error Code report between an EV and an
--- EVSE during an ISO 15118-2 high-level communication session, or
--- ahead of it via the Event/Signal Discovery Protocol (ESDP) / Event
--- Notification Protocol (ENP) extensions referenced by the ISO 15118-2
--- working draft. This is deliberately the minimum data set needed to
--- identify who raised an error, in which session/protocol context, and
--- which Unified Error Code applies; it is not a general-purpose telemetry
--- envelope.
+-- EVSE over the Event Notification Protocol (ENP) specified by
+-- ISO 15118-202 ("Extensible SECC Discovery Protocol and Event
+-- Notification Protocol", currently at Draft PAS stage). ENP is designed
+-- to run alongside either ISO 15118-2 or ISO 15118-20 — including before
+-- or independent of an active V2G session under either of them — which is
+-- why most fields below are OPTIONAL. This is deliberately the minimum
+-- data set needed to identify who raised an error, in which
+-- session/protocol context, and which Unified Error Code applies; it is
+-- not a general-purpose telemetry envelope.
 --
--- Encoding: on the ISO 15118-2 link, this message SHALL be encoded using
--- the Canonical Octet Encoding Rules (COER, ITU-T X.696). When relayed to
--- a charging management system, the same schema MAY be re-encoded using
--- the JSON Encoding Rules (JER, ITU-T X.697), e.g. as the `eventData`
--- payload of an OCPP 2.0.1 NotifyEventRequest.
+-- Encoding: over ENP, this message SHALL be encoded using the Canonical
+-- Octet Encoding Rules (COER), as defined in ISO/IEC 8825-7 (ITU-T
+-- X.696) — the same encoding rules ISO 15118-202 itself normatively
+-- references. When relayed to a charging management system, the same
+-- schema MAY be re-encoded using the JSON Encoding Rules (JER, ITU-T
+-- X.697), e.g. as the `eventData` payload of an OCPP 2.0.1
+-- NotifyEventRequest.
 -- =============================================================================
 
 ErrorCodeReport ::= SEQUENCE {

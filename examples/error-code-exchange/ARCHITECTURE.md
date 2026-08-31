@@ -17,7 +17,7 @@ sequenceDiagram
     participant CSMS201 as CSMS (OCPP 2.0.1)
 
     EV->>EVSE: ErrorCodeReport (ASN.1 / OER bytes)
-    Note over EV,EVSE: ISO 15118-2 Event Notification Protocol
+    Note over EV,EVSE: ISO 15118-202 Event Notification Protocol (ENP)
     par relay to both backends
         EVSE->>CSMS16: StatusNotification(errorCode, vendorErrorCode)
         CSMS16-->>EVSE: StatusNotification.conf
@@ -29,8 +29,8 @@ sequenceDiagram
 
 -  **EV** (`ev.py`) — builds an `ErrorCodeReport` (the ASN.1 message
    defined in `specification/protocol/UnifiedErrorCodeExchange.asn1`)
-   and encodes it as it would be sent over ISO 15118-2's Event
-   Notification Protocol.
+   and encodes it as it would be sent over the Event Notification
+   Protocol (ENP) specified by ISO 15118-202.
 -  **EVSE** (`evse.py`) — decodes the report and relays it, unchanged
    in meaning, to both connected CSMS backends at the same time. It
    translates the single `codeName` into each protocol's native error
@@ -77,9 +77,9 @@ in whichever OCPP version a given backend still speaks.
 
 This is a documentation demo, not a reference implementation:
 
--  No real ISO 15118-2 transport (SLAC, SDP, TLS) — the EV → EVSE leg
-   is a direct in-process function call carrying the same OER bytes
-   that would cross the wire.
+-  No real ISO 15118-202 (ENP) transport, and no ISO 15118-2/-20 SLAC,
+   SDP, or TLS — the EV → EVSE leg is a direct in-process function
+   call carrying the same OER bytes that would cross the wire.
 -  No OCPP security profiles (TLS, Basic Auth) — the mock CSMS
    backends accept any connection on `localhost`.
 -  No retry, backoff, or persistence — each relay is a single
@@ -90,9 +90,25 @@ This is a documentation demo, not a reference implementation:
 
 ## Prior art
 
+**ISO 15118-202** ("Extensible SECC Discovery Protocol and Event
+Notification Protocol") is a real, distinct ISO document — currently
+at [Draft PAS stage](https://www.iso.org/standard/89759.html), not yet
+a published International Standard — that specifies ESDP and ENP for
+use *alongside* ISO 15118-2 and ISO 15118-20. Its scope statement:
+"These protocols... offer additional functionality that makes the
+digital communication for EV charging more robust and allows to
+better determine the reason of failures." That is exactly the gap this
+message closes.
+
 [EVerest](https://github.com/EVerest/everest-core) is an existing
-open-source EVSE/CS software stack, and its OCPP modules inform how
-this demo maps a detected error onto each protocol's native fields:
+open-source EVSE/CS software stack. A fork,
+[NatLabRockies/everest-core](https://github.com/NatLabRockies/everest-core),
+adds a prototype of ESDP (not ENP) based on a draft of ISO 15118-202,
+including a real ASN.1 module
+([`esdp_extensions_new.asn`](https://github.com/NatLabRockies/everest-core/blob/main/modules/EvseV2G/asn1/esdp_extensions_new.asn))
+— no open ENP reference implementation was found, so this demo's OCPP
+field mappings are instead grounded in EVerest's general-purpose OCPP
+modules:
 
 -  OCPP 1.6: EVerest's `StatusNotification.req` carries `errorCode`,
    `status`, and optional `vendorId`/`vendorErrorCode` fields — this
