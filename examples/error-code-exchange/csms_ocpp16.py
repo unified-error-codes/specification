@@ -12,12 +12,18 @@ from ocpp.v16 import call_result
 
 logger = logging.getLogger("csms-ocpp1.6")
 
+# What this backend last received. The relay reads it after its call returns,
+# so the demo can log send/receive/acknowledge together and in order rather
+# than printing from two concurrent tasks at once.
+last_received: dict[str, Any] = {}
+
 
 class MockCentralSystemV16(ChargePointV16):
     @on("StatusNotification")
     def on_status_notification(self, **kwargs: Any) -> call_result.StatusNotification:
         logger.info("received StatusNotification: %s", kwargs)
-        print(f"CSMS (OCPP 1.6) received StatusNotification: {kwargs}")
+        last_received.clear()
+        last_received.update(kwargs)
         return call_result.StatusNotification()
 
 

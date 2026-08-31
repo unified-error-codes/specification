@@ -18,11 +18,11 @@ Run: python demo.py
 from __future__ import annotations
 
 import asyncio
-import json
 
 import csms_ocpp16
 import csms_ocpp201
-from common import compile_asn1_codec
+import demolog
+from common import ERROR_CODE_EXTENSION_ID, compile_asn1_codec
 from ev import raise_error_over_iso15118
 from evse import decode_from_iso15118, relay_to_both_backends
 
@@ -38,21 +38,33 @@ async def main() -> None:
     # OER encoding differ from a canonical (COER) one.
     coer = compile_asn1_codec("oer")
 
-    print("=== EV: building ErrorCodeReport, wrapping as an ENP extension ===")
+    demolog.step("EV detects a fault and builds an ErrorCodeReport")
     wire_bytes = raise_error_over_iso15118(coer)
-    print(f"EV -> EVSE over ISO 15118-202 ENP (OER, {len(wire_bytes)} bytes):")
-    print(wire_bytes.hex())
+    demolog.line("EV", "detected SideB_OverCurrentFailure (source=ev)")
+    demolog.line("EV", "wrapped the report as an ENP extension")
+    demolog.line("", f"extensionID     {ERROR_CODE_EXTENSION_ID}")
+    demolog.line("", "extensionValue  COER-encoded ErrorCodeReport")
 
-    print("\n=== EVSE: unwrapping the ENP extension and decoding the report ===")
+    demolog.step(
+        f"EV --> EVSE over ISO 15118-202 ENP (OER, {len(wire_bytes)} bytes)"
+    )
+    print(demolog.as_hex(wire_bytes))
+
+    demolog.step("EVSE unwraps the extension and decodes the report")
     report = decode_from_iso15118(coer, wire_bytes)
-    print(json.dumps(report, indent=2, default=str))
+    demolog.line("EVSE", "extensionID recognised, payload decoded")
+    print(demolog.as_json(report))
 
-    print("\n=== Starting mock CSMS backends ===")
+    demolog.step("Starting mock CSMS backends")
     async with csms_ocpp16.serve(), csms_ocpp201.serve():
-        print("\n=== EVSE: relaying to both CSMS backends in parallel ===")
+        demolog.line("CSMS (OCPP 1.6)", f"listening on {OCPP16_URI}")
+        demolog.line("CSMS (OCPP 2.0.1)", f"listening on {OCPP201_URI}")
+
+        demolog.step("EVSE relays the same error to both backends, concurrently")
         await relay_to_both_backends(report, OCPP16_URI, OCPP201_URI)
 
-    print("\nDone: the same Unified Error Code reached both backends.")
+    demolog.step("Done")
+    demolog.line("", "the same Unified Error Code reached both backends")
 
 
 if __name__ == "__main__":

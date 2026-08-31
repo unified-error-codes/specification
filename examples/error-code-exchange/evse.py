@@ -12,6 +12,9 @@ import asyncio
 import datetime
 from typing import Any
 
+import csms_ocpp16
+import csms_ocpp201
+import demolog
 import websockets
 from ocpp.v16 import ChargePoint as ChargePointV16
 from ocpp.v16 import call as call16
@@ -55,8 +58,12 @@ def map_code_name_to_ocpp16_error(code_name: str) -> enums16.ChargePointErrorCod
     return enums16.ChargePointErrorCode.other_error
 
 
-async def relay_over_ocpp16(report: dict, uri: str) -> None:
-    """Report the error to a CSMS speaking OCPP 1.6, via StatusNotification."""
+async def relay_over_ocpp16(report: dict, uri: str) -> list[str]:
+    """Report the error to a CSMS speaking OCPP 1.6, via StatusNotification.
+
+    Returns the log lines for this relay so the caller can emit them as one
+    block; see demolog.block for why.
+    """
     error_code = report["errorCode"]
     async with websockets.connect(uri, subprotocols=["ocpp1.6"]) as ws:
         cp = ChargePointV16(CHARGE_POINT_ID, ws)
@@ -76,11 +83,21 @@ async def relay_over_ocpp16(report: dict, uri: str) -> None:
             )
         finally:
             listener.cancel()
-    print(f"EVSE -> CSMS (OCPP 1.6) StatusNotification: accepted={response is not None}")
+    return [
+        demolog.format_line("EVSE", f"--> CSMS (OCPP 1.6) at {uri}"),
+        demolog.format_line("", "StatusNotification.req"),
+        demolog.as_json(csms_ocpp16.last_received),
+        demolog.format_line("CSMS (OCPP 1.6)", "--> EVSE  StatusNotification.conf"),
+        demolog.format_line("", f"accepted={response is not None}"),
+    ]
 
 
-async def relay_over_ocpp201(report: dict, uri: str) -> None:
-    """Report the error to a CSMS speaking OCPP 2.0.1, via NotifyEventRequest."""
+async def relay_over_ocpp201(report: dict, uri: str) -> list[str]:
+    """Report the error to a CSMS speaking OCPP 2.0.1, via NotifyEventRequest.
+
+    Returns the log lines for this relay so the caller can emit them as one
+    block; see demolog.block for why.
+    """
     error_code = report["errorCode"]
     async with websockets.connect(uri, subprotocols=["ocpp2.0.1"]) as ws:
         cp = ChargePointV201(CHARGE_POINT_ID, ws)
@@ -113,15 +130,27 @@ async def relay_over_ocpp201(report: dict, uri: str) -> None:
             )
         finally:
             listener.cancel()
-    print(f"EVSE -> CSMS (OCPP 2.0.1) NotifyEventRequest: accepted={response is not None}")
+    return [
+        demolog.format_line("EVSE", f"--> CSMS (OCPP 2.0.1) at {uri}"),
+        demolog.format_line("", "NotifyEventRequest"),
+        demolog.as_json(csms_ocpp201.last_received),
+        demolog.format_line("CSMS (OCPP 2.0.1)", "--> EVSE  NotifyEventResponse"),
+        demolog.format_line("", f"accepted={response is not None}"),
+    ]
 
 
 async def relay_to_both_backends(report: dict, uri_ocpp16: str, uri_ocpp201: str) -> None:
-    """Relay the same error to both CSMS backends concurrently."""
-    await asyncio.gather(
+    """Relay the same error to both CSMS backends concurrently.
+
+    Both requests are genuinely in flight at once; their log blocks are
+    emitted afterwards in a fixed order so the transcript stays readable.
+    """
+    blocks = await asyncio.gather(
         relay_over_ocpp16(report, uri_ocpp16),
         relay_over_ocpp201(report, uri_ocpp201),
     )
+    for lines in blocks:
+        demolog.block(lines)
 
 
 if __name__ == "__main__":

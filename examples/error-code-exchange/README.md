@@ -43,6 +43,7 @@ python demo.py
 |---|---|
 | `DemoEnpExtension.asn1` | Demo-only ENP extension wrapper (scaffolding, not spec) |
 | `common.py` | Shared sample data and ASN.1 codec setup |
+| `demolog.py` | Step-numbered transcript formatting |
 | `ev.py` | EV: builds and encodes the `ErrorCodeReport` |
 | `evse.py` | EVSE: decodes it, relays to both OCPP backends |
 | `csms_ocpp16.py` | Minimal mock CSMS speaking OCPP 1.6 |
