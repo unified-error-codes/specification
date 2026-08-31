@@ -79,11 +79,12 @@ The EVSE does not forward the ASN.1 message as-is; each backend gets a
 payload built from native OCPP fields, populated from the same
 `ErrorCodeReport`:
 
-| `ErrorCodeReport` field | OCPP 1.6 `StatusNotification` | OCPP 2.0.1 `NotifyEventRequest` |
+| Source | OCPP 1.6 `StatusNotification` | OCPP 2.0.1 `NotifyEventRequest` |
 |---|---|---|
 | `errorCode.codeName` (exact) | `vendor_error_code`, with `vendor_id` = `"org.charin.unified-error-codes"` | `event_data[].tech_code` and `event_data[].actual_value` |
 | `errorCode.codeName` (normalized) | `error_code` — the closest matching `ChargePointErrorCode`, else `OtherError` | — (no fixed vocabulary to normalize into) |
-| `errorCode.source` | *not represented* — see below | `event_data[].tech_info` (`source=ev` / `source=evse`) |
+| Reporting side, from the ENP channel | `info` — free text, `"reported by EV"` | `component.name` — `ConnectedEV` or `EVSE` |
+| `metadata` (whole `BasicMetadata`) | *not representable* — see below | `event_data[].tech_info`, as compact JSON |
 | `metadata.sessionContext.timestamp` | `timestamp` | `event_data[].timestamp` |
 | (fault state) | `status=Faulted` | `trigger=Alerting`, `event_notification_type=HardWiredNotification` |
 
@@ -95,12 +96,25 @@ along in `vendorErrorCode` regardless. OCPP 2.0.1's `NotifyEventRequest`
 was designed for exactly this kind of open-ended event/alarm reporting,
 so `tech_code` carries the Unified Error Code name directly.
 
-One asymmetry is worth calling out: **OCPP 1.6 has no field for
-`errorCode.source`**, so a 1.6-only backend cannot tell whether the EV
-or the EVSE detected the fault, even though the ISO 15118-202 message
-carries that distinction. OCPP 2.0.1 can convey it (here via
-`tech_info`). Anything richer than the error code name itself is where
-the two protocol generations stop being equivalent.
+Which side reported the error is not a field of the message — ENP
+already establishes it — so the EVSE derives it from the channel the
+report arrived on. In OCPP 2.0.1 that maps cleanly onto `component`,
+using the standardized component names `ConnectedEV` and `EVSE`, which
+is where a CSMS would expect to look.
+
+One asymmetry is worth calling out: **the session metadata cannot be
+relayed over OCPP 1.6.** Its only free-text field, `info`, is capped at
+50 characters — enough for the reporting side and nothing more —
+whereas OCPP 2.0.1's `tech_info` allows 500, enough for the EVSE/EVCC
+identifiers, session ID, negotiated protocol and message name as JSON.
+A 1.6-only backend therefore gets the error code and little else. That
+is where the two protocol generations stop being equivalent.
+
+Two field-length limits are worth noting for anyone extending this:
+`tech_code` (2.0.1) and `vendor_error_code` (1.6) are both capped at 50
+characters, while the specification allows `codeName` up to 64. A code
+name longer than 50 characters could not be relayed intact to either
+backend.
 
 ## Why simulate two backends at once
 

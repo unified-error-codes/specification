@@ -38,9 +38,9 @@ def compile_asn1_codec(codec: str) -> Any:
 def build_sample_report() -> dict:
     """A SideB_OverCurrentFailure report as the EV would raise it.
 
-    "Side B" is the vehicle side of the connector, so this is a fault the
-    EV itself detects and must tell the EVSE about — the EVSE has no other
-    way to learn of it, which is exactly why the EV -> EVSE leg exists.
+    The report carries no "who raised this" field: ENP already identifies
+    the sender, so the EVSE knows it came from the EV by virtue of having
+    received it over the EV's ENP channel.
     """
     return {
         "metadata": {
@@ -61,7 +61,6 @@ def build_sample_report() -> dict:
             },
         },
         "errorCode": {
-            "source": "ev",
             "codeName": "SideB_OverCurrentFailure",
         },
     }

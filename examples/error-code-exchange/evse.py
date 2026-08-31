@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import datetime
+import json
 from typing import Any
 
 import csms_ocpp16
@@ -28,6 +29,11 @@ from common import ERROR_CODE_EXTENSION_ID, VENDOR_ID, compile_asn1_codec
 
 CHARGE_POINT_ID = "EVSE-DE-ABC-E1234-1"
 
+# OCPP 2.0.1 EventDataType.techInfo and OCPP 1.6 StatusNotification.info
+# are both bounded; exceeding either is a schema violation, not a warning.
+TECH_INFO_MAX_LENGTH = 500
+OCPP16_INFO_MAX_LENGTH = 50
+
 
 def decode_from_iso15118(codec: Any, wire_bytes: bytes) -> dict:
     """The EVSE unwraps the ENP extension it received from the EV and
@@ -41,6 +47,51 @@ def decode_from_iso15118(codec: Any, wire_bytes: bytes) -> dict:
             f"(expected the Error Code Extension, {ERROR_CODE_EXTENSION_ID})"
         )
     return codec.decode("ErrorCodeReport", extension["extensionValue"])
+
+
+def ocpp201_component_for(reported_by: str) -> str:
+    """The OCPP 2.0.1 component an ENP-reported error should be attributed to.
+
+    ``ConnectedEV`` and ``EVSE`` are both standardized OCPP 2.0.1 component
+    names. Which one applies is known from the ENP channel the report
+    arrived on, not from the report itself.
+    """
+    return "ConnectedEV" if reported_by == "ev" else "EVSE"
+
+
+def summarize_metadata(report: dict, reported_by: str) -> str:
+    """Flatten BasicMetadata for an OCPP field that takes free-form text.
+
+    OCPP has no structured place for ISO 15118 session metadata, so the
+    parts a backend can act on are packed into compact JSON. Fields absent
+    from the report (they are all optional) are simply omitted.
+    """
+    metadata = report.get("metadata", {})
+    protocol = metadata.get("communicationProtocol") or {}
+    session = metadata.get("sessionContext") or {}
+
+    summary: dict[str, str] = {"reportedBy": reported_by}
+    if "evseID" in metadata:
+        summary["evseID"] = metadata["evseID"]
+    if "evccID" in metadata:
+        summary["evccID"] = metadata["evccID"].hex()
+    if "sessionID" in session:
+        summary["sessionID"] = session["sessionID"].hex()
+    if "messageName" in session:
+        summary["messageName"] = session["messageName"]
+    if "protocolNamespace" in protocol:
+        summary["protocol"] = protocol["protocolNamespace"]
+    if "versionMajor" in protocol:
+        summary["protocolVersion"] = (
+            f"{protocol['versionMajor']}.{protocol.get('versionMinor', 0)}"
+        )
+
+    text = json.dumps(summary, separators=(",", ":"))
+    if len(text) <= TECH_INFO_MAX_LENGTH:
+        return text
+    # Drop the longest field first rather than truncating into invalid JSON.
+    summary.pop("protocol", None)
+    return json.dumps(summary, separators=(",", ":"))[:TECH_INFO_MAX_LENGTH]
 
 
 def map_code_name_to_ocpp16_error(code_name: str) -> enums16.ChargePointErrorCode:
@@ -58,7 +109,7 @@ def map_code_name_to_ocpp16_error(code_name: str) -> enums16.ChargePointErrorCod
     return enums16.ChargePointErrorCode.other_error
 
 
-async def relay_over_ocpp16(report: dict, uri: str) -> list[str]:
+async def relay_over_ocpp16(report: dict, uri: str, reported_by: str) -> list[str]:
     """Report the error to a CSMS speaking OCPP 1.6, via StatusNotification.
 
     Returns the log lines for this relay so the caller can emit them as one
@@ -77,6 +128,10 @@ async def relay_over_ocpp16(report: dict, uri: str) -> list[str]:
                     timestamp=report["metadata"]["sessionContext"][
                         "timestamp"
                     ].isoformat(),
+                    # 50 characters is all OCPP 1.6 offers for free text, so
+                    # only the reporting side fits; the rest of the metadata
+                    # cannot be relayed over 1.6 at all.
+                    info=f"reported by {reported_by.upper()}"[:OCPP16_INFO_MAX_LENGTH],
                     vendor_id=VENDOR_ID,
                     vendor_error_code=error_code["codeName"],
                 )
@@ -92,7 +147,7 @@ async def relay_over_ocpp16(report: dict, uri: str) -> list[str]:
     ]
 
 
-async def relay_over_ocpp201(report: dict, uri: str) -> list[str]:
+async def relay_over_ocpp201(report: dict, uri: str, reported_by: str) -> list[str]:
     """Report the error to a CSMS speaking OCPP 2.0.1, via NotifyEventRequest.
 
     Returns the log lines for this relay so the caller can emit them as one
@@ -120,10 +175,12 @@ async def relay_over_ocpp201(report: dict, uri: str) -> list[str]:
                             event_notification_type=(
                                 enums201.EventNotificationEnumType.hard_wired_notification
                             ),
-                            component=datatypes201.ComponentType(name="EVSE"),
+                            component=datatypes201.ComponentType(
+                                name=ocpp201_component_for(reported_by)
+                            ),
                             variable=datatypes201.VariableType(name="ErrorCode"),
                             tech_code=error_code["codeName"],
-                            tech_info=f"source={error_code['source']}",
+                            tech_info=summarize_metadata(report, reported_by),
                         )
                     ],
                 )
@@ -139,15 +196,20 @@ async def relay_over_ocpp201(report: dict, uri: str) -> list[str]:
     ]
 
 
-async def relay_to_both_backends(report: dict, uri_ocpp16: str, uri_ocpp201: str) -> None:
+async def relay_to_both_backends(
+    report: dict, uri_ocpp16: str, uri_ocpp201: str, reported_by: str
+) -> None:
     """Relay the same error to both CSMS backends concurrently.
+
+    ``reported_by`` is which side sent the report, known from the ENP
+    channel it arrived on rather than from the report itself.
 
     Both requests are genuinely in flight at once; their log blocks are
     emitted afterwards in a fixed order so the transcript stays readable.
     """
     blocks = await asyncio.gather(
-        relay_over_ocpp16(report, uri_ocpp16),
-        relay_over_ocpp201(report, uri_ocpp201),
+        relay_over_ocpp16(report, uri_ocpp16, reported_by),
+        relay_over_ocpp201(report, uri_ocpp201, reported_by),
     )
     for lines in blocks:
         demolog.block(lines)
@@ -165,4 +227,5 @@ if __name__ == "__main__":
 
     uri16 = sys.argv[1] if len(sys.argv) > 1 else "ws://localhost:9016/EVSE"
     uri201 = sys.argv[2] if len(sys.argv) > 2 else "ws://localhost:9201/EVSE"
-    asyncio.run(relay_to_both_backends(report, uri16, uri201))
+    # The report arrived over the EV's ENP channel, so the EV reported it.
+    asyncio.run(relay_to_both_backends(report, uri16, uri201, reported_by="ev"))

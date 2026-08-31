@@ -67,10 +67,9 @@ EVSEID ::= UTF8String (SIZE (1..37))
 -- ISO 15118-2's EVSEIDType; the lower bound is deliberately permissive
 -- rather than mirroring that type's minimum, so that an EVSE reporting
 -- before it has a fully-formed identifier is still representable.
--- OPTIONAL at the BasicMetadata level because an EV-side (source=ev)
--- pre-session error report cannot include an EVSEID the EV has not yet
--- learned (the EVSEID is first returned to the EV in SessionSetupRes, at
--- the earliest).
+-- OPTIONAL at the BasicMetadata level because an EV-reported pre-session
+-- error cannot include an EVSEID the EV has not yet learned (the EVSEID
+-- is first returned to the EV in SessionSetupRes, at the earliest).
 
 EVCCID ::= OCTET STRING (SIZE (6..8))
 -- EV Communication Controller identifier, per ISO 15118-2 Annex A.1
@@ -116,16 +115,18 @@ SessionContext ::= SEQUENCE {
 -- -----------------------------------------------------------------------------
 
 UnifiedErrorCode ::= SEQUENCE {
-    source     ErrorSource,
     codeName   UTF8String (SIZE (1..64)),
     ...
 }
 -- codeName SHALL match the name of an error code defined in the CharIN
 -- Unified Error Codes specification, section "Error Codes" (e.g.
 -- "GridPowerLoss", "SideB_OverCurrentFailure").
-
-ErrorSource ::= ENUMERATED { ev(0), evse(1), ... }
--- Identifies which side of the charging session detected/raised the error.
+--
+-- There is deliberately no field identifying which side raised the
+-- error. ENP already carries that: an ENP message is sent either by the
+-- EVCC or by the SECC, so the receiver knows which one reported it.
+-- Restating it here would be redundant, and could contradict the
+-- transport if the two ever disagreed.
 
 -- =============================================================================
 -- ENP Extension Registration

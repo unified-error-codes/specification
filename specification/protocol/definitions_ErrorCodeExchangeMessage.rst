@@ -20,12 +20,16 @@ Draft PAS stage). ENP is designed to run alongside either
 ISO 15118-2 or ISO 15118-20.
 
 The message intentionally carries the *minimum* data required to
-answer three questions on receipt:
+answer two questions on receipt:
 
-#. Who raised the error — the EV or the EVSE (``UnifiedErrorCode.source``)?
 #. Which error occurred (``UnifiedErrorCode.codeName``, matching a code
    name from the :doc:`../error_codes/definitions` section)?
 #. In what protocol/session context did it occur (``BasicMetadata``)?
+
+A third question — which side raised the error — is deliberately *not*
+answered by a field of this message, because ENP already answers it:
+an ENP message is sent either by the EVCC or by the SECC, so the
+receiver knows which one reported it.
 
 It deliberately excludes telemetry, diagnostic payloads, and severity
 classification. Those remain the responsibility of the corresponding
@@ -87,9 +91,9 @@ Message Structure
       -  ``EVSEID`` (string, at most 37 characters)
       -  Identifier for the charging station / EVSE. The maximum length
          follows ISO 15118-2's ``EVSEIDType``; no minimum is imposed.
-      -  Optional — not yet known to the EV in an EV-side (``source``
-         = ``ev``) pre-session error report; the EVSEID is first
-         returned to the EV in ``SessionSetupRes``, at the earliest.
+      -  Optional — not yet known to the EV in an EV-reported
+         pre-session error; the EVSEID is first returned to the EV in
+         ``SessionSetupRes``, at the earliest.
 
    -  -  ``evccID``
       -  ``EVCCID`` (6-to-8-byte address)
@@ -215,17 +219,19 @@ Message Structure
       -  Description
       -  Presence
 
-   -  -  ``source``
-      -  ``ErrorSource`` (``ev`` | ``evse``)
-      -  Which side of the charging session detected/raised the error.
-      -  Required
-
    -  -  ``codeName``
       -  string
       -  Name of the reported error code, matching a code defined in
          :doc:`../error_codes/definitions` (e.g. ``GridPowerLoss``,
          ``SideB_OverCurrentFailure``).
       -  Required
+
+.. note::
+
+   There is deliberately no field identifying which side raised the
+   error. ENP already carries that — an ENP message is sent either by
+   the EVCC or by the SECC — so restating it here would be redundant,
+   and could contradict the transport if the two ever disagreed.
 
 ENP Extension Registration
 ============================

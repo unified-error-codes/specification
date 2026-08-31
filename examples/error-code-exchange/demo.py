@@ -40,7 +40,7 @@ async def main() -> None:
 
     demolog.step("EV detects a fault and builds an ErrorCodeReport")
     wire_bytes = raise_error_over_iso15118(coer)
-    demolog.line("EV", "detected SideB_OverCurrentFailure (source=ev)")
+    demolog.line("EV", "detected SideB_OverCurrentFailure")
     demolog.line("EV", "wrapped the report as an ENP extension")
     demolog.line("", f"extensionID     {ERROR_CODE_EXTENSION_ID}")
     demolog.line("", "extensionValue  COER-encoded ErrorCodeReport")
@@ -53,6 +53,8 @@ async def main() -> None:
     demolog.step("EVSE unwraps the extension and decodes the report")
     report = decode_from_iso15118(coer, wire_bytes)
     demolog.line("EVSE", "extensionID recognised, payload decoded")
+    demolog.line("EVSE", "arrived on the EV's ENP channel, so the EV reported it")
+    demolog.line("", "(the report itself carries no 'which side' field)")
     print(demolog.as_json(report))
 
     demolog.step("Starting mock CSMS backends")
@@ -61,7 +63,9 @@ async def main() -> None:
         demolog.line("CSMS (OCPP 2.0.1)", f"listening on {OCPP201_URI}")
 
         demolog.step("EVSE relays the same error to both backends, concurrently")
-        await relay_to_both_backends(report, OCPP16_URI, OCPP201_URI)
+        await relay_to_both_backends(
+            report, OCPP16_URI, OCPP201_URI, reported_by="ev"
+        )
 
     demolog.step("Done")
     demolog.line("", "the same Unified Error Code reached both backends")
