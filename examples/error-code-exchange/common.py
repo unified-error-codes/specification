@@ -16,17 +16,23 @@ ASN1_MODULE_PATH = (
     / "UnifiedErrorCodeExchange.asn1"
 )
 
+# Demonstration scaffolding, not part of the specification — see the file's
+# own header for why the demo cannot compile against ISO's own module.
+DEMO_EXTENSION_MODULE_PATH = Path(__file__).resolve().parent / "DemoEnpExtension.asn1"
+
 VENDOR_ID = "org.charin.unified-error-codes"
 
-# Proposed (unratified) extensionID for registering ErrorCodeReport as an
-# ISO 15118-202 ENP ExtensionSet entry, per GitHub issue #65. See the
-# "ENP Extension Registration" section of definitions_ErrorCodeExchangeMessage.rst.
+# Proposed (unratified) identifier for registering ErrorCodeReport as an
+# ISO 15118-202 ENP extension, per GitHub issue #65. See the "ENP Extension
+# Registration" section of definitions_ErrorCodeExchangeMessage.rst.
 ERROR_CODE_EXTENSION_ID = uuid.UUID("0F9FA02C-B967-40FF-AF1D-50BF09A1D8DC")
 
 
 def compile_asn1_codec(codec: str) -> Any:
-    """Compile the canonical ASN.1 module with the given asn1tools codec."""
-    return asn1tools.compile_files(str(ASN1_MODULE_PATH), codec=codec)
+    """Compile the specification's module plus the demo's extension wrapper."""
+    return asn1tools.compile_files(
+        [str(ASN1_MODULE_PATH), str(DEMO_EXTENSION_MODULE_PATH)], codec=codec
+    )
 
 
 def build_sample_report() -> dict:

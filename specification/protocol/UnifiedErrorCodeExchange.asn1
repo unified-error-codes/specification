@@ -24,10 +24,11 @@ EXPORTS ALL;
 -- session/protocol context, and which Unified Error Code applies; it is
 -- not a general-purpose telemetry envelope.
 --
--- Encoding: over ENP, this message SHALL be encoded using the Canonical
--- Octet Encoding Rules (COER), as defined in ISO/IEC 8825-7 (ITU-T
--- X.696) — the same encoding rules ISO 15118-202 itself normatively
--- references. When relayed to a charging management system, the same
+-- Encoding: ISO 15118-202 normatively references ISO/IEC 8825-7 (ITU-T
+-- X.696), which specifies both basic and canonical Octet Encoding Rules.
+-- This message SHALL use the canonical variant (COER), as proposed in
+-- GitHub issue #61, so that a given report has exactly one valid
+-- encoding. When relayed to a charging management system, the same
 -- schema MAY be re-encoded using the JSON Encoding Rules (JER, ITU-T
 -- X.697), e.g. as the `eventData` payload of an OCPP 2.0.1
 -- NotifyEventRequest.
@@ -62,7 +63,10 @@ BasicMetadata ::= SEQUENCE {
 }
 
 EVSEID ::= UTF8String (SIZE (1..37))
--- EVSE identifier, formatted per ISO 15118-2 Annex A.1 (EVSEIDType).
+-- EVSE identifier. The upper bound follows the maximum length of
+-- ISO 15118-2's EVSEIDType; the lower bound is deliberately permissive
+-- rather than mirroring that type's minimum, so that an EVSE reporting
+-- before it has a fully-formed identifier is still representable.
 -- OPTIONAL at the BasicMetadata level because an EV-side (source=ev)
 -- pre-session error report cannot include an EVSEID the EV has not yet
 -- learned (the EVSEID is first returned to the EV in SessionSetupRes, at
@@ -126,55 +130,33 @@ ErrorSource ::= ENUMERATED { ev(0), evse(1), ... }
 -- =============================================================================
 -- ENP Extension Registration
 --
--- ISO 15118-202 publishes its Event Notification Protocol extension
--- registry as a machine-readable ASN.1 module, ENPExtensions.asn:
+-- ISO 15118-202 carries ENP extensions in a registry whose entries pair a
+-- unique 16-octet identifier with the ASN.1 type that identifier selects.
+-- ISO publishes that registry as a machine-readable ASN.1 module,
+-- ENPExtensions.asn, separately from the (paywalled) prose document:
 --   https://standards.iso.org/iso/pas/15118/-202/ed-1/en/ENPExtensions.asn
--- (ENPExtensions.asn is an unmodified ISO deliverable, reproduced here
--- only in description, per its licence terms, not copied verbatim.)
+-- Its types are ISO's own and are neither reproduced nor redistributed
+-- here; consult that module for their normative definitions.
 --
--- That module defines an open, extensible registry:
---   ENPExtensions ::= SEQUENCE {
---       enpExtensionsList SEQUENCE (SIZE (1..MAX)) OF ENPExtension, ... }
---   ENPExtension ::= SEQUENCE {
---       extensionID    EXTENSION.&id ({ExtensionSet}),
---       extensionValue EXTENSION.&Type ({ExtensionSet}{@.extensionID}), ... }
---   EXTENSION ::= CLASS { &id OCTET STRING (SIZE (16)) UNIQUE, &Type }
---       WITH SYNTAX {&id &Type}
---   ExtensionSet EXTENSION ::= { {uuid-1 Type1} | {uuid-2 Type2} | ..., ... }
---
--- i.e. &id is a 16-octet UUID that selects which ASN.1 type &Type the
--- paired extensionValue holds. As published, ExtensionSet registers six
--- narrowly-scoped extensions (EVSE grid information, grid code impact
--- level, EV/EVSE stop reason, EV/EVSE derating reason) — none carries a
--- general-purpose error code. GitHub issue #65 proposes registering
--- ErrorCodeReport (this module's root type) as a new ExtensionSet entry
--- for exactly that purpose:
+-- As published, the registry holds six narrowly-scoped extensions (EVSE
+-- grid information, grid code impact level, EV/EVSE stop reason, EV/EVSE
+-- derating reason) — none carries a general-purpose error code. GitHub
+-- issue #65 proposes registering ErrorCodeReport (this module's root
+-- type) as a new entry for exactly that purpose:
 --   https://github.com/charinev/unified-error-codes/issues/65
 --
--- Proposed registration (pending working-group ratification via #65):
---   extensionID (UUID v4, PROPOSED, not yet assigned by the working
---   group): 0F9FA02C-B967-40FF-AF1D-50BF09A1D8DC
---   extensionValue type: ErrorCodeReport (this module)
+-- Proposed registration — NOT ratified, and not assigned by the working
+-- group; see #65 for its status:
+--   identifier (UUID v4): 0F9FA02C-B967-40FF-AF1D-50BF09A1D8DC
+--   selected type:        ErrorCodeReport (this module)
 --
--- Neither EXTENSION CLASS nor ExtensionSet are reproduced as ASN.1 here:
--- they are ISO 15118-202's own types, and — per the EVerest project's
--- own investigation (github.com/EVerest/EVerest-archived issue #259) —
--- current open-source ASN.1 compilers (asn1c) cannot yet generate code
--- for the X.681 Information Object Class construct EXTENSION CLASS
--- uses, so it is not practical to compile against it directly today
--- either. ErrorCodeExtension below is a simplified, tool-compatible
--- stand-in with the same shape (a 16-octet UUID plus an opaque payload)
--- used only to demonstrate the intended wire structure; it is NOT part
--- of the ISO 15118-202 ExtensionSet until #65 is ratified.
+-- ISO's registry is built on an X.681 Information Object Class, which
+-- current open-source ASN.1 compilers cannot yet process (see the EVerest
+-- project's investigation, github.com/EVerest/EVerest-archived issue
+-- #259). The demo under examples/error-code-exchange therefore defines
+-- its own simplified, tool-compatible stand-in rather than compiling
+-- against ISO's module; that stand-in is demonstration scaffolding and
+-- forms no part of this specification.
 -- =============================================================================
-
-ErrorCodeExtension ::= SEQUENCE {
-    extensionID      OCTET STRING (SIZE (16)),
-    extensionValue   OCTET STRING
-}
--- extensionID: the UUID (see above) identifying this as the Error Code
--- Extension, matching EXTENSION.&id's type (a 16-octet OCTET STRING).
--- extensionValue: an ErrorCodeReport, COER-encoded, matching how
--- EXTENSION.&Type's open type is carried on the wire.
 
 END
