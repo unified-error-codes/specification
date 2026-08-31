@@ -1,0 +1,117 @@
+-- SPDX-License-Identifier: CC-BY-4.0
+-- Copyright CharIN e.V. and Contributors
+--
+-- Canonical ASN.1 module for the CharIN Unified Error Codes exchange
+-- message. See specification/protocol/definitions_ErrorCodeExchangeMessage.rst
+-- for the normative field-by-field description.
+
+UnifiedErrorCodeExchange-ISO15118-2 DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN
+
+EXPORTS ALL;
+
+-- =============================================================================
+-- ErrorCodeReport
+--
+-- Carries a single CharIN Unified Error Code report between an EV and an
+-- EVSE during an ISO 15118-2 ("-202") high-level communication session, or
+-- ahead of it via the Event/Signal Discovery Protocol (ESDP) / Event
+-- Notification Protocol (ENP) extensions referenced by the ISO 15118-2
+-- working draft. This is deliberately the minimum data set needed to
+-- identify who raised an error, in which session/protocol context, and
+-- which Unified Error Code applies; it is not a general-purpose telemetry
+-- envelope.
+--
+-- Encoding: on the ISO 15118-2 link, this message SHALL be encoded using
+-- the Canonical Octet Encoding Rules (COER, ITU-T X.696). When relayed to
+-- a charging management system, the same schema MAY be re-encoded using
+-- the JSON Encoding Rules (JER, ITU-T X.697), e.g. as the `eventData`
+-- payload of an OCPP 2.0.1 NotifyEventRequest.
+-- =============================================================================
+
+ErrorCodeReport ::= SEQUENCE {
+    metadata    BasicMetadata,
+    errorCode   UnifiedErrorCode
+}
+
+-- -----------------------------------------------------------------------------
+-- Basic Metadata
+--
+-- Identifies the participants, negotiated protocol, and session an error
+-- occurred in. evseID and evccID are each OPTIONAL because an ESDP/ENP-
+-- signalled error can occur before either side has learned the other's
+-- identifier: the EV does not learn the EVSEID until SDP/SessionSetupRes,
+-- and the EVSE does not learn the EVCCID until SLAC/SDP completes.
+-- communicationProtocol, and every field of sessionContext except
+-- timestamp, are OPTIONAL for the same reason: an ESDP/ENP-signalled
+-- error can occur before application-protocol negotiation, or even
+-- before a V2G session exists. timestamp is always required.
+-- -----------------------------------------------------------------------------
+
+BasicMetadata ::= SEQUENCE {
+    evseID                  EVSEID OPTIONAL,
+    evccID                  EVCCID OPTIONAL,
+    communicationProtocol   CommunicationProtocol OPTIONAL,
+    sessionContext          SessionContext
+}
+
+EVSEID ::= UTF8String (SIZE (1..37))
+-- EVSE identifier, formatted per ISO 15118-2 Annex A.1 (EVSEIDType).
+-- OPTIONAL at the BasicMetadata level because an EV-side (source=ev)
+-- pre-session error report cannot include an EVSEID the EV has not yet
+-- learned (the EVSEID is first returned to the EV in SessionSetupRes, at
+-- the earliest).
+
+EVCCID ::= OCTET STRING (SIZE (6..8))
+-- EV Communication Controller identifier, per ISO 15118-2 Annex A.1
+-- (EVCCIDType, hexBinary, 6 to 8 octets: a 6-byte EUI-48 MAC address, or
+-- an 8-byte EUI-64 address). OPTIONAL at the BasicMetadata level because
+-- it is not yet known when an error is signalled before SLAC/SDP completes.
+
+CommunicationProtocol ::= SEQUENCE {
+    protocolNamespace   UTF8String (SIZE (1..100)) OPTIONAL,
+    versionMajor        INTEGER (0..255) OPTIONAL,
+    versionMinor        INTEGER (0..255) OPTIONAL,
+    schemaID            INTEGER (0..255) OPTIONAL,
+    priority            INTEGER (1..20) OPTIONAL
+}
+-- Mirrors the AppProtocolType negotiated in SupportedAppProtocolReq/Res.
+-- A separate protocolName field was intentionally dropped: protocolNamespace
+-- already identifies the protocol unambiguously (see GitHub issue #61).
+
+SessionContext ::= SEQUENCE {
+    sessionID     OCTET STRING (SIZE (1..8)) OPTIONAL,
+    messageName   UTF8String (SIZE (1..40)) OPTIONAL,
+    timestamp     GeneralizedTime
+}
+-- sessionID is the V2G session identifier assigned in SessionSetupRes, so
+-- it is OPTIONAL because it does not exist before that message is
+-- exchanged. Its SIZE range (1..8) matches ISO 15118-2's sessionIDType
+-- (hexBinary, maxLength 8, no minimum): the 8-octet form carries an
+-- assigned session identifier, while the 1-octet form covers the reserved
+-- single-byte 0x00 "no active session" encoding used elsewhere in
+-- ISO 15118-2. A separate couplingSessionID field was intentionally
+-- dropped per GitHub issue #61 review feedback.
+-- messageName SHOULD be populated with the V2GMessageType (ISO 15118-2
+-- Table 8) or SLACMessageType (ISO 15118-2 Table 4) name most closely
+-- associated with the fault, when known.
+-- timestamp uses GeneralizedTime rather than a free-form string so that
+-- COER and JER encoders/decoders both enforce a single, unambiguous
+-- date-time representation (equivalent to RFC 3339 / ISO 8601).
+
+-- -----------------------------------------------------------------------------
+-- Unified Error Code
+-- -----------------------------------------------------------------------------
+
+UnifiedErrorCode ::= SEQUENCE {
+    source     ErrorSource,
+    codeName   UTF8String (SIZE (1..64))
+}
+-- codeName SHALL match the name of an error code defined in the CharIN
+-- Unified Error Codes specification, section "Error Codes" (e.g.
+-- "GridPowerLoss", "SideB_OverCurrentFailure").
+
+ErrorSource ::= ENUMERATED { ev(0), evse(1) }
+-- Identifies which side of the charging session detected/raised the error.
+
+END
