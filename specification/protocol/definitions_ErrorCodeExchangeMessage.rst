@@ -20,21 +20,22 @@ Draft PAS stage). ENP is designed to run alongside either
 ISO 15118-2 or ISO 15118-20.
 
 The message intentionally carries the *minimum* data required to
-answer two questions on receipt:
+answer three questions on receipt:
 
 #. Which error occurred (``UnifiedErrorCode.codeName``, matching a code
    name from the :doc:`../error_codes/definitions` section)?
 #. In what protocol/session context did it occur (``BasicMetadata``)?
+#. What was measured when it occurred (``Telemetry``, carrying signals
+   from the :doc:`../telemetry/definitions` section)?
 
-A third question — which side raised the error — is deliberately *not*
+A fourth question — which side raised the error — is deliberately *not*
 answered by a field of this message, because ENP already answers it:
 an ENP message is sent either by the EVCC or by the SECC, so the
 receiver knows which one reported it.
 
-It deliberately excludes telemetry, diagnostic payloads, and severity
-classification. Those remain the responsibility of the corresponding
-:doc:`../telemetry/definitions` signals and of the receiving system,
-which resolves ``codeName`` against the Unified Error Codes catalog.
+It excludes diagnostic payloads and severity classification, which
+remain the responsibility of the receiving system once it has resolved
+``codeName`` against the Unified Error Codes catalog.
 
 Scope
 ======
@@ -71,9 +72,14 @@ Message Structure
 
    -  -  ``errorCode``
       -  ``UnifiedErrorCode``
-      -  The Unified Error Code being reported and the side that
-         detected it.
+      -  The Unified Error Code being reported.
       -  Required
+
+   -  -  ``telemetry``
+      -  ``Telemetry``
+      -  The measurements that make the reported error diagnosable.
+      -  Optional — a report can be raised before any measurement is
+         available.
 
 ``BasicMetadata``
 ------------------
@@ -232,6 +238,68 @@ Message Structure
    error. ENP already carries that — an ENP message is sent either by
    the EVCC or by the SECC — so restating it here would be redundant,
    and could contradict the transport if the two ever disagreed.
+
+   Nor does the code name carry where the condition was measured. That
+   is a telemetry signal — for ``SideB_OverCurrentFailure``, it is
+   ``Telemetry_SideB_OverCurrent_Location``, whose values are ``EVSE``,
+   ``EV`` or ``unknown`` — so that one code name covers the condition
+   wherever it occurs.
+
+``Telemetry``
+---------------
+
+A list of one or more ``TelemetrySignal`` entries. Each error code in
+:doc:`../error_codes/definitions` lists the signals required to analyse
+it under "Related Telemetry"; a sender SHOULD include those signals for
+the code it reports, and MAY include others.
+
+``TelemetrySignal``
+---------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 45 15
+
+   -  -  Field
+      -  Type
+      -  Description
+      -  Presence
+
+   -  -  ``name``
+      -  string
+      -  Name of the signal, matching one defined in
+         :doc:`../telemetry/definitions` (e.g.
+         ``Telemetry_SideB_OverCurrent_ActualCurrent``).
+      -  Required
+
+   -  -  ``value``
+      -  ``TelemetryValue``
+      -  The reported value of that signal.
+      -  Required
+
+``TelemetryValue``
+--------------------
+
+A choice of one of:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 80
+
+   -  -  Alternative
+      -  Meaning
+
+   -  -  ``scaled`` (integer)
+      -  A measurement, expressed as a whole multiple of the resolution
+         the signal declares, so that no floating-point representation
+         is needed on the wire. A signal whose resolution is ``0.1 A``
+         sending ``1503`` means 150.3 A. The unit is the one the signal
+         declares and is not repeated here.
+
+   -  -  ``text`` (string)
+      -  For signals whose values are a named set rather than a
+         measurement, one of the names that signal defines — e.g. ``EV``
+         for ``Telemetry_SideB_OverCurrent_Location``.
 
 ENP Extension Registration
 ============================

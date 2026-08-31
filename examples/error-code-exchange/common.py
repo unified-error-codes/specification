@@ -63,4 +63,22 @@ def build_sample_report() -> dict:
         "errorCode": {
             "codeName": "SideB_OverCurrentFailure",
         },
+        # The three signals this error code lists under "Related Telemetry".
+        # Where the over-current was measured is one of them — it is telemetry,
+        # not something the code name has to encode.
+        "telemetry": [
+            {
+                "name": "Telemetry_SideB_OverCurrent_Location",
+                "value": ("text", "EV"),
+            },
+            {
+                # Resolution 0.1 A, so 1503 means 150.3 A.
+                "name": "Telemetry_SideB_OverCurrent_ActualCurrent",
+                "value": ("scaled", 1503),
+            },
+            {
+                "name": "Telemetry_SideB_OverCurrent_ThresholdCurrent",
+                "value": ("scaled", 1250),
+            },
+        ],
     }

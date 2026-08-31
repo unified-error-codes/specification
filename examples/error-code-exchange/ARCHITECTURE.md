@@ -85,8 +85,16 @@ payload built from native OCPP fields, populated from the same
 | `errorCode.codeName` (normalized) | `error_code` — the closest matching `ChargePointErrorCode`, else `OtherError` | — (no fixed vocabulary to normalize into) |
 | Reporting side, from the ENP channel | `info` — free text, `"reported by EV"` | `component.name` — `ConnectedEV` or `EVSE` |
 | `metadata` (whole `BasicMetadata`) | *not representable* — see below | `event_data[].tech_info`, as compact JSON |
+| `telemetry[]` (each signal) | *not representable* — see below | one further `event_data[]` entry each, with `variable.name` = the signal name, `actual_value` = its value, and `cause` = the error entry's `event_id` |
 | `metadata.sessionContext.timestamp` | `timestamp` | `event_data[].timestamp` |
 | (fault state) | `status=Faulted` | `trigger=Alerting`, `event_notification_type=HardWiredNotification` |
+
+Telemetry maps onto OCPP 2.0.1 particularly well: that protocol reports
+one variable per `EventData` entry, so each signal becomes a sibling
+entry rather than being flattened into the error entry, and OCPP's own
+`cause` field — "refers to the Id of an event that is considered to be
+the cause for this event" — links each measurement back to the fault it
+belongs to.
 
 OCPP 1.6's `ChargePointErrorCode` is a small, fixed vocabulary; where a
 Unified Error Code name matches one of its values directly (e.g.
@@ -102,13 +110,16 @@ report arrived on. In OCPP 2.0.1 that maps cleanly onto `component`,
 using the standardized component names `ConnectedEV` and `EVSE`, which
 is where a CSMS would expect to look.
 
-One asymmetry is worth calling out: **the session metadata cannot be
-relayed over OCPP 1.6.** Its only free-text field, `info`, is capped at
-50 characters — enough for the reporting side and nothing more —
-whereas OCPP 2.0.1's `tech_info` allows 500, enough for the EVSE/EVCC
-identifiers, session ID, negotiated protocol and message name as JSON.
-A 1.6-only backend therefore gets the error code and little else. That
-is where the two protocol generations stop being equivalent.
+One asymmetry is worth calling out: **neither the session metadata nor
+the telemetry can be relayed over OCPP 1.6.** `StatusNotification` has
+no repeating structure to hold measurements, and its only free-text
+field, `info`, is capped at 50 characters — enough for the reporting
+side and nothing more. OCPP 2.0.1 carries both: `tech_info` allows 500
+characters for the metadata, and additional `event_data` entries carry
+the telemetry. A 1.6-only backend therefore gets the error code and
+little else — it learns *that* an over-current occurred, but not the
+measured current, the threshold it exceeded, or where it was measured.
+That is where the two protocol generations stop being equivalent.
 
 Two field-length limits are worth noting for anyone extending this:
 `tech_code` (2.0.1) and `vendor_error_code` (1.6) are both capped at 50

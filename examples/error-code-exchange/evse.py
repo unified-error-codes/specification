@@ -147,13 +147,71 @@ async def relay_over_ocpp16(report: dict, uri: str, reported_by: str) -> list[st
     ]
 
 
+def format_telemetry_value(value: tuple) -> str:
+    """Render a TelemetryValue CHOICE for an OCPP field that takes a string.
+
+    `scaled` values stay whole multiples of the signal's declared
+    resolution, exactly as they travel in the ASN.1 message; converting to
+    a decimal here would mean re-deriving each signal's resolution, which
+    the message deliberately does not carry.
+    """
+    _kind, payload = value
+    return str(payload)
+
+
+def build_ocpp201_event_data(report: dict, reported_by: str) -> list:
+    """One EventData for the error, plus one per related telemetry signal.
+
+    OCPP 2.0.1 reports one variable per EventData entry, so the telemetry
+    signals become sibling entries rather than being flattened into the
+    error entry. Each names the error's event_id as its `cause`, which is
+    what that field is for, so a CSMS can tell which measurements belong
+    to which fault.
+    """
+    timestamp = report["metadata"]["sessionContext"]["timestamp"].isoformat()
+    component = datatypes201.ComponentType(name=ocpp201_component_for(reported_by))
+    error_event_id = 1
+
+    entries = [
+        datatypes201.EventDataType(
+            event_id=error_event_id,
+            timestamp=timestamp,
+            trigger=enums201.EventTriggerEnumType.alerting,
+            actual_value=report["errorCode"]["codeName"],
+            event_notification_type=(
+                enums201.EventNotificationEnumType.hard_wired_notification
+            ),
+            component=component,
+            variable=datatypes201.VariableType(name="ErrorCode"),
+            tech_code=report["errorCode"]["codeName"],
+            tech_info=summarize_metadata(report, reported_by),
+        )
+    ]
+
+    for offset, signal in enumerate(report.get("telemetry") or [], start=1):
+        entries.append(
+            datatypes201.EventDataType(
+                event_id=error_event_id + offset,
+                timestamp=timestamp,
+                trigger=enums201.EventTriggerEnumType.alerting,
+                actual_value=format_telemetry_value(signal["value"]),
+                event_notification_type=(
+                    enums201.EventNotificationEnumType.hard_wired_notification
+                ),
+                component=component,
+                variable=datatypes201.VariableType(name=signal["name"]),
+                cause=error_event_id,
+            )
+        )
+    return entries
+
+
 async def relay_over_ocpp201(report: dict, uri: str, reported_by: str) -> list[str]:
     """Report the error to a CSMS speaking OCPP 2.0.1, via NotifyEventRequest.
 
     Returns the log lines for this relay so the caller can emit them as one
     block; see demolog.block for why.
     """
-    error_code = report["errorCode"]
     async with websockets.connect(uri, subprotocols=["ocpp2.0.1"]) as ws:
         cp = ChargePointV201(CHARGE_POINT_ID, ws)
         listener = asyncio.ensure_future(cp.start())
@@ -164,25 +222,7 @@ async def relay_over_ocpp201(report: dict, uri: str, reported_by: str) -> list[s
                         tz=datetime.timezone.utc
                     ).isoformat(),
                     seq_no=0,
-                    event_data=[
-                        datatypes201.EventDataType(
-                            event_id=1,
-                            timestamp=report["metadata"]["sessionContext"][
-                                "timestamp"
-                            ].isoformat(),
-                            trigger=enums201.EventTriggerEnumType.alerting,
-                            actual_value=error_code["codeName"],
-                            event_notification_type=(
-                                enums201.EventNotificationEnumType.hard_wired_notification
-                            ),
-                            component=datatypes201.ComponentType(
-                                name=ocpp201_component_for(reported_by)
-                            ),
-                            variable=datatypes201.VariableType(name="ErrorCode"),
-                            tech_code=error_code["codeName"],
-                            tech_info=summarize_metadata(report, reported_by),
-                        )
-                    ],
+                    event_data=build_ocpp201_event_data(report, reported_by),
                 )
             )
         finally:

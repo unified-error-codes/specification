@@ -37,6 +37,7 @@ EXPORTS ALL;
 ErrorCodeReport ::= SEQUENCE {
     metadata    BasicMetadata,
     errorCode   UnifiedErrorCode,
+    telemetry   Telemetry OPTIONAL,
     ...
 }
 
@@ -127,6 +128,49 @@ UnifiedErrorCode ::= SEQUENCE {
 -- EVCC or by the SECC, so the receiver knows which one reported it.
 -- Restating it here would be redundant, and could contradict the
 -- transport if the two ever disagreed.
+--
+-- Nor does the code name carry where the condition was measured. That is
+-- a telemetry signal (e.g. Telemetry_SideB_OverCurrent_Location, whose
+-- values are EVSE, EV or unknown), reported in the telemetry field
+-- below, so that one code name covers the condition wherever it occurs.
+
+-- -----------------------------------------------------------------------------
+-- Telemetry
+--
+-- The measurements that make a reported error diagnosable. Each error
+-- code in the CharIN Unified Error Codes specification lists the
+-- telemetry signals required to analyse it under "Related Telemetry"; a
+-- sender SHOULD include those signals for the code it reports, and MAY
+-- include others.
+--
+-- The field is OPTIONAL because a report can be raised before any
+-- measurement is available — an error signalled ahead of high-level
+-- communication, for instance.
+-- -----------------------------------------------------------------------------
+
+Telemetry ::= SEQUENCE (SIZE (1..MAX)) OF TelemetrySignal
+
+TelemetrySignal ::= SEQUENCE {
+    name    UTF8String (SIZE (1..64)),
+    value   TelemetryValue,
+    ...
+}
+-- name SHALL match the name of a telemetry signal defined in the CharIN
+-- Unified Error Codes specification, section "Telemetry" (e.g.
+-- "Telemetry_SideB_OverCurrent_ActualCurrent").
+
+TelemetryValue ::= CHOICE {
+    scaled   INTEGER,
+    text     UTF8String (SIZE (1..64)),
+    ...
+}
+-- scaled: a measurement expressed as a whole multiple of the resolution
+-- the signal declares, so no floating-point representation is needed on
+-- the wire. A signal with a resolution of 0.1 A sending 1503 means
+-- 150.3 A. The unit is the one the signal declares and is not repeated
+-- here.
+-- text: for signals whose values are a named set rather than a
+-- measurement, carrying one of the names that signal defines.
 
 -- =============================================================================
 -- ENP Extension Registration

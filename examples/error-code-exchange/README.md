@@ -13,8 +13,11 @@ See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the full design.
 
 The complete path **EV → EVSE → CSMS**:
 
-1. An EV builds an `ErrorCodeReport` for a `SideB_OverCurrentFailure`
-   using the canonical ASN.1 module at
+1. An EV builds an `ErrorCodeReport` for a `SideB_OverCurrentFailure`,
+   carrying the three telemetry signals that error code lists as
+   required for analysing it — including where the over-current was
+   measured, which is telemetry rather than something the code name
+   encodes — using the canonical ASN.1 module at
    [`specification/protocol/UnifiedErrorCodeExchange.asn1`](../../specification/protocol/UnifiedErrorCodeExchange.asn1)
    directly, so the demo can never drift from the published schema, and
    wraps it as an ISO 15118-202 ENP extension — see `ARCHITECTURE.md`'s

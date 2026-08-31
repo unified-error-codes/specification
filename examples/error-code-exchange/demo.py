@@ -41,6 +41,8 @@ async def main() -> None:
     demolog.step("EV detects a fault and builds an ErrorCodeReport")
     wire_bytes = raise_error_over_iso15118(coer)
     demolog.line("EV", "detected SideB_OverCurrentFailure")
+    demolog.line("EV", "attached the 3 telemetry signals that code requires")
+    demolog.line("", "location=EV, actual=150.3 A, threshold=125.0 A")
     demolog.line("EV", "wrapped the report as an ENP extension")
     demolog.line("", f"extensionID     {ERROR_CODE_EXTENSION_ID}")
     demolog.line("", "extensionValue  COER-encoded ErrorCodeReport")
