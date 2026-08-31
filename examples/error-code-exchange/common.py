@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import datetime
 from pathlib import Path
+from typing import Any
 
 import asn1tools
 
@@ -17,7 +18,7 @@ ASN1_MODULE_PATH = (
 VENDOR_ID = "org.charin.unified-error-codes"
 
 
-def compile_asn1_codec(codec: str):
+def compile_asn1_codec(codec: str) -> Any:
     """Compile the canonical ASN.1 module with the given asn1tools codec."""
     return asn1tools.compile_files(str(ASN1_MODULE_PATH), codec=codec)
 

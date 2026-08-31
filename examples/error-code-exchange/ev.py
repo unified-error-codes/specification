@@ -9,10 +9,12 @@ the wire.
 
 from __future__ import annotations
 
+from typing import Any
+
 from common import build_sample_report, compile_asn1_codec
 
 
-def raise_error_over_iso15118(codec) -> bytes:
+def raise_error_over_iso15118(codec: Any) -> bytes:
     """The EV builds and encodes an ErrorCodeReport for the EVSE."""
     report = build_sample_report()
     return codec.encode("ErrorCodeReport", report)

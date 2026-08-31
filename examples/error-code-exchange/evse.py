@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import datetime
+from typing import Any
 
 import websockets
 from ocpp.v16 import ChargePoint as ChargePointV16
@@ -25,7 +26,7 @@ from common import VENDOR_ID, compile_asn1_codec
 CHARGE_POINT_ID = "EVSE-DE-ABC-E1234-1"
 
 
-def decode_from_iso15118(codec, wire_bytes: bytes) -> dict:
+def decode_from_iso15118(codec: Any, wire_bytes: bytes) -> dict:
     """The EVSE decodes the bytes it received from the EV."""
     return codec.decode("ErrorCodeReport", wire_bytes)
 
