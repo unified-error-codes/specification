@@ -1,25 +1,28 @@
 # Error Code Exchange Demo
 
-Runnable demonstration of the `ErrorCodeReport` message defined in
+Runnable, end-to-end demonstration of the `ErrorCodeReport` message
+defined in
 [`specification/protocol/definitions_ErrorCodeExchangeMessage.rst`](../../specification/protocol/definitions_ErrorCodeExchangeMessage.rst),
 implementing [GitHub issue #61](https://github.com/charinev/unified-error-codes/issues/61).
 
-It uses the canonical ASN.1 module at
-[`specification/protocol/UnifiedErrorCodeExchange.asn1`](../../specification/protocol/UnifiedErrorCodeExchange.asn1)
-directly, so the demo can never drift from the published schema.
+See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the full design.
 
 ## What it shows
 
-1. An EVSE builds an `ErrorCodeReport` for a `SideB_OverCurrentFailure`.
-2. The EVSE encodes it with the Canonical Octet Encoding Rules (COER,
-   ITU-T X.696), as required on the ISO 15118-2 link, and the EV decodes it.
-   (The demo actually invokes asn1tools' `oer` codec: the installed
-   asn1tools release has no `coer` codec name, and OER is the closest
-   supported ITU-T X.696-family encoding for this message — see the
-   comment in `demo.py` for details.)
-3. The same report is re-encoded with the JSON Encoding Rules (JER,
-   ITU-T X.697), as would be relayed to a charging management system, e.g.
-   inside an OCPP 2.0.1 `NotifyEventRequest.eventData` field.
+The complete path **EV → EVSE → CSMS**:
+
+1. An EV builds an `ErrorCodeReport` for a `SideB_OverCurrentFailure`
+   and encodes it using the canonical ASN.1 module at
+   [`specification/protocol/UnifiedErrorCodeExchange.asn1`](../../specification/protocol/UnifiedErrorCodeExchange.asn1)
+   directly, so the demo can never drift from the published schema.
+   (The Canonical Octet Encoding Rules, COER, are ISO 15118-2's
+   required wire encoding; the demo uses asn1tools' `oer` codec as the
+   closest supported stand-in — see the comment in `demo.py`.)
+2. An EVSE decodes it, then relays the *same* detected error to **two**
+   mock CSMS backends **in parallel**: one speaking **OCPP 1.6**
+   (`StatusNotification`), one speaking **OCPP 2.0.1**
+   (`NotifyEventRequest`) — simulating a station that has not yet
+   fully migrated off the older protocol.
 
 ## Run it
 
@@ -28,3 +31,14 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python demo.py
 ```
+
+## Files
+
+| File | Role |
+|---|---|
+| `common.py` | Shared sample data and ASN.1 codec setup |
+| `ev.py` | EV: builds and encodes the `ErrorCodeReport` |
+| `evse.py` | EVSE: decodes it, relays to both OCPP backends |
+| `csms_ocpp16.py` | Minimal mock CSMS speaking OCPP 1.6 |
+| `csms_ocpp201.py` | Minimal mock CSMS speaking OCPP 2.0.1 |
+| `demo.py` | Orchestrates the full EV → EVSE → CSMS run |

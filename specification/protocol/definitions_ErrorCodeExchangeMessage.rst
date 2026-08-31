@@ -244,21 +244,23 @@ Encoding Rules
    the byte-, string-, and integer-encoding conventions already used
    by ISO 15118-2's Event Notification Protocol extensions.
 
--  **Charging management system relay (e.g. OCPP)**: the same schema
-   MAY be re-encoded using the **JSON Encoding Rules (JER)**, as
-   defined in `ITU-T X.697 <https://www.itu.int/rec/T-REC-X.697>`_.
-   This produces a JSON document suitable for use as, for example, the
-   ``eventData`` payload of an OCPP 2.0.1 ``NotifyEventRequest``.
-
-Using one ASN.1 schema with two encoding rules keeps the EV/EVSE wire
-format and the backend/OCPP representation of an error report
-structurally identical, differing only in bytes-on-the-wire vs. JSON.
+-  **Charging management system relay (e.g. OCPP)**: an EVSE relaying
+   this message to a backend maps its fields onto that backend's
+   native protocol rather than tunnelling the ASN.1 encoding through
+   it — e.g. ``UnifiedErrorCode.codeName`` into the ``techCode``/
+   ``actualValue`` of an OCPP 2.0.1 ``NotifyEventRequest``'s
+   ``eventData``, or into the ``vendorErrorCode`` of an OCPP 1.6
+   ``StatusNotification``. The schema MAY still be re-encoded directly
+   with the **JSON Encoding Rules (JER)**, as defined in `ITU-T X.697
+   <https://www.itu.int/rec/T-REC-X.697>`_, where a backend accepts an
+   opaque structured payload.
 
 Demonstration Code
 ====================
 
-A runnable demonstration of an EVSE encoding an ``ErrorCodeReport``
-with COER, an EV decoding it, and the same report being re-encoded
-with JER for an OCPP relay, is provided at
+A runnable demonstration of the full path — an EV encoding an
+``ErrorCodeReport`` with COER, an EVSE decoding it, and relaying the
+same detected error to two CSMS backends in parallel over OCPP 1.6 and
+OCPP 2.0.1 — is provided at
 `examples/error-code-exchange <../../examples/error-code-exchange>`_
 in the repository root.
