@@ -4,9 +4,9 @@
 
 .. _error_lowtemperature:
 
-*****************
- Low Temperature
-*****************
+****************
+ LowTemperature
+****************
 
 Description
 ===========
