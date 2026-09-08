@@ -13,6 +13,7 @@ for electric vehicle charging stations.
    :maxdepth: 2
    :caption: Contents:
 
+   terms/definitions
    error_codes/definitions
    error_codes/definitions_EVShiftPosition
    error_codes/definitions_ContactorPosition
