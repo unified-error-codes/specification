@@ -123,4 +123,4 @@ Its COER encoding, which is the ``extensionValue``, is 75 octets:
    08 55 6E 6C 6F 63 6B 65 64  position, "Unlocked"
    04 4C 6F 63 6B              command, "Lock"
 
-.. _UnifiedErrorCodeExchange.asn1: https://github.com/charinev/unified-error-codes/blob/main/specification/iso15118_202/UnifiedErrorCodeExchange.asn1
+.. include:: definitions_Ocpp16.rst
