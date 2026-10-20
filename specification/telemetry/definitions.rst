@@ -76,3 +76,4 @@ the charging station.
 .. include:: definitions_TemperatureTelemetry.rst
 .. include:: definitions_PowerModuleTelemetry.rst
 .. include:: definitions_OverCurrentTelemetry.rst
+.. include:: definitions_OvervoltageTelemetry.rst
