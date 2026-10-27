@@ -28,7 +28,7 @@
 .. _telemetry_overvoltage_side:
 
 **********************
- Overvoltage Side
+ OverVoltage Side
 **********************
 
 -  **Description**: The measurement location at which the overvoltage was

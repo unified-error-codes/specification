@@ -5,7 +5,7 @@
 .. _error_overvoltage:
 
 *************
- Overvoltage
+ OverVoltage
 *************
 
 Description
